@@ -15,6 +15,14 @@ public class Usuario {
     private String password;
     private String nombreCompleto;
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
     public Usuario(String nombreUsuario, String password, String nombreCompleto) {
         this.nombreUsuario = nombreUsuario;
         this.password = password;

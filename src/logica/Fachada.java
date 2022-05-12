@@ -14,6 +14,7 @@ public class Fachada {
     private ControlUsuarios cu = new ControlUsuarios();
     private ControlMesas cm = new ControlMesas();
     private ControlClientes cc = new ControlClientes();
+    private ControlServicio cs = new ControlServicio();
     
     
     private static Fachada instancia = new Fachada();

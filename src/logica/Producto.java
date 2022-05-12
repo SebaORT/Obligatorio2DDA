@@ -16,7 +16,12 @@ public class Producto {
     private int stock;
     private ProcesadoraPedidos unidadProcesadora;
     
-    public void actulizarStock(){
+    public boolean actulizarStock(int unidades){
+        if(stock >= unidades){
+            stock=-unidades;
+            return true;
+        }
+        else return false;
     }
         
 }

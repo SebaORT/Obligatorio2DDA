@@ -48,5 +48,11 @@ public class Mozo extends Usuario{
     private void agregarMesa(Mesa mesa) {
         mesas.add(mesa);
     }
+    
+    @Override
+    public boolean equals(Object o){
+        Mozo m = (Mozo) o;
+        return m.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
+    }
         
 }

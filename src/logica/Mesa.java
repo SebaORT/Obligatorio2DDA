@@ -17,12 +17,13 @@ public class Mesa {
     private Mozo mozo;
     private boolean abierta = false;
     private Cliente cliente;
-    private ArrayList<Producto> servicio = new ArrayList<Producto>();
+    private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
     
-    public void abrirMesa(){
-    }
-    
-    public void cerrarMesa(){
+    public void abrirCerrarMesa(){
+        if(!abierta){
+            abierta=true;
+        }
+        else abierta=false;
     }
     
     public void estaAbierta(){
@@ -31,7 +32,7 @@ public class Mesa {
     public void agregarCliente(){
     }
     
-    public void agregarProducto(){
+    public void agregarPedido(){
     }
     
     

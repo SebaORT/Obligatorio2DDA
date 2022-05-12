@@ -11,13 +11,14 @@ import java.util.ArrayList;
  *
  * @author Usuario
  */
-public class ControlUsuarios {
-    private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
-    private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
+public class ControlServicio {
     
-    public void agregarMozo(Mozo m){
+    private ArrayList<ProcesadoraPedidos> procesadoras = new ArrayList<ProcesadoraPedidos>();
+    private ArrayList<Producto> productos = new ArrayList<Producto>();
+    
+    public void crearPorcesadoraPedidos(){
     }
     
-    public void agregarGestor(Gestor g){
+    public void agregarProducto(){
     }
 }

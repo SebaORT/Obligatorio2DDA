@@ -5,16 +5,19 @@
  */
 package logica;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Usuario
  */
-public class ControlMesas {
-    private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
+public class Pedido {
     
-    public void agregarMesa(){
+    private Producto producto;
+    private int cantidad;
+    
+    public void agregarProducto(Producto p, int cantidad){
+        if(p.actulizarStock(cantidad)){
+            producto = p;
+        }
     }
     
 }
