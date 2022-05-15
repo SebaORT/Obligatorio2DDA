@@ -15,6 +15,11 @@ public class Cliente {
     private String email;
     private String tipo;
 
+    Cliente(String nombre, String email) {
+        this.nombre = nombre;
+        this.email = email;
+    }
+
     private void validaTipo(String tipo){
         
     }

@@ -15,7 +15,7 @@ public class DatosPrecargados {
         
         Fachada logica = Fachada.getInstancia();
         
-       /* ProcesadoraPedidos cocina = new ProcesadoraPedidos("cocina");
+        ProcesadoraPedidos cocina = new ProcesadoraPedidos("cocina");
         ProcesadoraPedidos bar = new ProcesadoraPedidos("bar");
         
         logica.agregarServicio(cocina);
@@ -81,7 +81,7 @@ public class DatosPrecargados {
         logica.agregarProducto(whiskey);
         logica.agregarProducto(vodka);
         logica.agregarProducto(martini);
-        */
+        
         
     }
     

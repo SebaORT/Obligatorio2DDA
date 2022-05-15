@@ -18,6 +18,11 @@ public class Mesa {
     private boolean abierta = false;
     private Cliente cliente;
     private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
+
+    Mesa(int numero, Mozo mozo) {
+        this.numero = numero;
+        this.mozo = mozo;
+    }
     
     public void abrirCerrarMesa(){
         if(!abierta){
