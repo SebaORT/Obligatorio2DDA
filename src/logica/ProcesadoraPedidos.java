@@ -14,5 +14,14 @@ import java.util.ArrayList;
 public class ProcesadoraPedidos {
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
+
+    public ProcesadoraPedidos(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void agregarGestor(Gestor g){
+        gestores.add(g);
+    }
+
     
 }

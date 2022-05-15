@@ -12,12 +12,24 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class ControlUsuarios {
-    private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
-    
+    private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
+
+    public ArrayList<Mozo> getMozos() {
+        return mozos;
+    }
+
+    public ArrayList<Gestor> getGestores() {
+        return gestores;
+    }
+
     public void agregarMozo(Mozo m){
+        //Mozo m = new Mozo(usuario, password, nombreCompleto, telefono);
+        mozos.add(m);
     }
     
     public void agregarGestor(Gestor g){
+        //Gestor g = new Gestor(usuario,password,nombreCompleto);
+        gestores.add(g);
     }
 }

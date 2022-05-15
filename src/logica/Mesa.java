@@ -18,21 +18,34 @@ public class Mesa {
     private boolean abierta = false;
     private Cliente cliente;
     private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
+
+
+    public Mesa(int numero) {
+        this.numero = numero;
+    }
     
     public void abrirCerrarMesa(){
         if(!abierta){
             abierta=true;
         }
-        else abierta=false;
+        else{
+            cerrarMesa();
+        } 
+    }
+     
+    public void agregarCliente(Cliente c){
+        cliente=c;
     }
     
-    public void estaAbierta(){
+    public void agregarPedido(Pedido p){
+        servicio.add(p);
     }
-    
-    public void agregarCliente(){
-    }
-    
-    public void agregarPedido(){
+
+    private void cerrarMesa() {
+        servicio.clear();//no se si se borran asi todo los elementos de una lista y tienen que pasar mas cosa cuando se sierra la mesa
+        
+        cliente = null;
+        abierta=false;
     }
     
     

@@ -23,5 +23,30 @@ public class Fachada {
     }
     private Fachada() {
     }
+
+    void agregarCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void agregarMesa(Mesa m){
+        cm.agregarMesa(m);
+    }
+    
+    public void agregarProcesadora(ProcesadoraPedidos p){
+        cs.agregarPorcesadoraPedidos(p);
+    }
+    
+    public void agregarMozo(Mozo m){
+        cu.agregarMozo(m);
+    }
+    
+    public void agregarGestor(Gestor g){
+        cu.agregarGestor(g);
+       }
+    
+    public void agregarProducto(Producto producto){
+        cs.agregarProducto(producto);
+    }
+    
     
 }

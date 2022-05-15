@@ -14,7 +14,9 @@ import java.util.ArrayList;
 public class ControlMesas {
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
     
-    public void agregarMesa(){
+    public void agregarMesa(Mesa m){
+        //Mesa m = new Mesa(numero);
+        mesas.add(m);
     }
     
 }
