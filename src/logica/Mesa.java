@@ -22,6 +22,7 @@ public class Mesa {
 
     public Mesa(int numero) {
         this.numero = numero;
+
     }
     
     public void abrirCerrarMesa(){

@@ -16,13 +16,13 @@ public class Cliente {
     private String tipo;
 
 
+
     public Cliente(String nombre, String email) {
         this.nombre = nombre;
         this.email = email;     
     }
 
-    private void validaTipo(String tipo){
-        
+    private void validaTipo(String tipo){        
     }
 
 }

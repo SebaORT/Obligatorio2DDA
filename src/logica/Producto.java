@@ -24,6 +24,7 @@ public class Producto {
         this.unidadProcesadora = unidadProcesadora;
     }
 
+
     public boolean actulizarStock(int unidades){
         if(stock >= unidades){
             stock=-unidades;
