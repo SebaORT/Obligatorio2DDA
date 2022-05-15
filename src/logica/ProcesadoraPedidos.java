@@ -15,8 +15,15 @@ public class ProcesadoraPedidos {
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 
-    ProcesadoraPedidos(String nombre) {
+
+    public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
     }
+    
+    public void agregarGestor(Gestor g){
+        gestores.add(g);
+    }
+
+
     
 }
