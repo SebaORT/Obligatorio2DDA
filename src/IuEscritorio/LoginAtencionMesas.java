@@ -5,6 +5,7 @@
 package IuEscritorio;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -89,7 +90,11 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add login logic para atencion mesas, un mozo
-        
+        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                 this.setVisible(false);
+                this.dispose();
+                
+                
         JDialog d = new GUIAtencionMesas(null, false);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
