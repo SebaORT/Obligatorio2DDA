@@ -14,6 +14,7 @@ public class Cliente {
     private String nombre;
     private String email;
     private String tipo;
+    
 
 
 

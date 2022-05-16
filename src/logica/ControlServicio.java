@@ -25,4 +25,14 @@ public class ControlServicio {
         //Producto p = new Producto(codigo,nombre,precio,stock,unidadProcesadora);
         productos.add(p);
     }
+
+    public ArrayList<ProcesadoraPedidos> getProcesadoras() {
+        return procesadoras;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+    
+    
 }

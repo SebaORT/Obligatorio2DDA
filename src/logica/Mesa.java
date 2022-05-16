@@ -33,6 +33,14 @@ public class Mesa {
             cerrarMesa();
         } 
     }
+    
+    public int calcularServicio(){
+        int resultado = 0;
+        for(Pedido p:servicio){
+            resultado += p.getMontoPedido();
+        }
+        return resultado;
+    }
      
     public void agregarCliente(Cliente c){
         cliente=c;
@@ -41,12 +49,29 @@ public class Mesa {
     public void agregarPedido(Pedido p){
         servicio.add(p);
     }
+    
+    public void cerrarServicio(){
+        servicio.clear();
+    }
+
+    public Mozo getMozo() {
+        return mozo;
+    }
+    
 
     private void cerrarMesa() {
-        servicio.clear();//no se si se borran asi todo los elementos de una lista y tienen que pasar mas cosa cuando se sierra la mesa
-        
-        cliente = null;
-        abierta=false;
+        if(servicio.size() == 0){
+            cliente = null;
+            abierta=false;
+        }
+    }
+
+    public void setMozo(Mozo mozo) {
+        this.mozo = mozo;
+    }
+    
+    public void agregarMozo(Mozo m){
+        setMozo(m);
     }
     
     

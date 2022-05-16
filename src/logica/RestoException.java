@@ -5,21 +5,14 @@
  */
 package logica;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Usuario
  */
-public class ControlMesas {
-    private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
+public class RestoException extends Exception{
     
-    public void agregarMesa(Mesa m){
-        mesas.add(m);
-    }
-
-    public ArrayList<Mesa> getMesas() {
-        return mesas;
+    public RestoException(String mensaje) {
+        super(mensaje);
     }
     
 }

@@ -25,7 +25,7 @@ public class Fachada {
     }
 
     void agregarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cc.agregarCliente(cliente);
     }
 
     public void agregarMesa(Mesa m){

@@ -24,6 +24,14 @@ public class Producto {
         this.unidadProcesadora = unidadProcesadora;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
 
     public boolean actulizarStock(int unidades){
         if(stock >= unidades){

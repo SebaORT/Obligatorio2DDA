@@ -14,8 +14,13 @@ import java.util.ArrayList;
 public class ControlClientes {
     private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     
-    public void agregarCliente(String nombre,String email){
-        Cliente c = new Cliente(nombre,email);
+    public void agregarCliente(Cliente c){
         clientes.add(c);
     }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+    
+    
 }
