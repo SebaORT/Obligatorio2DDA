@@ -82,7 +82,9 @@ public class IuStart extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JDialog d = new LoginProcesadoraPedidos(null,false);       
+        JDialog d = new LoginProcesadoraPedidos(null,false);     
+         d.setVisible(true);
+        d.setLocationRelativeTo(null);
         d.setVisible(true); 
 
     }//GEN-LAST:event_jButton2ActionPerformed

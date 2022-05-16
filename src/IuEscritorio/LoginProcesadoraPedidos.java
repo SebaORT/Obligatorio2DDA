@@ -4,7 +4,11 @@
  */
 package IuEscritorio;
 
+import exception.LogicException;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import logica.Gestor;
+import logica.Usuario;
 
 /**
  *
@@ -29,7 +33,7 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnLoginGestor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombreMozo = new javax.swing.JTextField();
@@ -38,10 +42,10 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login Procesadora Pedidos");
 
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLoginGestor.setText("Login");
+        btnLoginGestor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginGestorActionPerformed(evt);
             }
         });
 
@@ -55,7 +59,7 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnLoginGestor)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
@@ -80,28 +84,35 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnLoginGestor)
                 .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add logic para un gestor
+    private void btnLoginGestorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginGestorActionPerformed
+
+                JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                 this.setVisible(false);
+                this.dispose();
+
         
-         JDialog d = new GUIProcesadoraPedidos(null, false);
-        d.setVisible(true);
-        d.setLocationRelativeTo(null);
+        boolean loginOk = true; //TODO cambiar
+        if (loginOk) {
+            Gestor gestor = new Gestor("pepe","password","Pepe Sosa"); 
+            JDialog d = new DialogSeleccionarProcesadora(null, false, gestor);
+            d.setVisible(true);
+            d.setLocationRelativeTo(null);
+        }
 
         this.setVisible(false);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnLoginGestorActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLoginGestor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtNombreMozo;
