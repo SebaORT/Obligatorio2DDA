@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Gestor;
 import java.util.ArrayList;
 
 /**

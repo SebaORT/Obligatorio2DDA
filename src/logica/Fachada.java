@@ -5,6 +5,11 @@
  */
 package logica;
 
+import logica.modelo.Mozo;
+import logica.modelo.Gestor;
+import logica.modelo.Mesa;
+import logica.modelo.Producto;
+
 /**
  *
  * @author Usuario

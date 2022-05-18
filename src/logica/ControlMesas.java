@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Mesa;
 import java.util.ArrayList;
 
 /**

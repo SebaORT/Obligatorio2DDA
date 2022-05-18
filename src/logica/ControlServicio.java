@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Producto;
 import java.util.ArrayList;
 
 /**

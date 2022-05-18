@@ -5,6 +5,8 @@
  */
 package logica;
 
+import logica.modelo.Mozo;
+import logica.modelo.Gestor;
 import java.util.ArrayList;
 
 /**

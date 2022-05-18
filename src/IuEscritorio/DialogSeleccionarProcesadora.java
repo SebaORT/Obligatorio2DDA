@@ -6,7 +6,7 @@ package IuEscritorio;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import logica.Gestor;
+import logica.modelo.Gestor;
 
 /**
  *

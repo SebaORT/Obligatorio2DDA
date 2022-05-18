@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.modelo;
 
+import logica.modelo.Usuario;
 import java.util.ArrayList;
+import logica.excepciones.RestoException;
 
 /**
  *

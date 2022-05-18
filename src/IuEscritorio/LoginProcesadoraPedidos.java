@@ -7,8 +7,8 @@ package IuEscritorio;
 import exception.LogicException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import logica.Gestor;
-import logica.Usuario;
+import logica.modelo.Gestor;
+import logica.modelo.Usuario;
 
 /**
  *
