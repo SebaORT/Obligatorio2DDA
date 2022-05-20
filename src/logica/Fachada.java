@@ -6,6 +6,7 @@
 package logica;
 
 import IuEscritorio.GUIProcesadoraPedidos;
+import java.util.ArrayList;
 import logica.excepciones.LogicException;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
@@ -62,6 +63,10 @@ public class Fachada {
     
     public Gestor loginGestor(String u, String p) {
         return controlUsuario.loginGestor(u, p);
+    }
+
+    public ArrayList<ProcesadoraPedidos> getProcesadoras() {
+        return controlServicio.getProcesadoras();
     }
     
 

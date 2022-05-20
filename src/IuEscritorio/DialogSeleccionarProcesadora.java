@@ -4,8 +4,10 @@
  */
 package IuEscritorio;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import logica.Fachada;
 import logica.ProcesadoraPedidos;
 import logica.modelo.Gestor;
 
@@ -26,7 +28,12 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
         
         this.gestorActual = gestor;
         
-        //CARGAR DROPDOWN CON LAS PROCESADORAS
+        
+        ProcesadoraPedidos[] procesadoras =  Fachada.getInstancia().getProcesadoras().toArray(ProcesadoraPedidos[]::new);
+        DefaultComboBoxModel cboBoxModel = 
+                new DefaultComboBoxModel<ProcesadoraPedidos>(procesadoras);
+        
+        this.cbxProcesadora.setModel(cboBoxModel);
     }
 
     /**
@@ -44,8 +51,6 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seleccionar Procesadora");
-
-        cbxProcesadora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cocina", "Bar", "Heladeria" }));
 
         jLabel1.setText("Procesadora");
 
@@ -90,12 +95,12 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
                  this.setVisible(false);
                 this.dispose();        
         */
-        ProcesadoraPedidos procesadoraSeleccionada = new ProcesadoraPedidos("cocina");
+        ProcesadoraPedidos procesadoraSeleccionada = (ProcesadoraPedidos)this.cbxProcesadora.getSelectedItem();
         
         /*gestorActual.asignarProcesadora(procesadoraSeleccionada);
         procesadoraSeleccionada.asignarGestor(gestorActual);
         */
-        JDialog d = new GUIProcesadoraPedidos(null, false, procesadoraSeleccionada);
+        JDialog d = new GUIProcesadoraPedidos(null, false, gestorActual,procesadoraSeleccionada);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnConfirmarActionPerformed
@@ -103,7 +108,7 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JComboBox<String> cbxProcesadora;
+    private javax.swing.JComboBox<ProcesadoraPedidos> cbxProcesadora;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
