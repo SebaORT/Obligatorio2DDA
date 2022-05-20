@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ControlClientes {
     private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    private ArrayList<String> tipos = new ArrayList<String>();
     
     public void agregarCliente(Cliente c){
         clientes.add(c);
@@ -21,6 +22,5 @@ public class ControlClientes {
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
-    
     
 }

@@ -15,30 +15,34 @@ import java.util.Date;
  */
 public class Gestor extends Usuario{
     
-    private Date fechaUltimoAcceso= new Date();
+    //private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
         super(nombreUsuario, password, nombreCompleto);
     }
 
+    /*
     public void ultimoAcceso(){
         Date nuevaFecha = new Date();
         setFechaUltimoAcceso(nuevaFecha);
     }
+    public Date getFechaUltimoAcceso() {
+        return fechaUltimoAcceso;
+    }
+    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+        this.fechaUltimoAcceso = fechaUltimoAcceso;
+    }
+    */
     
     public void preparaPedido(Pedido p){
         pedidos.add(p);
         p.gestorPreparador(this);
     }
     
-    public Date getFechaUltimoAcceso() {
-        return fechaUltimoAcceso;
-    }
+    
 
-    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
-        this.fechaUltimoAcceso = fechaUltimoAcceso;
-    }
+    
     
     public void validar(){
     }

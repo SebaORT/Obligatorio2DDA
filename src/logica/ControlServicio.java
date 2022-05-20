@@ -7,12 +7,13 @@ package logica;
 
 import logica.modelo.Producto;
 import java.util.ArrayList;
+import logica.observador.Observable;
 
 /**
  *
  * @author Usuario
  */
-public class ControlServicio {
+public class ControlServicio  {
     
     private ArrayList<ProcesadoraPedidos> procesadoras = new ArrayList<ProcesadoraPedidos>();
     private ArrayList<Producto> productos = new ArrayList<Producto>();

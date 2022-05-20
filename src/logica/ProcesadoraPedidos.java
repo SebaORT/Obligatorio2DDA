@@ -7,16 +7,19 @@ package logica;
 
 import logica.modelo.Gestor;
 import java.util.ArrayList;
+import logica.modelo.Pedido;
+import logica.observador.Observable;
 
 /**
  *
  * @author Usuario
  */
-public class ProcesadoraPedidos {
+public class ProcesadoraPedidos extends Observable{
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
-
-
+    private ArrayList<Pedido> pedidos = new ArrayList<>();
+//agregar enum con los eventos
+    
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
     }
@@ -24,6 +27,10 @@ public class ProcesadoraPedidos {
     public void agregarGestor(Gestor g){
         gestores.add(g);
     }
-
+    
+    public void agregarPedido(Pedido p) {
+        //avisar con el evento "agregarPedido"
+        pedidos.add(p);
+    }
   
 }

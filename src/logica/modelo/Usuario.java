@@ -19,6 +19,10 @@ public class Usuario {
         return nombreUsuario;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
@@ -28,5 +32,13 @@ public class Usuario {
         this.password = password;
         this.nombreCompleto = nombreCompleto;
     }
+    
+    @Override
+    public boolean equals(Object o){
+        Usuario u = (Usuario) o;
+        return u.getNombreUsuario().equalsIgnoreCase(nombreUsuario);
+    }
+    
+    
     
 }

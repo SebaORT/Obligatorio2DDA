@@ -11,8 +11,5 @@ package logica.excepciones;
  */
 public class RestoException extends Exception{
     
-    public RestoException(String mensaje) {
-        super(mensaje);
-    }
-    
+
 }
