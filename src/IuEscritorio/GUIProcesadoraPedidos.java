@@ -5,6 +5,8 @@
 package IuEscritorio;
 
 import javax.swing.JOptionPane;
+import logica.Fachada;
+import logica.ProcesadoraPedidos;
 import logica.observador.Observable;
 
 /**
@@ -13,12 +15,17 @@ import logica.observador.Observable;
  */
 public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica.observador.Observador{
 
+    private final ProcesadoraPedidos procesadora;
+
     /**
      * Creates new form GUIProcesadoraPedidos
      */
-    public GUIProcesadoraPedidos(java.awt.Frame parent, boolean modal) {
+    public GUIProcesadoraPedidos(java.awt.Frame parent, boolean modal, ProcesadoraPedidos procesadora) {
         super(parent, modal);
         initComponents();
+        this.procesadora = procesadora;
+        
+       procesadora.agregar(this);
     }
 
     /**

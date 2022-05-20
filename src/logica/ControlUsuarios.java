@@ -8,6 +8,7 @@ package logica;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
 import java.util.ArrayList;
+import logica.excepciones.LogicException;
 import logica.modelo.Usuario;
 
 /**
@@ -46,17 +47,24 @@ public class ControlUsuarios {
         return null;
     }
     
-    public Mozo loginMozo(String u,String p){
-       return (Mozo)login(u,p,(ArrayList)mozos);
+    public Mozo loginMozo(String nombre,String password) throws LogicException{
+       Usuario usuario = login(nombre,password,(ArrayList)mozos);
+       if (usuario!=null) {
+        return (Mozo)usuario;
+       }
+       else {
+           throw new LogicException("Eror al tratar de loguear el mozo");
+       }
     }
     
-    public Conexion loginGestor(String u,String p){
-        Gestor g = (Gestor)login(u,p,(ArrayList)gestores);
+    public Gestor loginGestor(String u,String p){
+        return (Gestor)login(u,p,(ArrayList)gestores);
+        /*Gestor g = (Gestor)login(u,p,(ArrayList)gestores);
         Conexion c = null;
         if(g!=null){
             c = new Conexion(g);
             conexiones.add(c);
         }
-       return c; 
+       return c; */
     }
 }

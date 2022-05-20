@@ -4,8 +4,13 @@
  */
 package IuEscritorio;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import logica.Fachada;
+import logica.excepciones.LogicException;
+import logica.modelo.Mozo;
 
 /**
  *
@@ -89,21 +94,26 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add login logic para atencion mesas, un mozo
-        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                 this.setVisible(false);
-                this.dispose();
-                
-                
-        JDialog d = new GUIAtencionMesas(null, false);
-        d.setVisible(true);
-        d.setLocationRelativeTo(null);
 
-        this.setVisible(false);
-        this.dispose();
+        Mozo mozo;
+        try {
+            String pass = String.valueOf(txtPassword.getPassword());
+            mozo = Fachada.getInstancia().loginMozo(txtNombreMozo.getText(), pass );
+            if (mozo != null) {
+                JDialog d = new GUIAtencionMesas(null, false);
+                d.setVisible(true);
+                d.setLocationRelativeTo(null);
+
+                this.setVisible(false);
+                this.dispose();
+            }
+        } catch (LogicException ex) {
+            Logger.getLogger(LoginAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

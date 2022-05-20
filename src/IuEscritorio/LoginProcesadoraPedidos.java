@@ -4,10 +4,14 @@
  */
 package IuEscritorio;
 
-import exception.LogicException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logica.excepciones.LogicException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import logica.Fachada;
 import logica.modelo.Gestor;
+import logica.modelo.Mozo;
 import logica.modelo.Usuario;
 
 /**
@@ -93,21 +97,19 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
 
     private void btnLoginGestorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginGestorActionPerformed
 
-                JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                 this.setVisible(false);
-                this.dispose();
-
-        
-        boolean loginOk = true; //TODO cambiar
-        if (loginOk) {
-            Gestor gestor = new Gestor("pepe","password","Pepe Sosa"); 
+               
+        String pass = String.valueOf(txtPassword.getPassword());
+        Gestor gestor = Fachada.getInstancia().loginGestor(txtNombreMozo.getText(), pass );
+        if (gestor != null) {
             JDialog d = new DialogSeleccionarProcesadora(null, false, gestor);
             d.setVisible(true);
             d.setLocationRelativeTo(null);
-        }
+            
+            this.setVisible(false);
+            this.dispose();
+        }        
 
-        this.setVisible(false);
-        this.dispose();
+       
     }//GEN-LAST:event_btnLoginGestorActionPerformed
 
 

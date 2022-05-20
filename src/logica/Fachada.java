@@ -5,10 +5,13 @@
  */
 package logica;
 
+import IuEscritorio.GUIProcesadoraPedidos;
+import logica.excepciones.LogicException;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
 import logica.modelo.Mesa;
 import logica.modelo.Producto;
+import logica.observador.Observador;
 
 /**
  *
@@ -16,10 +19,10 @@ import logica.modelo.Producto;
  */
 public class Fachada {
     
-    private ControlUsuarios cu = new ControlUsuarios();
-    private ControlMesas cm = new ControlMesas();
-    private ControlClientes cc = new ControlClientes();
-    private ControlServicio cs = new ControlServicio();
+    private ControlUsuarios controlUsuario = new ControlUsuarios();
+    private ControlMesas controlMesas = new ControlMesas();
+    private ControlClientes controlClientes = new ControlClientes();
+    private ControlServicio controlServicio = new ControlServicio();
     
     
     private static Fachada instancia = new Fachada();
@@ -30,35 +33,35 @@ public class Fachada {
     }
 
     void agregarCliente(Cliente cliente) {
-        cc.agregarCliente(cliente);
+        controlClientes.agregarCliente(cliente);
     }
 
     public void agregarMesa(Mesa m){
-        cm.agregarMesa(m);
+        controlMesas.agregarMesa(m);
     }
     
     public void agregarProcesadora(ProcesadoraPedidos p){
-        cs.agregarPorcesadoraPedidos(p);
+        controlServicio.agregarPorcesadoraPedidos(p);
     }
     
     public void agregarMozo(Mozo m){
-        cu.agregarMozo(m);
+        controlUsuario.agregarMozo(m);
     }
     
     public void agregarGestor(Gestor g){
-        cu.agregarGestor(g);
+        controlUsuario.agregarGestor(g);
        }
     
     public void agregarProducto(Producto producto){
-        cs.agregarProducto(producto);
+        controlServicio.agregarProducto(producto);
     }
     
-    public Mozo loginMozo(String u, String p) {
-        return cu.loginMozo(u, p);
+    public Mozo loginMozo(String u, String p) throws LogicException {
+        return controlUsuario.loginMozo(u, p);
     }
     
-    public Conexion loginGestor(String u, String p) {
-        return cu.loginGestor(u, p);
+    public Gestor loginGestor(String u, String p) {
+        return controlUsuario.loginGestor(u, p);
     }
     
 

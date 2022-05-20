@@ -5,7 +5,7 @@
  */
 package logica.modelo;
 
-import exception.LogicException;
+import logica.excepciones.LogicException;
 import logica.excepciones.RestoException;
 
 /**

@@ -6,6 +6,7 @@ package IuEscritorio;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import logica.ProcesadoraPedidos;
 import logica.modelo.Gestor;
 
 /**
@@ -24,6 +25,8 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
         initComponents();
         
         this.gestorActual = gestor;
+        
+        //CARGAR DROPDOWN CON LAS PROCESADORAS
     }
 
     /**
@@ -85,10 +88,12 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
 JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
                  this.setVisible(false);
                 this.dispose();        
+        
+         ProcesadoraPedidos procesadoraSeleccionada = new ProcesadoraPedidos("cocina");
         //gestorActual.asignarProcesadora(procesadoraSeleccionada);
         //procesadoraSeleccionada.asignarGestor(gestorActual);
         
-        JDialog d = new GUIProcesadoraPedidos(null, false);
+        JDialog d = new GUIProcesadoraPedidos(null, false, procesadoraSeleccionada);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnConfirmarActionPerformed
