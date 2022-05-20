@@ -85,14 +85,16 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        /*JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
                  this.setVisible(false);
                 this.dispose();        
+        */
+        ProcesadoraPedidos procesadoraSeleccionada = new ProcesadoraPedidos("cocina");
         
-         ProcesadoraPedidos procesadoraSeleccionada = new ProcesadoraPedidos("cocina");
-        //gestorActual.asignarProcesadora(procesadoraSeleccionada);
-        //procesadoraSeleccionada.asignarGestor(gestorActual);
-        
+        /*gestorActual.asignarProcesadora(procesadoraSeleccionada);
+        procesadoraSeleccionada.asignarGestor(gestorActual);
+        */
         JDialog d = new GUIProcesadoraPedidos(null, false, procesadoraSeleccionada);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
