@@ -32,5 +32,9 @@ public class ProcesadoraPedidos extends Observable{
         //avisar con el evento "agregarPedido"
         pedidos.add(p);
     }
+
+    public void asignarGestor(Gestor gestorActual) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
   
 }
