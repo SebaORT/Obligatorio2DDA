@@ -5,12 +5,13 @@
 package IuEscritorio;
 
 import javax.swing.JOptionPane;
+import logica.observador.Observable;
 
 /**
  *
  * @author Sebastian
  */
-public class GUIProcesadoraPedidos extends javax.swing.JDialog {
+public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica.observador.Observador{
 
     /**
      * Creates new form GUIProcesadoraPedidos
@@ -149,4 +150,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar(Object evento, Observable origen) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

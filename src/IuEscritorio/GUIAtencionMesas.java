@@ -7,12 +7,13 @@ package IuEscritorio;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import logica.observador.Observable;
 
 /**
  *
  * @author Sebastian
  */
-public class GUIAtencionMesas extends javax.swing.JDialog {
+public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
 
     /**
      * Creates new form GUIAtencionMesas
@@ -433,5 +434,10 @@ public class GUIAtencionMesas extends javax.swing.JDialog {
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar(Object evento, Observable origen) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }
