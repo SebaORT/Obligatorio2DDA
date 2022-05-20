@@ -53,6 +53,14 @@ public class Fachada {
         cs.agregarProducto(producto);
     }
     
+    public Mozo loginMozo(String u, String p) {
+        return cu.loginMozo(u, p);
+    }
+    
+    public Conexion loginGestor(String u, String p) {
+        return cu.loginGestor(u, p);
+    }
+    
 
     
 }

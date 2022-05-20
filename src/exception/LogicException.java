@@ -10,7 +10,9 @@ package exception;
  */
 public class LogicException extends Exception{
 
-    public LogicException() {
+
+    public LogicException(String mensaje) {
+        super(mensaje);
     }
     
 }

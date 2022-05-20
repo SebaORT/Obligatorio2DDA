@@ -8,6 +8,7 @@ package logica;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
 import java.util.ArrayList;
+import logica.modelo.Usuario;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class ControlUsuarios {
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
+    private ArrayList<Conexion> conexiones = new ArrayList<Conexion>();
 
     public ArrayList<Mozo> getMozos() {
         return mozos;
@@ -26,12 +28,35 @@ public class ControlUsuarios {
     }
 
     public void agregarMozo(Mozo m){
-        //Mozo m = new Mozo(usuario, password, nombreCompleto, telefono);
         mozos.add(m);
     }
     
     public void agregarGestor(Gestor g){
-        //Gestor g = new Gestor(usuario,password,nombreCompleto);
         gestores.add(g);
+    }
+    
+    private Usuario login(String u,String p,ArrayList<Usuario> lista){
+       
+        for(Usuario usr:lista){
+            if(usr.getNombreUsuario().equalsIgnoreCase(u) && 
+                    usr.getPassword().equals(p)){
+                    return usr;
+            }
+        }
+        return null;
+    }
+    
+    public Mozo loginMozo(String u,String p){
+       return (Mozo)login(u,p,(ArrayList)mozos);
+    }
+    
+    public Conexion loginGestor(String u,String p){
+        Gestor g = (Gestor)login(u,p,(ArrayList)gestores);
+        Conexion c = null;
+        if(g!=null){
+            c = new Conexion(g);
+            conexiones.add(c);
+        }
+       return c; 
     }
 }

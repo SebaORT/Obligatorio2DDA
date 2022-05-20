@@ -5,6 +5,7 @@
  */
 package logica.modelo;
 
+import exception.LogicException;
 import logica.excepciones.RestoException;
 
 /**
@@ -18,13 +19,13 @@ public class Pedido {
     private int montoPedido;
     private Gestor gestor;
     
-    public void agregarProducto(Producto p, int cantidad)throws RestoException{
+    public void agregarProducto(Producto p, int cantidad)throws LogicException{
         if(p.actulizarStock(cantidad)){
             producto = p;
             this.cantidad = cantidad;
             montoPedido = cantidad*p.getPrecio();
         }
-        else throw new RestoException("La cantidad" + cantidad + "es major a el stock del producto (" + p.getStock() + ").");
+        else throw new LogicException("La cantidad" + cantidad + "es major a el stock del producto (" + p.getStock() + ").");
     }
     
     public void gestorPreparador(Gestor g){

@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Updated upstream
             <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/IuEscritorio/GUIAtencionMesas.java</file>
             <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/IuEscritorio/GUIProcesadoraPedidos.java</file>
+=======
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/New%20folder/Obligatorio2DDA/src/logica/Fachada.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/New%20folder/Obligatorio2DDA/src/logica/ControlUsuarios.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/New%20folder/Obligatorio2DDA/src/logica/ProcesadoraPedidos.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
