@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Mesa;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,12 @@ import java.util.ArrayList;
 public class ControlMesas {
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
     
-    public void agregarMesa(){
+    public void agregarMesa(Mesa m){
+        mesas.add(m);
+    }
+
+    public ArrayList<Mesa> getMesas() {
+        return mesas;
     }
     
 }

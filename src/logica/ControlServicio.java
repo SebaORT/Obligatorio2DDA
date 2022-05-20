@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Producto;
 import java.util.ArrayList;
 
 /**
@@ -16,9 +17,23 @@ public class ControlServicio {
     private ArrayList<ProcesadoraPedidos> procesadoras = new ArrayList<ProcesadoraPedidos>();
     private ArrayList<Producto> productos = new ArrayList<Producto>();
     
-    public void crearPorcesadoraPedidos(){
+    public void agregarPorcesadoraPedidos(ProcesadoraPedidos p){
+        //ProcesadoraPedidos p = new ProcesadoraPedidos(nombre);
+        procesadoras.add(p);
     }
     
-    public void agregarProducto(){
+    public void agregarProducto(Producto p){
+        //Producto p = new Producto(codigo,nombre,precio,stock,unidadProcesadora);
+        productos.add(p);
     }
+
+    public ArrayList<ProcesadoraPedidos> getProcesadoras() {
+        return procesadoras;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+    
+    
 }

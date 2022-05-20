@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.modelo;
 
+import logica.modelo.Usuario;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -13,7 +15,8 @@ import java.util.Date;
  */
 public class Gestor extends Usuario{
     
-    private Date fechaUltimoAcceso= new Date(); 
+    private Date fechaUltimoAcceso= new Date();
+    private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
         super(nombreUsuario, password, nombreCompleto);
@@ -23,7 +26,12 @@ public class Gestor extends Usuario{
         Date nuevaFecha = new Date();
         setFechaUltimoAcceso(nuevaFecha);
     }
-
+    
+    public void preparaPedido(Pedido p){
+        pedidos.add(p);
+        p.gestorPreparador(this);
+    }
+    
     public Date getFechaUltimoAcceso() {
         return fechaUltimoAcceso;
     }

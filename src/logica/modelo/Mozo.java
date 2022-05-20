@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.modelo;
 
+import logica.modelo.Usuario;
 import java.util.ArrayList;
+import logica.excepciones.RestoException;
 
 /**
  *
@@ -21,9 +23,10 @@ public class Mozo extends Usuario{
     }
     
     
-    public void transferirMesa(Mozo mozo,Mesa mesa){
+    public void transferirMesa(Mozo mozo,Mesa mesa)throws RestoException{
         mesas.remove(mesa);
         mozo.agregarMesa(mesa);
+        //mesa.setMozo(mozo);
     }
 
     public int getTelefono() {
@@ -45,8 +48,14 @@ public class Mozo extends Usuario{
     public void validar(){
     }
 
-    private void agregarMesa(Mesa mesa) {
-        mesas.add(mesa);
+    private void agregarMesa(Mesa mesa)throws RestoException {
+        if(mesas.size()>=5){
+            throw new RestoException("El mozo ya tiene 5 mesas.");
+        }
+        else{
+            mesas.add(mesa);
+            mesa.setMozo(this);
+        }
     }
     
     @Override

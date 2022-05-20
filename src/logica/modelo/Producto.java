@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.modelo;
+
+import logica.ProcesadoraPedidos;
 
 /**
  *
@@ -24,8 +26,15 @@ public class Producto {
         this.unidadProcesadora = unidadProcesadora;
     }
 
-    
-    
+    public int getStock() {
+        return stock;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+
     public boolean actulizarStock(int unidades){
         if(stock >= unidades){
             stock=-unidades;

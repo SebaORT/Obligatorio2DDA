@@ -1,13 +1,15 @@
 package main;
 
 import IuEscritorio.IuStart;
+import logica.DatosPrecargados;
 
 
 public class Inicio {
 
      public static void main(String[] args) throws Exception {
-            IuStart start =  (new IuStart());
-            start.setLocationRelativeTo(null);
+        DatosPrecargados.cargar();
+        IuStart start =  (new IuStart());
+        start.setLocationRelativeTo(null);
         start.setVisible(true);
       } 
 }

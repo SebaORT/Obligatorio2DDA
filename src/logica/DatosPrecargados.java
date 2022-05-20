@@ -5,6 +5,11 @@
  */
 package logica;
 
+import logica.modelo.Mozo;
+import logica.modelo.Gestor;
+import logica.modelo.Mesa;
+import logica.modelo.Producto;
+
 /**
  *
  * @author santi
@@ -18,8 +23,8 @@ public class DatosPrecargados {
         ProcesadoraPedidos cocina = new ProcesadoraPedidos("cocina");
         ProcesadoraPedidos bar = new ProcesadoraPedidos("bar");
         
-        logica.agregarServicio(cocina);
-        logica.agregarServicio(bar);
+        logica.agregarProcesadora(cocina);
+        logica.agregarProcesadora(bar);
         
         Cliente juan = new Cliente("Juan", "juan@gmail.com");
         Cliente ana = new Cliente("ana","ana@gmail.com");
@@ -45,15 +50,15 @@ public class DatosPrecargados {
         logica.agregarGestor(antonio);
         logica.agregarGestor(florencia);
         
-        Mesa mesa1 = new Mesa(1, anna);
-        Mesa mesa2 = new Mesa(2, pablo);
-        Mesa mesa3 = new Mesa(3, matias);
-        Mesa mesa4 = new Mesa(4, matias);
-        Mesa mesa5 = new Mesa(5, anna);
-        Mesa mesa6 = new Mesa(6, anna);
-        Mesa mesa7 = new Mesa(7, pablo);
-        Mesa mesa8 = new Mesa(8, matias);
-        Mesa mesa9 = new Mesa(9, pablo);
+        Mesa mesa1 = new Mesa(1);
+        Mesa mesa2 = new Mesa(2);
+        Mesa mesa3 = new Mesa(3);
+        Mesa mesa4 = new Mesa(4);
+        Mesa mesa5 = new Mesa(5);
+        Mesa mesa6 = new Mesa(6);
+        Mesa mesa7 = new Mesa(7);
+        Mesa mesa8 = new Mesa(8);
+        Mesa mesa9 = new Mesa(9);
         
         logica.agregarMesa(mesa1);
         logica.agregarMesa(mesa2);
