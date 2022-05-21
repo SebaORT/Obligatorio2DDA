@@ -18,7 +18,10 @@ public class ProcesadoraPedidos extends Observable{
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
-//agregar enum con los eventos
+    
+    public enum eventos{
+        agregarPedido
+    }
     
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
@@ -29,7 +32,6 @@ public class ProcesadoraPedidos extends Observable{
     }
     
     public void agregarPedido(Pedido p) {
-        //avisar con el evento "agregarPedido"
         pedidos.add(p);
     }
 

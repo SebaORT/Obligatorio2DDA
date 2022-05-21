@@ -7,6 +7,7 @@ package IuEscritorio;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import logica.ProcesadoraPedidos;
 import logica.observador.Observable;
 
 /**
@@ -437,7 +438,9 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(evento.equals(ProcesadoraPedidos.eventos.agregarPedido)){
+            
+        }
     }
 
 }
