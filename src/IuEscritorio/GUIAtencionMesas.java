@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package IuEscritorio;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import logica.modelo.Mozo;
+import logica.modelo.Pedido;
+import logica.modelo.Producto;
 import logica.observador.Observable;
 
 /**
@@ -17,7 +19,14 @@ import logica.observador.Observable;
 public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
 
     private final Mozo mozoActual;
+    
+    private final boolean[] mesasSeleccionada={false,false,false,false,false};
+    private int indexMesaSeleccionada=0;
 
+    
+    private String[] columnNames = {"Cantidad",  
+                "Precio Unitario", "SubTotal","Desripcion"};
+    private SimpleDateFormat dateFormatter=  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     /**
      * Creates new form GUIAtencionMesas
      */
@@ -28,6 +37,31 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         this.mozoActual = mozo;
         
         lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
+        
+        //set initial model 
+
+         ArrayList<Pedido> servicioActual = new ArrayList<>() {{
+             add(new Pedido(new Producto(1,"hamburguer",10,100, null),1,10,"hamburgueza vegana"));
+             add(new Pedido(new Producto(1,"asado",1000,100, null),1,1000,"asado a las brazs"));
+             add(new Pedido(new Producto(1,"daikiri",10,100, null),1,10,"daikiri fotante"));
+             add(new Pedido(new Producto(1,"vino",20,100, null),1,20,"vino merlot"));
+
+         }};
+         ArrayList<Object[]> data = new ArrayList<Object[]>();
+
+            for (Pedido pedido : servicioActual) {
+                       
+                data.add(new Object[]{
+                    pedido.getCantidad(), 
+                     //dateFormatter.format(fecha) 
+                    pedido.getProducto().getPrecio(),
+                    pedido.getMontoPedido(),
+                    pedido.getDescripcion()
+                });
+            }
+            
+          TableModelCustom model =  new TableModelCustom(columnNames, data);
+          tblServicioActual.setModel(model);
     }
 
     /**
@@ -46,7 +80,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         btnCerrarMesa = new javax.swing.JButton();
         btnTransferirMesa = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblServicioActual = new javax.swing.JTable();
         txtCodigoProducto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDescripcionProducto = new javax.swing.JTextField();
@@ -106,7 +140,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblServicioActual.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"2", "Chivito Con fritas", "10", "20", "A punto sin cebolla"},
                 {null, null, null, null, null},
@@ -119,7 +153,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblServicioActual);
 
         jLabel3.setText("Descripcion");
 
@@ -332,7 +366,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                                 .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(34, 34, 34))
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -371,9 +405,14 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pressPanel(JPanel pnl) {
+    private void pressPanel(JPanel pnl, int index) {
         unPressPanels();
         pnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        
+        String name = pnl.getClass().getName();
+        
+        this.indexMesaSeleccionada = index-1;
+        mesasSeleccionada[indexMesaSeleccionada]=true;
     }
 
     private void unPressPanels() {
@@ -382,30 +421,35 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         this.pnlMesa3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        
+        for (int i = 0; i < mesasSeleccionada.length; i++) {
+            mesasSeleccionada[i] = false;
+        }
 
     }
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa1MouseClicked
-        pressPanel(this.pnlMesa1);
+        pressPanel(this.pnlMesa1,1);
+       
     }//GEN-LAST:event_pnlMesa1MouseClicked
 
     private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa2MouseClicked
 
-        pressPanel(this.pnlMesa2);
+        pressPanel(this.pnlMesa2,2);
     }//GEN-LAST:event_pnlMesa2MouseClicked
 
     private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa3MouseClicked
 
-        pressPanel(this.pnlMesa3);
+        pressPanel(this.pnlMesa3,3);
     }//GEN-LAST:event_pnlMesa3MouseClicked
 
     private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa4MouseClicked
 
-        pressPanel(this.pnlMesa4);
+        pressPanel(this.pnlMesa4,4);
     }//GEN-LAST:event_pnlMesa4MouseClicked
 
     private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa5MouseClicked
 
-        pressPanel(this.pnlMesa5);
+        pressPanel(this.pnlMesa5,5);
     }//GEN-LAST:event_pnlMesa5MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -419,7 +463,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblMesa1;
     private javax.swing.JLabel lblMesa2;
@@ -432,6 +475,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JPanel pnlMesa3;
     private javax.swing.JPanel pnlMesa4;
     private javax.swing.JPanel pnlMesa5;
+    private javax.swing.JTable tblServicioActual;
     private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtDescripcionProducto;

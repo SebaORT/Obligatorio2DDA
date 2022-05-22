@@ -26,6 +26,16 @@ public class Producto {
         this.unidadProcesadora = unidadProcesadora;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    
+    
     public int getStock() {
         return stock;
     }
