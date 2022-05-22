@@ -7,6 +7,7 @@ package IuEscritorio;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import logica.modelo.Mozo;
 import logica.observador.Observable;
 
 /**
@@ -15,12 +16,18 @@ import logica.observador.Observable;
  */
 public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
 
+    private final Mozo mozoActual;
+
     /**
      * Creates new form GUIAtencionMesas
      */
-    public GUIAtencionMesas(java.awt.Frame parent, boolean modal) {
+    public GUIAtencionMesas(java.awt.Frame parent, boolean modal,Mozo mozo) {
         super(parent, modal);
         initComponents();
+        
+        this.mozoActual = mozo;
+        
+        lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
     }
 
     /**
@@ -57,7 +64,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         lblMesa5 = new javax.swing.JLabel();
         pnlMesa3 = new javax.swing.JPanel();
         lblMesa3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblMozo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("App Atencion de Mesas");
@@ -122,7 +129,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa1.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa1.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa1MouseClicked(evt);
@@ -151,7 +157,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa4.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa4.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa4MouseClicked(evt);
@@ -180,7 +185,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa2.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa2.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa2MouseClicked(evt);
@@ -209,7 +213,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa5.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa5.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa5MouseClicked(evt);
@@ -238,7 +241,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa3.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa3.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa3MouseClicked(evt);
@@ -303,8 +305,8 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addGap(15, 15, 15))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Mozo: {{Nombre Mozo}}");
+        lblMozo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblMozo.setText("Mozo: {{Nombre Mozo}}");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -338,14 +340,14 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                         .addGap(26, 26, 26))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblMozo)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -411,7 +413,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnCerrarMesa;
     private javax.swing.JButton btnTransferirMesa;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -425,6 +426,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JLabel lblMesa3;
     private javax.swing.JLabel lblMesa4;
     private javax.swing.JLabel lblMesa5;
+    private javax.swing.JLabel lblMozo;
     private javax.swing.JPanel pnlMesa1;
     private javax.swing.JPanel pnlMesa2;
     private javax.swing.JPanel pnlMesa3;

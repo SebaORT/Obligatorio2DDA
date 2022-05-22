@@ -41,10 +41,6 @@ public class Gestor extends Usuario{
         p.gestorPreparador(this);
     }
     
-    
-
-    
-    
     public void validar(){
     }
 
