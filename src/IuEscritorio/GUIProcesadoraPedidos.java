@@ -46,8 +46,8 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         lblMonitorPedidosTitle = new javax.swing.JLabel();
         lblGestor = new javax.swing.JLabel();
         lblProcesadora = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scrollPanePedidos = new javax.swing.JScrollPane();
+        tblPedidos = new javax.swing.JTable();
         btnTomarPedido = new javax.swing.JButton();
         btnFinalizarPedido = new javax.swing.JButton();
 
@@ -62,7 +62,7 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         lblProcesadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblProcesadora.setText("Unidad Procesadora: {{nombreUnidadProcesadora}}");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Papa fritas", "2", "Papa fritas noisette", "11", "Julio", "Esperando"},
                 {"Hamburguesa", "1", "Hamburguesa de a casa Jugosa", "4", "Pepe", "Procesando"},
@@ -75,9 +75,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                 "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
             }
         ));
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPedidos.setColumnSelectionAllowed(true);
+        scrollPanePedidos.setViewportView(tblPedidos);
+        tblPedidos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         btnTomarPedido.setText("Tomar Pedido");
         btnTomarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +107,7 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                         .addGap(0, 35, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
+                            .addComponent(scrollPanePedidos)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblMonitorPedidosTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,7 +130,7 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                         .addComponent(btnTomarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblMonitorPedidosTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -154,11 +154,11 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizarPedido;
     private javax.swing.JButton btnTomarPedido;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblGestor;
     private javax.swing.JLabel lblMonitorPedidosTitle;
     private javax.swing.JLabel lblProcesadora;
+    private javax.swing.JScrollPane scrollPanePedidos;
+    private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
 
     @Override
