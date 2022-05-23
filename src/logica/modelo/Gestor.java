@@ -18,7 +18,8 @@ public class Gestor extends Usuario{
     
     //private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-
+    private ProcesadoraPedidos procesadora = null;
+    
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
         super(nombreUsuario, password, nombreCompleto);
     }
@@ -44,8 +45,8 @@ public class Gestor extends Usuario{
     public void validar(){
     }
 
-    public void asignarProcesadora(ProcesadoraPedidos procesadoraSeleccionada) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void asignarProcesadora(ProcesadoraPedidos procesadora) {
+        this.procesadora = procesadora;
     }
 
 }
