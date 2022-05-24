@@ -14,9 +14,9 @@ import logica.ProcesadoraPedidos;
  *
  * @author Usuario
  */
-public class Gestor extends Usuario{
-    
-    //private Date fechaUltimoAcceso= new Date();
+public class Gestor extends Usuario {
+
+    // private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private ProcesadoraPedidos procesadoraPedidos;
 
@@ -25,47 +25,44 @@ public class Gestor extends Usuario{
     }
 
     /*
-    public void ultimoAcceso(){
-        Date nuevaFecha = new Date();
-        setFechaUltimoAcceso(nuevaFecha);
-    }
-    public Date getFechaUltimoAcceso() {
-        return fechaUltimoAcceso;
-    }
-    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
-        this.fechaUltimoAcceso = fechaUltimoAcceso;
-    }
-    */
-    
-    public void preparaPedido(Pedido p){
+     * public void ultimoAcceso(){
+     * Date nuevaFecha = new Date();
+     * setFechaUltimoAcceso(nuevaFecha);
+     * }
+     * public Date getFechaUltimoAcceso() {
+     * return fechaUltimoAcceso;
+     * }
+     * public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+     * this.fechaUltimoAcceso = fechaUltimoAcceso;
+     * }
+     */
+
+    public void preparaPedido(Pedido p) {
         pedidos.add(p);
         p.gestorPreparador(this);
         p.setStatus("En preparacion");
     }
-    
-    public void validar(){
+
+    public void validar() {
     }
 
     public void asignarProcesadora(ProcesadoraPedidos procesadoraSeleccionada) {
         procesadoraPedidos = procesadoraSeleccionada;
     }
-    
-    public void pedidoPronto(Pedido p){
-        if(pedidos.contains(p)){
+
+    public void pedidoPronto(Pedido p) {
+        if (pedidos.contains(p)) {
             pedidos.remove(p);
             p.setStatus("Pronto");
-        }
-        else{
-            
+        } else {
+
         }
     }
-    
+
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         Gestor g = (Gestor) o;
         return g.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
 
 }
-
-

@@ -34,7 +34,7 @@ public class DatosPrecargados {
         logica.agregarCliente(ana);
         logica.agregarCliente(mario);
         
-        Mozo pablo = new Mozo("pepe", "123", "pablo castro", 12345678);
+        Mozo pablo = new Mozo("mozo", "123", "pablo castro", 12345678);
         Mozo anna = new Mozo("ann", "5678", "anna paula", 56781234); 
         Mozo matias = new Mozo("mat", "9090", "matias ramon", 13572468);      
         
@@ -42,7 +42,7 @@ public class DatosPrecargados {
         logica.agregarMozo(anna);
         logica.agregarMozo(matias);
         
-        Gestor alicia = new Gestor("ali", "4321", "alicia juarez");
+        Gestor alicia = new Gestor("gestor", "123", "alicia juarez");
         Gestor antonio = new Gestor("ant", "4321", "antonio rodriguez");
         Gestor florencia = new Gestor("flor", "4321", "florencia martines");
         

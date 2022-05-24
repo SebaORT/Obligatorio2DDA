@@ -34,9 +34,9 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Component id="scrollPanePedidos" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel1" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="lblMonitorPedidosTitle" min="-2" pref="165" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnTomarPedido" min="-2" pref="134" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -63,17 +63,17 @@
                       <Component id="btnFinalizarPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btnTomarPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="lblMonitorPedidosTitle" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+              <Component id="scrollPanePedidos" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblMonitorPedidosTitle">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="16" style="2"/>
@@ -97,14 +97,14 @@
         <Property name="text" type="java.lang.String" value="Unidad Procesadora: {{nombreUnidadProcesadora}}"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+    <Container class="javax.swing.JScrollPane" name="scrollPanePedidos">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tblPedidos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="6">

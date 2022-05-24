@@ -14,12 +14,12 @@ import logica.observador.Observable;
  *
  * @author Usuario
  */
-public class ProcesadoraPedidos extends Observable{
+public class ProcesadoraPedidos extends Observable {
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
-    //agregar enum con los eventos
-    
+    // agregar enum con los eventos
+
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
     }
@@ -31,14 +31,13 @@ public class ProcesadoraPedidos extends Observable{
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
-    
-    
-    public void agregarGestor(Gestor g){
+
+    public void agregarGestor(Gestor g) {
         gestores.add(g);
     }
-    
+
     public void agregarPedido(Pedido p) {
-        //avisar con el evento "agregarPedido"
+        // avisar con el evento "agregarPedido"
         pedidos.add(p);
     }
 
@@ -48,9 +47,7 @@ public class ProcesadoraPedidos extends Observable{
 
     @Override
     public String toString() {
-       return this.nombre;
+        return this.nombre;
     }
-    
-    
-  
+
 }
