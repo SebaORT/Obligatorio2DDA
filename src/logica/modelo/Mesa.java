@@ -49,15 +49,12 @@ public class Mesa {
         cliente=c;
     }
     
-    //No se si esto esta bien
+    
     public void agregarPedido(Producto producto,int cantidad,String descripcion) throws LogicException{
         Pedido p = new Pedido();
         if(abierta){
-            try{
                 p.agregarProducto(producto, cantidad,descripcion);
                 servicio.add(p);
-            }catch(LogicException e){
-            }
         }
         else{
             throw new LogicException("La mesa esta cerrada.");
