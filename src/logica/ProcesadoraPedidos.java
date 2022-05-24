@@ -43,7 +43,7 @@ public class ProcesadoraPedidos extends Observable{
     }
 
     public void asignarGestor(Gestor gestorActual) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        gestores.add(gestorActual);
     }
 
     @Override

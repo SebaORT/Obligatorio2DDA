@@ -19,7 +19,11 @@ public class Pedido {
     private int montoPedido;
     private String descripcion;
     private Gestor gestor;
+    private String Estado = "Buscando Gestor";
 
+    public Pedido() {
+    }
+    
     public Pedido(Producto producto, int cantidad, int montoPedido, String descripcion) {
         this.producto = producto;
         this.cantidad = cantidad;
@@ -27,16 +31,22 @@ public class Pedido {
         this.descripcion = descripcion;
         this.gestor = gestor;
     }
-    
-    
-    
-    public void agregarProducto(Producto p, int cantidad)throws LogicException{
-        if(p.actulizarStock(cantidad)){
-            producto = p;
-            this.cantidad = cantidad;
-            montoPedido = cantidad*p.getPrecio();
+
+    public void setStatus(String status) {
+        this.Estado = status;
+    }
+
+    public void agregarProducto(Producto p, int cantidad, String desc)throws LogicException{
+        if(cantidad >0){
+            if(p.actulizarStock(cantidad)){
+                producto = p;
+                this.cantidad = cantidad;
+                montoPedido = cantidad*p.getPrecio();
+                descripcion = desc;
+            }
+            else throw new LogicException("Sin stock, solo quedan (" + p.getStock() + ").");
         }
-        else throw new LogicException("La cantidad" + cantidad + "es major a el stock del producto (" + p.getStock() + ").");
+        else throw new LogicException("La cantidad es menor a 1");
     }
 
     public int getCantidad() {
@@ -81,6 +91,8 @@ public class Pedido {
     public void setGestor(Gestor gestor) {
         this.gestor = gestor;
     }
+
+   
     
     
     
