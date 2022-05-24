@@ -7,6 +7,7 @@ package logica.modelo;
 
 import java.util.ArrayList;
 import logica.Cliente;
+import logica.excepciones.LogicException;
 
 /**
  *
@@ -26,15 +27,16 @@ public class Mesa {
 
     }
     
-    public void abrirCerrarMesa(){
+    public void abrirCerrarMesa() throws LogicException{
         if(!abierta){
             abierta=true;
         }
         else{
-            cerrarMesa();
+           throw new LogicException("La mesa esta abierta.");
         } 
     }
     
+   
     public int calcularServicio(){
         int resultado = 0;
         for(Pedido p:servicio){
@@ -47,23 +49,36 @@ public class Mesa {
         cliente=c;
     }
     
-    public void agregarPedido(Pedido p){
-        servicio.add(p);
+    
+    public void agregarPedido(Producto producto,int cantidad,String descripcion) throws LogicException{
+        Pedido p = new Pedido();
+        if(abierta){
+                p.agregarProducto(producto, cantidad,descripcion);
+                servicio.add(p);
+        }
+        else{
+            throw new LogicException("La mesa esta cerrada.");
+        }
     }
     
     public void cerrarServicio(){
         servicio.clear();
     }
+    
+    
 
     public Mozo getMozo() {
         return mozo;
     }
     
 
-    private void cerrarMesa() {
+    private void cerrarMesa() throws LogicException {
         if(servicio.size() == 0){
             cliente = null;
             abierta=false;
+        }
+        else{
+           throw new LogicException("debe cerrar el servicio antes de cerrar la mesa");
         }
     }
 

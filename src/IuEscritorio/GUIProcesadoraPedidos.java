@@ -29,6 +29,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         this.gestorActual = gestorActual;
         
        procesadora.agregar(this);
+       
+       lblGestor.setText("Gestor: "+gestorActual.getNombreUsuario());
+       lblProcesadora.setText("Unidad Procesadora: "+procesadora.getNombre());
     }
 
     /**
@@ -40,26 +43,26 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        lblMonitorPedidosTitle = new javax.swing.JLabel();
+        lblGestor = new javax.swing.JLabel();
+        lblProcesadora = new javax.swing.JLabel();
+        scrollPanePedidos = new javax.swing.JScrollPane();
+        tblPedidos = new javax.swing.JTable();
+        btnTomarPedido = new javax.swing.JButton();
+        btnFinalizarPedido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        jLabel1.setText("Monitor de Pedidos");
+        lblMonitorPedidosTitle.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        lblMonitorPedidosTitle.setText("Monitor de Pedidos");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Gestor: {{nombreGestor}}");
+        lblGestor.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblGestor.setText("Gestor: {{nombreGestor}}");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Unidad Procesadora: {{nombreUnidadProcesadora}}");
+        lblProcesadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblProcesadora.setText("Unidad Procesadora: {{nombreUnidadProcesadora}}");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Papa fritas", "2", "Papa fritas noisette", "11", "Julio", "Esperando"},
                 {"Hamburguesa", "1", "Hamburguesa de a casa Jugosa", "4", "Pepe", "Procesando"},
@@ -72,21 +75,21 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                 "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
             }
         ));
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPedidos.setColumnSelectionAllowed(true);
+        scrollPanePedidos.setViewportView(tblPedidos);
+        tblPedidos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jButton1.setText("Tomar Pedido");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTomarPedido.setText("Tomar Pedido");
+        btnTomarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTomarPedidoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Finalizar Pedido");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnFinalizarPedido.setText("Finalizar Pedido");
+        btnFinalizarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnFinalizarPedidoActionPerformed(evt);
             }
         });
 
@@ -97,68 +100,65 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblGestor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66)
+                        .addComponent(lblProcesadora, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 35, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollPanePedidos)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblMonitorPedidosTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 29, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(btnTomarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(lblGestor)
+                    .addComponent(lblProcesadora))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTomarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMonitorPedidosTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(scrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarPedidoActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
                  this.setVisible(false);
                 this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnTomarPedidoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
                  this.setVisible(false);
                 this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnFinalizarPedidoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton btnFinalizarPedido;
+    private javax.swing.JButton btnTomarPedido;
+    private javax.swing.JLabel lblGestor;
+    private javax.swing.JLabel lblMonitorPedidosTitle;
+    private javax.swing.JLabel lblProcesadora;
+    private javax.swing.JScrollPane scrollPanePedidos;
+    private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
 
     @Override

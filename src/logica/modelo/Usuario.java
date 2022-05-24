@@ -15,6 +15,14 @@ public class Usuario {
     private String password;
     private String nombreCompleto;
 
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }

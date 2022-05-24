@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package IuEscritorio;
 
+import java.awt.Component;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import logica.ProcesadoraPedidos;
+import logica.modelo.Mozo;
+import logica.modelo.Pedido;
+import logica.modelo.Producto;
 import logica.observador.Observable;
 
 /**
@@ -16,12 +21,59 @@ import logica.observador.Observable;
  */
 public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
 
+    private final Mozo mozoActual;
+    
+    private final boolean[] mesasSeleccionada={false,false,false,false,false};
+    private final JPanel[] panelsMesasButtons = new JPanel[5];
+    private int indexMesaSeleccionada=0;
+
+    
+    private String[] columnNames = {"Cantidad",  
+                "Precio Unitario", "SubTotal","Desripcion"};
+    private SimpleDateFormat dateFormatter=  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     /**
      * Creates new form GUIAtencionMesas
      */
-    public GUIAtencionMesas(java.awt.Frame parent, boolean modal) {
+    public GUIAtencionMesas(java.awt.Frame parent, boolean modal,Mozo mozo) {
         super(parent, modal);
         initComponents();
+        
+        this.mozoActual = mozo;
+        
+        lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
+        
+        //set initial model 
+
+         ArrayList<Pedido> servicioActual = new ArrayList<>() {{
+             add(new Pedido(new Producto(1,"hamburguer",10,100, null),1,10,"hamburgueza vegana"));
+             add(new Pedido(new Producto(1,"asado",1000,100, null),1,1000,"asado a las brazs"));
+             add(new Pedido(new Producto(1,"daikiri",10,100, null),1,10,"daikiri fotante"));
+             add(new Pedido(new Producto(1,"vino",20,100, null),1,20,"vino merlot"));
+
+         }};
+         ArrayList<Object[]> data = new ArrayList<Object[]>();
+
+            for (Pedido pedido : servicioActual) {
+                       
+                data.add(new Object[]{
+                    pedido.getCantidad(), 
+                     //dateFormatter.format(fecha) 
+                    pedido.getProducto().getPrecio(),
+                    pedido.getMontoPedido(),
+                    pedido.getDescripcion()
+                });
+            }
+            
+          TableModelCustom model =  new TableModelCustom(columnNames, data);
+          tblServicioActual.setModel(model);
+    
+          panelsMesasButtons[0] = pnlMesa1;
+          panelsMesasButtons[1] = pnlMesa2;
+          panelsMesasButtons[2] = pnlMesa3;
+          panelsMesasButtons[3] = pnlMesa4;
+          panelsMesasButtons[4] = pnlMesa5;
+
+          
     }
 
     /**
@@ -34,20 +86,20 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private void initComponents() {
 
         lblCodigo = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        pnlAccionesMesas = new javax.swing.JPanel();
+        lblMesaSeleccionada = new javax.swing.JLabel();
         btnAbrirMesa = new javax.swing.JButton();
         btnCerrarMesa = new javax.swing.JButton();
         btnTransferirMesa = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        paneServicio = new javax.swing.JScrollPane();
+        tblServicioActual = new javax.swing.JTable();
         txtCodigoProducto = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblDescripProducto = new javax.swing.JLabel();
         txtDescripcionProducto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblCantidad = new javax.swing.JLabel();
         txtCantidadProducto = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        pnlMesas = new javax.swing.JPanel();
         pnlMesa1 = new javax.swing.JPanel();
         lblMesa1 = new javax.swing.JLabel();
         pnlMesa4 = new javax.swing.JPanel();
@@ -58,14 +110,14 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         lblMesa5 = new javax.swing.JLabel();
         pnlMesa3 = new javax.swing.JPanel();
         lblMesa3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblMozo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("App Atencion de Mesas");
 
         lblCodigo.setText("Codigo");
 
-        jLabel2.setText("Mesa 5");
+        lblMesaSeleccionada.setText("Mesa 5");
 
         btnAbrirMesa.setText("Abrir");
 
@@ -73,24 +125,24 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         btnTransferirMesa.setText("Transferir");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlAccionesMesasLayout = new javax.swing.GroupLayout(pnlAccionesMesas);
+        pnlAccionesMesas.setLayout(pnlAccionesMesasLayout);
+        pnlAccionesMesasLayout.setHorizontalGroup(
+            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAbrirMesa)
                     .addComponent(btnTransferirMesa)
                     .addComponent(btnCerrarMesa))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlAccionesMesasLayout.setVerticalGroup(
+            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel2)
+                .addComponent(lblMesaSeleccionada)
                 .addGap(18, 18, 18)
                 .addComponent(btnAbrirMesa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -100,7 +152,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblServicioActual.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"2", "Chivito Con fritas", "10", "20", "A punto sin cebolla"},
                 {null, null, null, null, null},
@@ -113,17 +165,16 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        paneServicio.setViewportView(tblServicioActual);
 
-        jLabel3.setText("Descripcion");
+        lblDescripProducto.setText("Descripcion");
 
-        jLabel4.setText("Cantidad");
+        lblCantidad.setText("Cantidad");
 
         btnAgregarProducto.setText("Agregar Producto");
 
         pnlMesa1.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa1.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa1MouseClicked(evt);
@@ -152,7 +203,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa4.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa4.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa4MouseClicked(evt);
@@ -181,7 +231,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa2.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa2.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa2MouseClicked(evt);
@@ -210,7 +259,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa5.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa5.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa5MouseClicked(evt);
@@ -239,7 +287,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         pnlMesa3.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMesa3.setForeground(new java.awt.Color(0, 0, 0));
         pnlMesa3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlMesa3MouseClicked(evt);
@@ -266,46 +313,46 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addGap(25, 25, 25))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlMesasLayout = new javax.swing.GroupLayout(pnlMesas);
+        pnlMesas.setLayout(pnlMesasLayout);
+        pnlMesasLayout.setHorizontalGroup(
+            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesasLayout.createSequentialGroup()
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(pnlMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
                         .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlMesasLayout.setVerticalGroup(
+            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesasLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlMesa3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
+                        .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Mozo: {{Nombre Mozo}}");
+        lblMozo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblMozo.setText("Mozo: {{Nombre Mozo}}");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,63 +363,75 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDescripProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(34, 34, 34))
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblMozo)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
                     .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblDescripProducto)
                     .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblCantidad)
                     .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarProducto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pressPanel(JPanel pnl) {
+    private void pressPanel(JPanel pnl, int index) {
         unPressPanels();
         pnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        
+        String name = pnl.getClass().getName();
+        
+        this.indexMesaSeleccionada = index-1;
+        mesasSeleccionada[indexMesaSeleccionada]=true;
+        
+        Component comp = panelsMesasButtons[index-1].getComponent(0);
+        JLabel label = comp!= null ? (JLabel)comp : null;
+        
+        if (label!=null) {
+            lblMesaSeleccionada.setText(label.getText());
+        }
     }
 
     private void unPressPanels() {
@@ -381,30 +440,35 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         this.pnlMesa3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        
+        for (int i = 0; i < mesasSeleccionada.length; i++) {
+            mesasSeleccionada[i] = false;
+        }
 
     }
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa1MouseClicked
-        pressPanel(this.pnlMesa1);
+        pressPanel(this.pnlMesa1,1);
+       
     }//GEN-LAST:event_pnlMesa1MouseClicked
 
     private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa2MouseClicked
 
-        pressPanel(this.pnlMesa2);
+        pressPanel(this.pnlMesa2,2);
     }//GEN-LAST:event_pnlMesa2MouseClicked
 
     private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa3MouseClicked
 
-        pressPanel(this.pnlMesa3);
+        pressPanel(this.pnlMesa3,3);
     }//GEN-LAST:event_pnlMesa3MouseClicked
 
     private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa4MouseClicked
 
-        pressPanel(this.pnlMesa4);
+        pressPanel(this.pnlMesa4,4);
     }//GEN-LAST:event_pnlMesa4MouseClicked
 
     private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa5MouseClicked
 
-        pressPanel(this.pnlMesa5);
+        pressPanel(this.pnlMesa5,5);
     }//GEN-LAST:event_pnlMesa5MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -412,25 +476,25 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnCerrarMesa;
     private javax.swing.JButton btnTransferirMesa;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblDescripProducto;
     private javax.swing.JLabel lblMesa1;
     private javax.swing.JLabel lblMesa2;
     private javax.swing.JLabel lblMesa3;
     private javax.swing.JLabel lblMesa4;
     private javax.swing.JLabel lblMesa5;
+    private javax.swing.JLabel lblMesaSeleccionada;
+    private javax.swing.JLabel lblMozo;
+    private javax.swing.JScrollPane paneServicio;
+    private javax.swing.JPanel pnlAccionesMesas;
     private javax.swing.JPanel pnlMesa1;
     private javax.swing.JPanel pnlMesa2;
     private javax.swing.JPanel pnlMesa3;
     private javax.swing.JPanel pnlMesa4;
     private javax.swing.JPanel pnlMesa5;
+    private javax.swing.JPanel pnlMesas;
+    private javax.swing.JTable tblServicioActual;
     private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtDescripcionProducto;

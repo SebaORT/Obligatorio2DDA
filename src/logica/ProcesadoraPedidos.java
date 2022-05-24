@@ -14,7 +14,7 @@ import logica.observador.Observable;
  *
  * @author Usuario
  */
-public class ProcesadoraPedidos extends Observable{
+public class ProcesadoraPedidos extends Observable {
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
@@ -23,27 +23,36 @@ public class ProcesadoraPedidos extends Observable{
         agregarPedido
     }
     
+    // agregar enum con los eventos
+
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
     }
-    
-    public void agregarGestor(Gestor g){
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void agregarGestor(Gestor g) {
         gestores.add(g);
     }
-    
+
     public void agregarPedido(Pedido p) {
+        // avisar con el evento "agregarPedido"
         pedidos.add(p);
     }
 
     public void asignarGestor(Gestor gestorActual) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        gestores.add(gestorActual);
     }
 
     @Override
     public String toString() {
-       return this.nombre;
+        return this.nombre;
     }
-    
-    
-  
+
 }

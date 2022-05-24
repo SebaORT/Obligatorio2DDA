@@ -26,8 +26,7 @@ public class Mozo extends Usuario{
     
     public void transferirMesa(Mozo mozo,Mesa mesa)throws LogicException{
         mesas.remove(mesa);
-        mozo.agregarMesa(mesa);
-        //mesa.setMozo(mozo);
+        mozo.agregarMesa(mesa);        
     }
 
     public int getTelefono() {
