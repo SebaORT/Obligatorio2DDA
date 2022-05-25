@@ -47,9 +47,13 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         lblGestor = new javax.swing.JLabel();
         lblProcesadora = new javax.swing.JLabel();
         scrollPanePedidos = new javax.swing.JScrollPane();
-        tblPedidos = new javax.swing.JTable();
+        tblPedidosPendientes = new javax.swing.JTable();
         btnTomarPedido = new javax.swing.JButton();
         btnFinalizarPedido = new javax.swing.JButton();
+        lblPedidosPendientes = new javax.swing.JLabel();
+        scrollPanePedidos1 = new javax.swing.JScrollPane();
+        tblPedidosCurso = new javax.swing.JTable();
+        lblPedidosCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -62,10 +66,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         lblProcesadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblProcesadora.setText("Unidad Procesadora: {{nombreUnidadProcesadora}}");
 
-        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidosPendientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Papa fritas", "2", "Papa fritas noisette", "11", "Julio", "Esperando"},
-                {"Hamburguesa", "1", "Hamburguesa de a casa Jugosa", "4", "Pepe", "Procesando"},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -75,9 +78,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                 "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
             }
         ));
-        tblPedidos.setColumnSelectionAllowed(true);
-        scrollPanePedidos.setViewportView(tblPedidos);
-        tblPedidos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPedidosPendientes.setColumnSelectionAllowed(true);
+        scrollPanePedidos.setViewportView(tblPedidosPendientes);
+        tblPedidosPendientes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         btnTomarPedido.setText("Tomar Pedido");
         btnTomarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +96,25 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
             }
         });
 
+        lblPedidosPendientes.setText("Pedidos Pendientes");
+
+        tblPedidosCurso.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Hamburguesa", "1", "Hamburguesa de a casa Jugosa", "4", "Pepe", "Procesando"},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
+            }
+        ));
+        scrollPanePedidos1.setViewportView(tblPedidosCurso);
+        tblPedidosCurso.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        lblPedidosCurso.setText("Pedidos Pendientes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,11 +123,6 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblGestor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
-                        .addComponent(lblProcesadora, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 35, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollPanePedidos)
                             .addGroup(layout.createSequentialGroup()
@@ -113,8 +130,20 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnTomarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrollPanePedidos1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPedidosCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblGestor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(lblProcesadora, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblPedidosPendientes, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 35, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,9 +158,15 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
                         .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTomarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblMonitorPedidosTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPedidosPendientes)
+                .addGap(9, 9, 9)
+                .addComponent(scrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(scrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblPedidosCurso)
+                .addGap(9, 9, 9)
+                .addComponent(scrollPanePedidos1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,13 +191,19 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
     private javax.swing.JButton btnTomarPedido;
     private javax.swing.JLabel lblGestor;
     private javax.swing.JLabel lblMonitorPedidosTitle;
+    private javax.swing.JLabel lblPedidosCurso;
+    private javax.swing.JLabel lblPedidosPendientes;
     private javax.swing.JLabel lblProcesadora;
     private javax.swing.JScrollPane scrollPanePedidos;
-    private javax.swing.JTable tblPedidos;
+    private javax.swing.JScrollPane scrollPanePedidos1;
+    private javax.swing.JTable tblPedidosCurso;
+    private javax.swing.JTable tblPedidosPendientes;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actualizar(Object evento, Observable origen) {
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

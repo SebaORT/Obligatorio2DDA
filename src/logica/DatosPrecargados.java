@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.excepciones.LogicException;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
 import logica.modelo.Mesa;
@@ -16,7 +17,7 @@ import logica.modelo.Producto;
  */
 public class DatosPrecargados {
     
-    public static void cargar(){
+    public static void cargar() throws LogicException{
         
         Fachada logica = Fachada.getInstancia();
         
@@ -34,21 +35,21 @@ public class DatosPrecargados {
         logica.agregarCliente(ana);
         logica.agregarCliente(mario);
         
-        Mozo pablo = new Mozo("mozo", "123", "pablo castro", 12345678);
-        Mozo anna = new Mozo("ann", "5678", "anna paula", 56781234); 
-        Mozo matias = new Mozo("mat", "9090", "matias ramon", 13572468);      
+        Mozo mozo1 = new Mozo("mozo", "123", "pablo castro", 12345678);
+        Mozo mozo2 = new Mozo("ann", "5678", "anna paula", 56781234); 
+        Mozo mozo3 = new Mozo("mat", "9090", "matias ramon", 13572468);      
         
-        logica.agregarMozo(pablo);
-        logica.agregarMozo(anna);
-        logica.agregarMozo(matias);
+        logica.agregarMozo(mozo1);
+        logica.agregarMozo(mozo2);
+        logica.agregarMozo(mozo3);
         
-        Gestor alicia = new Gestor("gestor", "123", "alicia juarez");
-        Gestor antonio = new Gestor("ant", "4321", "antonio rodriguez");
-        Gestor florencia = new Gestor("flor", "4321", "florencia martines");
+        Gestor gestor1 = new Gestor("gestor", "123", "alicia juarez");
+        Gestor gestor2 = new Gestor("ant", "4321", "antonio rodriguez");
+        Gestor gestor3 = new Gestor("flor", "4321", "florencia martines");
         
-        logica.agregarGestor(alicia);
-        logica.agregarGestor(antonio);
-        logica.agregarGestor(florencia);
+        logica.agregarGestor(gestor1);
+        logica.agregarGestor(gestor2);
+        logica.agregarGestor(gestor3);
         
         Mesa mesa1 = new Mesa(1);
         Mesa mesa2 = new Mesa(2);
@@ -69,6 +70,14 @@ public class DatosPrecargados {
         logica.agregarMesa(mesa7);
         logica.agregarMesa(mesa8);
         logica.agregarMesa(mesa9);
+        
+        
+        //prueba 
+        mesa1.agregarCliente(ana);
+        mesa1.abrirCerrarMesa();
+        
+        mozo1.agregarMesa(mesa1);
+        mozo1.agregarMesa(mesa2);
         
         
         Producto hamburguesa = new Producto(1111, "hamburguesa", 340, 25, cocina);

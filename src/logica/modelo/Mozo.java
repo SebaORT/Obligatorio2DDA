@@ -18,6 +18,7 @@ public class Mozo extends Usuario{
     private int telefono;
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
 
+    private final int MAX_MESAS=5;
     public Mozo(String nombreUsuario,String password, String nombreCompleto,int telefono) {
         super(nombreUsuario,password,nombreCompleto);
         this.telefono = telefono;
@@ -48,8 +49,8 @@ public class Mozo extends Usuario{
     public void validar(){
     }
 
-    private void agregarMesa(Mesa mesa)throws LogicException {
-        if(mesas.size()>=5){
+    public void agregarMesa(Mesa mesa)throws LogicException {
+        if(mesas.size()>=MAX_MESAS){
             throw new LogicException("El mozo ya tiene 5 mesas.");
         }
         else{

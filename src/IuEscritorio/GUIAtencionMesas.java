@@ -1,15 +1,20 @@
 
 package IuEscritorio;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import logica.Fachada;
 import logica.ProcesadoraPedidos;
+import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
@@ -25,6 +30,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     
     private final boolean[] mesasSeleccionada={false,false,false,false,false};
     private final JPanel[] panelsMesasButtons = new JPanel[5];
+    private final JLabel[] labelMesas = new JLabel[5];
     private int indexMesaSeleccionada=0;
 
     
@@ -43,21 +49,70 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
         
         //set initial model 
-
-         ArrayList<Pedido> servicioActual = new ArrayList<>() {{
+        /* ArrayList<Pedido> servicioActual = new ArrayList<>() {{
              add(new Pedido(new Producto(1,"hamburguer",10,100, null),1,10,"hamburgueza vegana"));
              add(new Pedido(new Producto(1,"asado",1000,100, null),1,1000,"asado a las brazs"));
              add(new Pedido(new Producto(1,"daikiri",10,100, null),1,10,"daikiri fotante"));
              add(new Pedido(new Producto(1,"vino",20,100, null),1,20,"vino merlot"));
+         }};*/
+        
+        
+          ArrayList<Pedido> servicioActual = new ArrayList<>();
+          updateServicioActual(servicioActual);
 
-         }};
-         ArrayList<Object[]> data = new ArrayList<Object[]>();
+          ArrayList<Mesa> mesasMozo = mozo.getMesas();
+          
+          
+          
+          panelsMesasButtons[0] = pnlMesa1;
+          panelsMesasButtons[1] = pnlMesa2;
+          panelsMesasButtons[2] = pnlMesa3;
+          panelsMesasButtons[3] = pnlMesa4;
+          panelsMesasButtons[4] = pnlMesa5;
+          labelMesas[0] = lblMesa1;
+          labelMesas[1] = lblMesa2;
+          labelMesas[2] = lblMesa3;
+          labelMesas[3] = lblMesa4;
+          labelMesas[4] = lblMesa5;
+          
 
-            for (Pedido pedido : servicioActual) {
-                       
+          int i= 0;
+          for (Mesa mesa : mesasMozo) {
+             if(mesa.isAbierta()) {
+               panelsMesasButtons[i].setBackground(new Color(0,153,0)); //green
+             }
+             else { //mesa cerrada
+               panelsMesasButtons[i].setBackground(new Color(153,0,0));//red
+
+             }
+             labelMesas[i].setText(mesa.toString());
+             i++;
+          }
+          
+          for (int j = i; j < 5; j++) {
+              //mesa no asignada al mozo
+             panelsMesasButtons[j].setBackground(new Color(153,153,153));//gray
+             labelMesas[j].setText("N/A");
+          }
+          
+          //pressPanel(this.pnlMesa1,1);                  
+          updateListaProductos();
+    }
+    private void updateListaProductos(){
+        ArrayList<Producto> productos = Fachada.getInstancia().getProductosConStock();
+          // cbxProducto.setModel((ComboBoxModel<Producto>) productos);
+           
+          for (Producto producto : productos) {
+            cbxProducto.addItem(producto);
+          }
+    }
+    
+     private void updateServicioActual(ArrayList<Pedido> servicioActual) {
+            ArrayList<Object[]> data = new ArrayList<Object[]>();
+
+            for (Pedido pedido : servicioActual) {     
                 data.add(new Object[]{
                     pedido.getCantidad(), 
-                     //dateFormatter.format(fecha) 
                     pedido.getProducto().getPrecio(),
                     pedido.getMontoPedido(),
                     pedido.getDescripcion()
@@ -66,14 +121,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
             
           TableModelCustom model =  new TableModelCustom(columnNames, data);
           tblServicioActual.setModel(model);
-    
-          panelsMesasButtons[0] = pnlMesa1;
-          panelsMesasButtons[1] = pnlMesa2;
-          panelsMesasButtons[2] = pnlMesa3;
-          panelsMesasButtons[3] = pnlMesa4;
-          panelsMesasButtons[4] = pnlMesa5;
-
-          
     }
 
     /**
@@ -85,7 +132,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblCodigo = new javax.swing.JLabel();
+        lblProducto = new javax.swing.JLabel();
         pnlAccionesMesas = new javax.swing.JPanel();
         lblMesaSeleccionada = new javax.swing.JLabel();
         btnAbrirMesa = new javax.swing.JButton();
@@ -93,11 +140,9 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         btnTransferirMesa = new javax.swing.JButton();
         paneServicio = new javax.swing.JScrollPane();
         tblServicioActual = new javax.swing.JTable();
-        txtCodigoProducto = new javax.swing.JTextField();
         lblDescripProducto = new javax.swing.JLabel();
         txtDescripcionProducto = new javax.swing.JTextField();
         lblCantidad = new javax.swing.JLabel();
-        txtCantidadProducto = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
         pnlMesas = new javax.swing.JPanel();
         pnlMesa1 = new javax.swing.JPanel();
@@ -111,11 +156,15 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         pnlMesa3 = new javax.swing.JPanel();
         lblMesa3 = new javax.swing.JLabel();
         lblMozo = new javax.swing.JLabel();
+        lblServicioParaMesa = new javax.swing.JLabel();
+        spnCantidad = new javax.swing.JSpinner();
+        lblMontoTotal = new javax.swing.JLabel();
+        cbxProducto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("App Atencion de Mesas");
 
-        lblCodigo.setText("Codigo");
+        lblProducto.setText("Producto");
 
         lblMesaSeleccionada.setText("Mesa 5");
 
@@ -131,11 +180,11 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
             pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAbrirMesa)
-                    .addComponent(btnTransferirMesa)
-                    .addComponent(btnCerrarMesa))
+                    .addComponent(btnTransferirMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAbrirMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         pnlAccionesMesasLayout.setVerticalGroup(
@@ -171,7 +220,12 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblCantidad.setText("Cantidad");
 
-        btnAgregarProducto.setText("Agregar Producto");
+        btnAgregarProducto.setText("Agregar Producto al Servicio");
+        btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProductoActionPerformed(evt);
+            }
+        });
 
         pnlMesa1.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -257,7 +311,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addGap(26, 26, 26))
         );
 
-        pnlMesa5.setBackground(new java.awt.Color(153, 0, 0));
+        pnlMesa5.setBackground(new java.awt.Color(153, 153, 153));
         pnlMesa5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlMesa5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -354,40 +408,50 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         lblMozo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMozo.setText("Mozo: {{Nombre Mozo}}");
 
+        lblServicioParaMesa.setText("Servicio para {{mesa}}");
+
+        lblMontoTotal.setText("Monto Total:  {{monto}}");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDescripProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblServicioParaMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblDescripProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(lblCantidad)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnAgregarProducto))))
+                        .addGap(0, 7, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,22 +460,28 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
                 .addComponent(lblMozo)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblProducto)
+                            .addComponent(cbxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDescripProducto)
+                            .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCantidad)
+                            .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
-                    .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDescripProducto)
-                    .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCantidad)
-                    .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarProducto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(lblServicioParaMesa)
+                    .addComponent(lblMontoTotal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         pack();
@@ -431,6 +501,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         
         if (label!=null) {
             lblMesaSeleccionada.setText(label.getText());
+            lblServicioParaMesa.setText("Servicio para " + label.getText());
         }
     }
 
@@ -448,7 +519,6 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     }
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa1MouseClicked
         pressPanel(this.pnlMesa1,1);
-       
     }//GEN-LAST:event_pnlMesa1MouseClicked
 
     private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa2MouseClicked
@@ -471,13 +541,17 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         pressPanel(this.pnlMesa5,5);
     }//GEN-LAST:event_pnlMesa5MouseClicked
 
+    private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
+       // mozoActual.agregarProductoAlServicio();
+    }//GEN-LAST:event_btnAgregarProductoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirMesa;
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnCerrarMesa;
     private javax.swing.JButton btnTransferirMesa;
+    private javax.swing.JComboBox<Producto> cbxProducto;
     private javax.swing.JLabel lblCantidad;
-    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDescripProducto;
     private javax.swing.JLabel lblMesa1;
     private javax.swing.JLabel lblMesa2;
@@ -485,7 +559,10 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JLabel lblMesa4;
     private javax.swing.JLabel lblMesa5;
     private javax.swing.JLabel lblMesaSeleccionada;
+    private javax.swing.JLabel lblMontoTotal;
     private javax.swing.JLabel lblMozo;
+    private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblServicioParaMesa;
     private javax.swing.JScrollPane paneServicio;
     private javax.swing.JPanel pnlAccionesMesas;
     private javax.swing.JPanel pnlMesa1;
@@ -494,9 +571,8 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JPanel pnlMesa4;
     private javax.swing.JPanel pnlMesa5;
     private javax.swing.JPanel pnlMesas;
+    private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblServicioActual;
-    private javax.swing.JTextField txtCantidadProducto;
-    private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
 
@@ -506,5 +582,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
             
         }
     }
+
+
 
 }

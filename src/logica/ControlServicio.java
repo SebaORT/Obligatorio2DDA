@@ -35,6 +35,16 @@ public class ControlServicio  {
     public ArrayList<Producto> getProductos() {
         return productos;
     }
+
+    ArrayList<Producto> getProductosConStock() {
+        ArrayList<Producto> res = new ArrayList<>();
+        for (Producto p : productos) {
+            if (p.getStock() > 0) {
+                res.add(p);
+            }
+        }
+        return res;
+    }
     
     
 }

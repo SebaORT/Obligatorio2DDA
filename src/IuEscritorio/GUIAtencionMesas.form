@@ -24,42 +24,54 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="paneServicio" alignment="0" min="-2" pref="632" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblCodigo" min="-2" pref="61" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtCodigoProducto" min="-2" pref="84" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblDescripProducto" min="-2" pref="83" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="txtDescripcionProducto" min="-2" pref="84" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lblCantidad" min="-2" pref="66" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtCantidadProducto" min="-2" pref="24" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btnAgregarProducto" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="lblServicioParaMesa" min="-2" pref="161" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblMontoTotal" min="-2" pref="168" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="lblMozo" min="-2" pref="209" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                      <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="paneServicio" alignment="0" min="-2" pref="632" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblDescripProducto" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
+                                      <Component id="lblProducto" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="txtDescripcionProducto" min="-2" pref="201" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="lblCantidad" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="spnCantidad" min="-2" pref="72" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="cbxProducto" min="-2" pref="351" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnAgregarProducto" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
                   </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Component id="lblMozo" min="-2" pref="209" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -70,33 +82,42 @@
               <Component id="lblMozo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnlMesas" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDescripProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDescripcionProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+                  <Component id="btnAgregarProducto" alignment="1" min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCodigoProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblDescripProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtDescripcionProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCantidadProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAgregarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblServicioParaMesa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMontoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="paneServicio" min="-2" pref="326" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="paneServicio" min="-2" pref="262" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblCodigo">
+    <Component class="javax.swing.JLabel" name="lblProducto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Codigo"/>
+        <Property name="text" type="java.lang.String" value="Producto"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="pnlAccionesMesas">
@@ -106,11 +127,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="lblMesaSeleccionada" min="-2" pref="76" max="-2" attributes="0"/>
-                      <Component id="btnAbrirMesa" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnTransferirMesa" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCerrarMesa" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnTransferirMesa" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnCerrarMesa" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnAbrirMesa" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
@@ -244,8 +265,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="txtCodigoProducto">
-    </Component>
     <Component class="javax.swing.JLabel" name="lblDescripProducto">
       <Properties>
         <Property name="text" type="java.lang.String" value="Descripcion"/>
@@ -258,12 +277,13 @@
         <Property name="text" type="java.lang.String" value="Cantidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCantidadProducto">
-    </Component>
     <Component class="javax.swing.JButton" name="btnAgregarProducto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+        <Property name="text" type="java.lang.String" value="Agregar Producto al Servicio"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarProductoActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="pnlMesas">
 
@@ -457,7 +477,7 @@
         <Container class="javax.swing.JPanel" name="pnlMesa5">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="99" type="rgb"/>
+              <Color blue="99" green="99" red="99" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -555,6 +575,28 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Mozo: {{Nombre Mozo}}"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblServicioParaMesa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Servicio para {{mesa}}"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spnCantidad">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblMontoTotal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Monto Total:  {{monto}}"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbxProducto">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Producto&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
