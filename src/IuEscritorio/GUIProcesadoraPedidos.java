@@ -4,6 +4,8 @@
  */
 package IuEscritorio;
 
+import controladorYvista.ControladorProcesadora;
+import controladorYvista.VistaProcesadora;
 import javax.swing.JOptionPane;
 import logica.Fachada;
 import logica.ProcesadoraPedidos;
@@ -14,10 +16,11 @@ import logica.observador.Observable;
  *
  * @author Sebastian
  */
-public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica.observador.Observador{
+public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica.observador.Observador, VistaProcesadora{
 
     private final ProcesadoraPedidos procesadora;
     private final Gestor gestorActual;
+    private ControladorProcesadora controlador;
 
     /**
      * Creates new form GUIProcesadoraPedidos
@@ -27,6 +30,7 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         initComponents();
         this.procesadora = procesadora;
         this.gestorActual = gestorActual;
+        controlador = new ControladorProcesadora(procesadora, this);
         
        procesadora.agregar(this);
        
