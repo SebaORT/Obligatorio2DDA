@@ -14,7 +14,7 @@ import logica.excepciones.LogicException;
  * @author Usuario
  */
 public class Mesa {
-    
+
     private int numero;
     private Mozo mozo;
     private boolean abierta = false;
@@ -33,45 +33,43 @@ public class Mesa {
     public boolean isAbierta() {
         return abierta;
     }
-    
-    public void abrirMesa() throws LogicException{
-        if(!abierta){
-            abierta=true;
-            
+
+    public void abrirMesa() throws LogicException {
+        if (!abierta) {
+            abierta = true;
+
+        } else {
+            throw new LogicException("La mesa esta abierta.");
         }
-        else{
-           throw new LogicException("La mesa esta abierta.");
-        } 
     }
+
     /*
-    public void cerrarServicio(){
-        servicio.cerrarServicio();
-    }
-    */
+     * public void cerrarServicio(){
+     * servicio.cerrarServicio();
+     * }
+     */
     public Mozo getMozo() {
         return mozo;
     }
-    
+
     private void cerrarMesa() throws LogicException {
-        if(abierta){            
-            if(servicio.pedidosPendientes() == 0){
+        if (abierta) {
+            if (servicio.pedidosPendientes() == 0) {
                 cliente = null;
-                abierta=false;
+                abierta = false;
                 servicio.limpiar();
-            }
-            else throw new LogicException("Tiene pedidos pendientes");
-        }
-        else throw new LogicException("La mesa no está abierta");
+            } else
+                throw new LogicException("Tiene pedidos pendientes");
+        } else
+            throw new LogicException("La mesa no está abierta");
     }
 
     public void setMozo(Mozo mozo) {
         this.mozo = mozo;
     }
-    
-    public void agregarMozo(Mozo m){
+
+    public void agregarMozo(Mozo m) {
         setMozo(m);
     }
-    
-    
-    
+
 }

@@ -46,17 +46,17 @@ public class Producto {
         return precio;
     }
 
-    public boolean actulizarStock(int unidades){
-        if(stock >= unidades){
-            stock=-unidades;
+    public boolean actulizarStock(int unidades) {
+        if (stock >= unidades) {
+            stock = -unidades;
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 
     @Override
     public String toString() {
-        return  nombre;
+        return nombre;
     }
-  
+
 }

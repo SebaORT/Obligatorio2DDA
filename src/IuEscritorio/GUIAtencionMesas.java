@@ -1,15 +1,26 @@
 
 package IuEscritorio;
 
+import controladorYvista.ControladorAtencion;
+import controladorYvista.VistaAtencion;
+import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+import logica.Fachada;
 import logica.ProcesadoraPedidos;
+import logica.excepciones.LogicException;
+import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
@@ -19,62 +30,95 @@ import logica.observador.Observable;
  *
  * @author Sebastian
  */
-public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
+public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador, VistaAtencion {
 
     private final Mozo mozoActual;
-    
-    private final boolean[] mesasSeleccionada={false,false,false,false,false};
-    private final JPanel[] panelsMesasButtons = new JPanel[5];
-    private int indexMesaSeleccionada=0;
+    private ControladorAtencion controlador;
 
-    
-    private String[] columnNames = {"Cantidad",  
-                "Precio Unitario", "SubTotal","Desripcion"};
-    private SimpleDateFormat dateFormatter=  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private final JPanel[] panelsMesasButtons = new JPanel[5];
+    private final JLabel[] labelMesas = new JLabel[5];
+
+    private int indexMesaSeleccionada = -1;
+
+    private String[] columnNames = { "Cantidad",
+            "Precio Unitario", "SubTotal", "Desripcion" };
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     /**
      * Creates new form GUIAtencionMesas
      */
-    public GUIAtencionMesas(java.awt.Frame parent, boolean modal,Mozo mozo) {
+    public GUIAtencionMesas(java.awt.Frame parent, boolean modal, Mozo mozo) {
         super(parent, modal);
         initComponents();
-        
-        
+
         this.mozoActual = mozo;
-        
-        lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
-        
-        //set initial model 
-        
-         ArrayList<Pedido> servicioActual = new ArrayList<>() {{
-             add(new Pedido(new Producto(1,"hamburguer",10,100, null),1,10,"hamburgueza vegana"));
-             add(new Pedido(new Producto(1,"asado",1000,100, null),1,1000,"asado a las brazs"));
-             add(new Pedido(new Producto(1,"daikiri",10,100, null),1,10,"daikiri fotante"));
-             add(new Pedido(new Producto(1,"vino",20,100, null),1,20,"vino merlot"));
+        controlador = new ControladorAtencion(mozo, this);
 
-         }};
-         ArrayList<Object[]> data = new ArrayList<Object[]>();
+        lblMozo.setText("Mozo: " + mozo.getNombreCompleto());
 
-            for (Pedido pedido : servicioActual) {
-                       
-                data.add(new Object[]{
-                    pedido.getCantidad(), 
-                     //dateFormatter.format(fecha) 
+        ArrayList<Pedido> servicioActual = new ArrayList<>();
+        updateServicioActual(servicioActual);
+
+        ArrayList<Mesa> mesasMozo = mozo.getMesas();
+
+        panelsMesasButtons[0] = pnlMesa1;
+        panelsMesasButtons[1] = pnlMesa2;
+        panelsMesasButtons[2] = pnlMesa3;
+        panelsMesasButtons[3] = pnlMesa4;
+        panelsMesasButtons[4] = pnlMesa5;
+        labelMesas[0] = lblMesa1;
+        labelMesas[1] = lblMesa2;
+        labelMesas[2] = lblMesa3;
+        labelMesas[3] = lblMesa4;
+        labelMesas[4] = lblMesa5;
+
+        int i = 0;
+        for (Mesa mesa : mesasMozo) {
+            if (mesa.isAbierta()) {
+                panelsMesasButtons[i].setBackground(new Color(0, 153, 0)); // green
+            } else { // mesa cerrada
+                panelsMesasButtons[i].setBackground(new Color(153, 0, 0));// red
+            }
+            labelMesas[i].setText(mesa.toString());
+            i++;
+        }
+
+        for (int j = i; j < 5; j++) {
+            // mesa no asignada al mozo
+            panelsMesasButtons[j].setBackground(new Color(153, 153, 153));// gray
+            panelsMesasButtons[j].setEnabled(false);
+            labelMesas[j].setText("N/A");
+        }
+
+        // pressPanel(this.pnlMesa1,1);
+        updateListaProductos();
+
+        lblMontoTotal.setText("Monto: 0");
+    }
+
+    private void updateListaProductos() {
+        ArrayList<Producto> productos = Fachada.getInstancia().getProductosConStock();
+        // cbxProducto.setModel((ComboBoxModel<Producto>) productos);
+
+        for (Producto producto : productos) {
+            cbxProducto.addItem(producto);
+        }
+    }
+
+    private void updateServicioActual(ArrayList<Pedido> servicioActual) {
+        ArrayList<Object[]> data = new ArrayList<Object[]>();
+
+        for (Pedido pedido : servicioActual) {
+            data.add(new Object[] {
+                    pedido.getCantidad(),
                     pedido.getProducto().getPrecio(),
                     pedido.getMontoPedido(),
                     pedido.getDescripcion()
-                });
-            }
-            
-          TableModelCustom model =  new TableModelCustom(columnNames, data);
-          tblServicioActual.setModel(model);
-    
-          panelsMesasButtons[0] = pnlMesa1;
-          panelsMesasButtons[1] = pnlMesa2;
-          panelsMesasButtons[2] = pnlMesa3;
-          panelsMesasButtons[3] = pnlMesa4;
-          panelsMesasButtons[4] = pnlMesa5;
+            });
+        }
 
-          
+        TableModelCustom model = new TableModelCustom(columnNames, data);
+        tblServicioActual.setModel(model);
     }
 
     /**
@@ -83,10 +127,11 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblCodigo = new javax.swing.JLabel();
+        lblProducto = new javax.swing.JLabel();
         pnlAccionesMesas = new javax.swing.JPanel();
         lblMesaSeleccionada = new javax.swing.JLabel();
         btnAbrirMesa = new javax.swing.JButton();
@@ -94,11 +139,9 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         btnTransferirMesa = new javax.swing.JButton();
         paneServicio = new javax.swing.JScrollPane();
         tblServicioActual = new javax.swing.JTable();
-        txtCodigoProducto = new javax.swing.JTextField();
         lblDescripProducto = new javax.swing.JLabel();
         txtDescripcionProducto = new javax.swing.JTextField();
         lblCantidad = new javax.swing.JLabel();
-        txtCantidadProducto = new javax.swing.JTextField();
         btnAgregarProducto = new javax.swing.JButton();
         pnlMesas = new javax.swing.JPanel();
         pnlMesa1 = new javax.swing.JPanel();
@@ -112,11 +155,16 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         pnlMesa3 = new javax.swing.JPanel();
         lblMesa3 = new javax.swing.JLabel();
         lblMozo = new javax.swing.JLabel();
+        lblServicioParaMesa = new javax.swing.JLabel();
+        spnCantidad = new javax.swing.JSpinner();
+        lblMontoTotal = new javax.swing.JLabel();
+        cbxProducto = new javax.swing.JComboBox<>();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("App Atencion de Mesas");
 
-        lblCodigo.setText("Codigo");
+        lblProducto.setText("Producto");
 
         lblMesaSeleccionada.setText("Mesa 5");
 
@@ -129,50 +177,57 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         javax.swing.GroupLayout pnlAccionesMesasLayout = new javax.swing.GroupLayout(pnlAccionesMesas);
         pnlAccionesMesas.setLayout(pnlAccionesMesasLayout);
         pnlAccionesMesasLayout.setHorizontalGroup(
-            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAbrirMesa)
-                    .addComponent(btnTransferirMesa)
-                    .addComponent(btnCerrarMesa))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+                pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(pnlAccionesMesasLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnTransferirMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCerrarMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnAbrirMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(15, Short.MAX_VALUE)));
         pnlAccionesMesasLayout.setVerticalGroup(
-            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(lblMesaSeleccionada)
-                .addGap(18, 18, 18)
-                .addComponent(btnAbrirMesa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnTransferirMesa)
-                .addGap(18, 18, 18)
-                .addComponent(btnCerrarMesa)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(lblMesaSeleccionada)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAbrirMesa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnTransferirMesa)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCerrarMesa)
+                                .addContainerGap(12, Short.MAX_VALUE)));
 
         tblServicioActual.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"2", "Chivito Con fritas", "10", "20", "A punto sin cebolla"},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
-            }
-        ));
+                new Object[][] {
+                        { "2", "Chivito Con fritas", "10", "20", "A punto sin cebolla" },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null }
+                },
+                new String[] {
+                        "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
+                }));
         paneServicio.setViewportView(tblServicioActual);
 
         lblDescripProducto.setText("Descripcion");
 
         lblCantidad.setText("Cantidad");
 
-        btnAgregarProducto.setText("Agregar Producto");
+        btnAgregarProducto.setText("Agregar Producto al Servicio");
+        btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProductoActionPerformed(evt);
+            }
+        });
 
         pnlMesa1.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -184,23 +239,27 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblMesa1.setForeground(new java.awt.Color(255, 255, 255));
         lblMesa1.setText("Mesa 1");
+        lblMesa1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesa1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMesa1Layout = new javax.swing.GroupLayout(pnlMesa1);
         pnlMesa1.setLayout(pnlMesa1Layout);
         pnlMesa1Layout.setHorizontalGroup(
-            pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesa1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(lblMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
+                pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesa1Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(lblMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(39, Short.MAX_VALUE)));
         pnlMesa1Layout.setVerticalGroup(
-            pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa1Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(lblMesa1)
-                .addGap(26, 26, 26))
-        );
+                pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa1Layout.createSequentialGroup()
+                                .addContainerGap(28, Short.MAX_VALUE)
+                                .addComponent(lblMesa1)
+                                .addGap(26, 26, 26)));
 
         pnlMesa4.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -212,23 +271,27 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblMesa4.setForeground(new java.awt.Color(255, 255, 255));
         lblMesa4.setText("Mesa 4");
+        lblMesa4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesa4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMesa4Layout = new javax.swing.GroupLayout(pnlMesa4);
         pnlMesa4.setLayout(pnlMesa4Layout);
         pnlMesa4Layout.setHorizontalGroup(
-            pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesa4Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(lblMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
+                pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesa4Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(lblMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(39, Short.MAX_VALUE)));
         pnlMesa4Layout.setVerticalGroup(
-            pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesa4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblMesa4)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
+                pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesa4Layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(lblMesa4)
+                                .addContainerGap(25, Short.MAX_VALUE)));
 
         pnlMesa2.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -240,25 +303,29 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblMesa2.setForeground(new java.awt.Color(255, 255, 255));
         lblMesa2.setText("Mesa 2");
+        lblMesa2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesa2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMesa2Layout = new javax.swing.GroupLayout(pnlMesa2);
         pnlMesa2.setLayout(pnlMesa2Layout);
         pnlMesa2Layout.setHorizontalGroup(
-            pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesa2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(lblMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
+                pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesa2Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(lblMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(34, Short.MAX_VALUE)));
         pnlMesa2Layout.setVerticalGroup(
-            pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa2Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(lblMesa2)
-                .addGap(26, 26, 26))
-        );
+                pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa2Layout.createSequentialGroup()
+                                .addContainerGap(28, Short.MAX_VALUE)
+                                .addComponent(lblMesa2)
+                                .addGap(26, 26, 26)));
 
-        pnlMesa5.setBackground(new java.awt.Color(153, 0, 0));
+        pnlMesa5.setBackground(new java.awt.Color(153, 153, 153));
         pnlMesa5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlMesa5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -268,23 +335,27 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblMesa5.setForeground(new java.awt.Color(255, 255, 255));
         lblMesa5.setText("Mesa 5");
+        lblMesa5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesa5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMesa5Layout = new javax.swing.GroupLayout(pnlMesa5);
         pnlMesa5.setLayout(pnlMesa5Layout);
         pnlMesa5Layout.setHorizontalGroup(
-            pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesa5Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lblMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
+                pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesa5Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(lblMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(35, Short.MAX_VALUE)));
         pnlMesa5Layout.setVerticalGroup(
-            pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa5Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(lblMesa5)
-                .addGap(24, 24, 24))
-        );
+                pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa5Layout.createSequentialGroup()
+                                .addContainerGap(26, Short.MAX_VALUE)
+                                .addComponent(lblMesa5)
+                                .addGap(24, 24, 24)));
 
         pnlMesa3.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -296,143 +367,256 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
         lblMesa3.setForeground(new java.awt.Color(255, 255, 255));
         lblMesa3.setText("Mesa 3");
+        lblMesa3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMesa3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMesa3Layout = new javax.swing.GroupLayout(pnlMesa3);
         pnlMesa3.setLayout(pnlMesa3Layout);
         pnlMesa3Layout.setHorizontalGroup(
-            pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(lblMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-        );
+                pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
+                                .addContainerGap(40, Short.MAX_VALUE)
+                                .addComponent(lblMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)));
         pnlMesa3Layout.setVerticalGroup(
-            pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblMesa3)
-                .addGap(25, 25, 25))
-        );
+                pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblMesa3)
+                                .addGap(25, 25, 25)));
 
         javax.swing.GroupLayout pnlMesasLayout = new javax.swing.GroupLayout(pnlMesas);
         pnlMesas.setLayout(pnlMesasLayout);
         pnlMesasLayout.setHorizontalGroup(
-            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesasLayout.createSequentialGroup()
-                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlMesasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(pnlMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMesasLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
+                pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesasLayout.createSequentialGroup()
+                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pnlMesasLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(33, 33, 33)
+                                                .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(pnlMesa3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(pnlMesasLayout.createSequentialGroup()
+                                                .addGap(93, 93, 93)
+                                                .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(41, 41, 41)
+                                                .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(51, Short.MAX_VALUE)));
         pnlMesasLayout.setVerticalGroup(
-            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMesasLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMesa3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlMesasLayout.createSequentialGroup()
-                        .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
-        );
+                pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMesasLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(pnlMesa3, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(pnlMesasLayout.createSequentialGroup()
+                                                .addGroup(pnlMesasLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)));
 
         lblMozo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMozo.setText("Mozo: {{Nombre Mozo}}");
 
+        lblServicioParaMesa.setText("Servicio para {{mesa}}");
+
+        spnCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnCantidadStateChanged(evt);
+            }
+        });
+
+        lblMontoTotal.setText("Monto Total:  {{monto}}");
+
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDescripProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(20, 20, 20))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                                                .createSequentialGroup()
+                                                .addComponent(lblServicioParaMesa,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 161,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(paneServicio,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 632,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout
+                                                                .createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(lblDescripProducto,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                        83,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(lblProducto,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                        61,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                .addGroup(layout.createSequentialGroup()
+                                                                                        .addComponent(
+                                                                                                txtDescripcionProducto,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                201,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addGap(18, 18, 18)
+                                                                                        .addComponent(lblCantidad)
+                                                                                        .addPreferredGap(
+                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                        .addComponent(spnCantidad,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                72,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addComponent(cbxProducto,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                        351,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addGap(18, 18, 18)
+                                                                        .addComponent(btnAgregarProducto))
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(lblMozo,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                209,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(305, 305, 305)
+                                                                        .addGroup(layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                false)
+                                                                                .addComponent(pnlAccionesMesas,
+                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                        Short.MAX_VALUE)
+                                                                                .addComponent(btnLogout,
+                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                        Short.MAX_VALUE)))))
+                                                .addGap(0, 7, Short.MAX_VALUE)))));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMozo)
-                        .addGap(14, 14, 14)
-                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
-                    .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDescripProducto)
-                    .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCantidad)
-                    .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarProducto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblMozo)
+                                        .addComponent(btnLogout))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblProducto)
+                                                        .addComponent(cbxProducto,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblDescripProducto)
+                                                        .addComponent(txtDescripcionProducto,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblCantidad)
+                                                        .addComponent(spnCantidad,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE, 56,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblServicioParaMesa)
+                                        .addComponent(lblMontoTotal))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 262,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void pressPanel(JPanel pnl, int index) {
-        unPressPanels();
-        pnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        
-        String name = pnl.getClass().getName();
-        
-        this.indexMesaSeleccionada = index-1;
-        mesasSeleccionada[indexMesaSeleccionada]=true;
-        
-        Component comp = panelsMesasButtons[index-1].getComponent(0);
-        JLabel label = comp!= null ? (JLabel)comp : null;
-        
-        if (label!=null) {
-            lblMesaSeleccionada.setText(label.getText());
+        if (pnl.isEnabled()) {
+            unPressPanels();
+            pnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+
+            this.indexMesaSeleccionada = index - 1;
+
+            Component comp = panelsMesasButtons[index - 1].getComponent(0);
+            JLabel label = comp != null ? (JLabel) comp : null;
+
+            if (label != null) {
+                lblMesaSeleccionada.setText(label.getText());
+                lblServicioParaMesa.setText("Servicio para " + label.getText());
+            }
         }
     }
 
@@ -442,44 +626,100 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         this.pnlMesa3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        
-        for (int i = 0; i < mesasSeleccionada.length; i++) {
-            mesasSeleccionada[i] = false;
-        }
 
     }
-    private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa1MouseClicked
-        pressPanel(this.pnlMesa1,1);
-       
-    }//GEN-LAST:event_pnlMesa1MouseClicked
 
-    private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa2MouseClicked
+    private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa1MouseClicked
+        pressPanel(this.pnlMesa1, 1);
+    }// GEN-LAST:event_pnlMesa1MouseClicked
 
-        pressPanel(this.pnlMesa2,2);
-    }//GEN-LAST:event_pnlMesa2MouseClicked
+    private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa2MouseClicked
 
-    private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa3MouseClicked
+        pressPanel(this.pnlMesa2, 2);
+    }// GEN-LAST:event_pnlMesa2MouseClicked
 
-        pressPanel(this.pnlMesa3,3);
-    }//GEN-LAST:event_pnlMesa3MouseClicked
+    private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa3MouseClicked
 
-    private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa4MouseClicked
+        pressPanel(this.pnlMesa3, 3);
+    }// GEN-LAST:event_pnlMesa3MouseClicked
 
-        pressPanel(this.pnlMesa4,4);
-    }//GEN-LAST:event_pnlMesa4MouseClicked
+    private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa4MouseClicked
 
-    private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMesa5MouseClicked
+        pressPanel(this.pnlMesa4, 4);
+    }// GEN-LAST:event_pnlMesa4MouseClicked
 
-        pressPanel(this.pnlMesa5,5);
-    }//GEN-LAST:event_pnlMesa5MouseClicked
+    private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa5MouseClicked
+
+        pressPanel(this.pnlMesa5, 5);
+    }// GEN-LAST:event_pnlMesa5MouseClicked
+
+    private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
+        if (indexMesaSeleccionada >= 0) {
+            Object o = cbxProducto.getSelectedItem();
+            if (o != null) {
+                int cantidad = (Integer) spnCantidad.getValue();
+                String description = txtDescripcionProducto.getText();
+                try {
+                    mozoActual.agregarProductoAlServicio(indexMesaSeleccionada, (Producto) o, cantidad, description);
+                    updateServicioActual(mozoActual.obtenerPedidosServicio(indexMesaSeleccionada));
+                    JOptionPane.showMessageDialog(this, "Producto agregado al servicio correctamente.", "INFO",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (LogicException ex) {
+                    Logger.getLogger(GUIAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }// GEN-LAST:event_btnAgregarProductoActionPerformed
+
+    private void lblMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa1MouseClicked
+        pnlMesa1MouseClicked(evt);
+    }// GEN-LAST:event_lblMesa1MouseClicked
+
+    private void lblMesa2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa2MouseClicked
+        pnlMesa2MouseClicked(evt);
+    }// GEN-LAST:event_lblMesa2MouseClicked
+
+    private void lblMesa3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa3MouseClicked
+        pnlMesa3MouseClicked(evt);
+    }// GEN-LAST:event_lblMesa3MouseClicked
+
+    private void lblMesa4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa4MouseClicked
+        pnlMesa4MouseClicked(evt);
+    }// GEN-LAST:event_lblMesa4MouseClicked
+
+    private void lblMesa5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa5MouseClicked
+        pnlMesa5MouseClicked(evt);
+    }// GEN-LAST:event_lblMesa5MouseClicked
+
+    private void spnCantidadStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_spnCantidadStateChanged
+        if ((Integer) spnCantidad.getValue() < 0) {
+            spnCantidad.setValue(0);
+        }
+    }// GEN-LAST:event_spnCantidadStateChanged
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+
+        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        this.setVisible(false);
+        this.dispose();
+    }// GEN-LAST:event_btnLogoutActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirMesa;
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnCerrarMesa;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnTransferirMesa;
+    private javax.swing.JComboBox<Producto> cbxProducto;
     private javax.swing.JLabel lblCantidad;
-    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDescripProducto;
     private javax.swing.JLabel lblMesa1;
     private javax.swing.JLabel lblMesa2;
@@ -487,7 +727,10 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JLabel lblMesa4;
     private javax.swing.JLabel lblMesa5;
     private javax.swing.JLabel lblMesaSeleccionada;
+    private javax.swing.JLabel lblMontoTotal;
     private javax.swing.JLabel lblMozo;
+    private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblServicioParaMesa;
     private javax.swing.JScrollPane paneServicio;
     private javax.swing.JPanel pnlAccionesMesas;
     private javax.swing.JPanel pnlMesa1;
@@ -496,15 +739,14 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JPanel pnlMesa4;
     private javax.swing.JPanel pnlMesa5;
     private javax.swing.JPanel pnlMesas;
+    private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblServicioActual;
-    private javax.swing.JTextField txtCantidadProducto;
-    private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        //if(evento.equals(ProcesadoraPedidos.eventos.cambioPedidos)){}
+        // if(evento.equals(ProcesadoraPedidos.eventos.cambioPedidos)){}
     }
 
 }
