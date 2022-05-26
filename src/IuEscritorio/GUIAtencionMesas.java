@@ -1,6 +1,8 @@
 
 package IuEscritorio;
 
+import controladorYvista.ControladorAtencion;
+import controladorYvista.VistaAtencion;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
@@ -28,9 +30,10 @@ import logica.observador.Observable;
  *
  * @author Sebastian
  */
-public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador {
+public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador, VistaAtencion {
 
     private final Mozo mozoActual;
+    private ControladorAtencion controlador;
     
    
     private final JPanel[] panelsMesasButtons = new JPanel[5];
@@ -50,6 +53,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         initComponents();
         
         this.mozoActual = mozo;
+        controlador = new ControladorAtencion(mozo, this);
         
         lblMozo.setText("Mozo: "+mozo.getNombreCompleto());
                
