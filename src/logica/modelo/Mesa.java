@@ -21,11 +21,22 @@ public class Mesa {
     private Cliente cliente;
     private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
 
+    public ArrayList<Pedido> getServicio() {
+        return servicio;
+    }
+
+    
 
     public Mesa(int numero) {
         this.numero = numero;
 
     }
+
+    public boolean isAbierta() {
+        return abierta;
+    }
+    
+    
     
     public void abrirCerrarMesa() throws LogicException{
         if(!abierta){
@@ -35,7 +46,11 @@ public class Mesa {
            throw new LogicException("La mesa esta abierta.");
         } 
     }
-    
+
+    @Override
+    public String toString() {
+        return "Mesa "+numero;
+    }
    
     public int calcularServicio(){
         int resultado = 0;

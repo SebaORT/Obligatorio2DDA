@@ -27,12 +27,6 @@
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="lblGestor" min="-2" pref="192" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                      <Component id="lblProcesadora" min="-2" pref="373" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="scrollPanePedidos" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -42,8 +36,24 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnFinalizarPedido" min="-2" pref="126" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="scrollPanePedidos1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblPedidosCurso" min="-2" pref="123" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblGestor" min="-2" pref="192" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <Component id="lblProcesadora" min="-2" pref="373" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblPedidosPendientes" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -65,9 +75,15 @@
                   </Group>
                   <Component id="lblMonitorPedidosTitle" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lblPedidosPendientes" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <Component id="scrollPanePedidos" min="-2" pref="164" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="scrollPanePedidos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblPedidosCurso" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <Component id="scrollPanePedidos1" min="-2" pref="164" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,13 +120,12 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblPedidos">
+        <Component class="javax.swing.JTable" name="tblPedidosPendientes">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="6">
+              <Table columnCount="6" rowCount="5">
                 <Column editable="true" title="Nombre Producto" type="java.lang.Object">
                   <Data value="Papa fritas"/>
-                  <Data value="Hamburguesa"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -118,7 +133,6 @@
                 </Column>
                 <Column editable="true" title="Cantidad" type="java.lang.Object">
                   <Data value="2"/>
-                  <Data value="1"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -126,7 +140,6 @@
                 </Column>
                 <Column editable="true" title="Descripcion" type="java.lang.Object">
                   <Data value="Papa fritas noisette"/>
-                  <Data value="Hamburguesa de a casa Jugosa"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -134,7 +147,6 @@
                 </Column>
                 <Column editable="true" title="N&#xb0; Mesa" type="java.lang.Object">
                   <Data value="11"/>
-                  <Data value="4"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -142,7 +154,6 @@
                 </Column>
                 <Column editable="true" title="Mozo " type="java.lang.Object">
                   <Data value="Julio"/>
-                  <Data value="Pepe"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -150,7 +161,6 @@
                 </Column>
                 <Column editable="true" title="Estado" type="java.lang.Object">
                   <Data value="Esperando"/>
-                  <Data value="Procesando"/>
                   <Data value="null"/>
                   <Data value="null"/>
                   <Data value="null"/>
@@ -215,6 +225,112 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFinalizarPedidoActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPedidosPendientes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pedidos Pendientes"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="scrollPanePedidos1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tblPedidosCurso">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="6" rowCount="5">
+                <Column editable="true" title="Nombre Producto" type="java.lang.Object">
+                  <Data value="Hamburguesa"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="true" title="Cantidad" type="java.lang.Object">
+                  <Data value="1"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="true" title="Descripcion" type="java.lang.Object">
+                  <Data value="Hamburguesa de a casa Jugosa"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="true" title="N&#xb0; Mesa" type="java.lang.Object">
+                  <Data value="4"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="true" title="Mozo " type="java.lang.Object">
+                  <Data value="Pepe"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+                <Column editable="true" title="Estado" type="java.lang.Object">
+                  <Data value="Procesando"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="1">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="lblPedidosCurso">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pedidos Pendientes"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

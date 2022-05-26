@@ -69,6 +69,10 @@ public class Fachada {
         return controlServicio.getProcesadoras();
     }
     
+    public ArrayList<Producto> getProductosConStock() {
+        return controlServicio.getProductosConStock();
+    }
+    
 
     
 }

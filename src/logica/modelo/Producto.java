@@ -34,7 +34,12 @@ public class Producto {
         return codigo;
     }
 
-    
+    @Override
+    public String toString() {
+        return nombre +"-"+codigo;
+    }
+
+
     
     public int getStock() {
         return stock;
