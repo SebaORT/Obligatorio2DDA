@@ -19,67 +19,49 @@ public class Mesa {
     private Mozo mozo;
     private boolean abierta = false;
     private Cliente cliente;
-    private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
+    private Servicio servicio;
 
+    public Servicio getServicio() {
+        return servicio;
+    }
 
     public Mesa(int numero) {
         this.numero = numero;
+        servicio = new Servicio(this);
+    }
 
+    public boolean isAbierta() {
+        return abierta;
     }
     
-    public void abrirCerrarMesa() throws LogicException{
+    public void abrirMesa() throws LogicException{
         if(!abierta){
             abierta=true;
+            
         }
         else{
            throw new LogicException("La mesa esta abierta.");
         } 
     }
-    
-   
-    public int calcularServicio(){
-        int resultado = 0;
-        for(Pedido p:servicio){
-            resultado += p.getMontoPedido();
-        }
-        return resultado;
-    }
-     
-    public void agregarCliente(Cliente c){
-        cliente=c;
-    }
-    
-    
-    public void agregarPedido(Producto producto,int cantidad,String descripcion) throws LogicException{
-        Pedido p = new Pedido();
-        if(abierta){
-                p.agregarProducto(producto, cantidad,descripcion);
-                servicio.add(p);
-        }
-        else{
-            throw new LogicException("La mesa esta cerrada.");
-        }
-    }
-    
+    /*
     public void cerrarServicio(){
-        servicio.clear();
+        servicio.cerrarServicio();
     }
-    
-    
-
+    */
     public Mozo getMozo() {
         return mozo;
     }
     
-
     private void cerrarMesa() throws LogicException {
-        if(servicio.size() == 0){
-            cliente = null;
-            abierta=false;
+        if(abierta){            
+            if(servicio.pedidosPendientes() == 0){
+                cliente = null;
+                abierta=false;
+                servicio.limpiar();
+            }
+            else throw new LogicException("Tiene pedidos pendientes");
         }
-        else{
-           throw new LogicException("debe cerrar el servicio antes de cerrar la mesa");
-        }
+        else throw new LogicException("La mesa no está abierta");
     }
 
     public void setMozo(Mozo mozo) {

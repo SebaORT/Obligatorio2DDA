@@ -18,7 +18,9 @@ import logica.modelo.Usuario;
 public class ControlUsuarios {
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
-    private ArrayList<Conexion> conexiones = new ArrayList<Conexion>();
+    private ArrayList<Usuario> usuariosConectados = new ArrayList<Usuario>();
+    
+    
 
     public ArrayList<Mozo> getMozos() {
         return mozos;
@@ -49,22 +51,37 @@ public class ControlUsuarios {
     
     public Mozo loginMozo(String nombre,String password) throws LogicException{
        Usuario usuario = login(nombre,password,(ArrayList)mozos);
-       if (usuario!=null) {
-        return (Mozo)usuario;
-       }
-       else {
-           throw new LogicException("Eror al tratar de loguear el mozo");
-       }
+       if (usuario!=null){
+           if(!usuariosConectados.contains(usuario)){
+               usuariosConectados.add(usuario);
+            return (Mozo)usuario;
+           }
+           else throw new LogicException("Ud. ya está logueado");
+        }
+       else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
     
-    public Gestor loginGestor(String u,String p){
-        return (Gestor)login(u,p,(ArrayList)gestores);
-        /*Gestor g = (Gestor)login(u,p,(ArrayList)gestores);
-        Conexion c = null;
-        if(g!=null){
-            c = new Conexion(g);
-            conexiones.add(c);
+    
+    public Gestor loginGestor(String u,String p) throws LogicException{
+        Usuario usu = login(u,p,(ArrayList)gestores);
+        if(usu!=null){
+            if(!usuariosConectados.contains(usu)){
+                Gestor g = (Gestor)usu;
+                g.ultimoAcceso();
+                return g; 
+            }
+            else throw new LogicException("Ud. ya está logueado");
         }
-       return c; */
+        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
+    }
+    
+    public void logoutMozo(Mozo m){
+        if(m.mesasCerradas()){
+            usuariosConectados.remove(m);
+        }
+    }
+    
+    public void logoutGestor(Gestor g){
+    
     }
 }

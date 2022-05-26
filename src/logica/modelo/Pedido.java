@@ -19,9 +19,15 @@ public class Pedido {
     private int montoPedido;
     private String descripcion;
     private Gestor gestor;
+    private Servicio servicio;
     private String Estado = "Buscando Gestor";
 
-    public Pedido() {
+    public Pedido(Servicio s) {
+        this.servicio = s;
+    }
+
+    public String getEstado() {
+        return Estado;
     }
     
     public Pedido(Producto producto, int cantidad, int montoPedido, String descripcion) {
@@ -30,6 +36,7 @@ public class Pedido {
         this.montoPedido = montoPedido;
         this.descripcion = descripcion;
         this.gestor = gestor;
+        //this.servicio = servicio;
     }
 
     public void setStatus(String status) {
@@ -46,7 +53,7 @@ public class Pedido {
             }
             else throw new LogicException("Sin stock, solo quedan (" + p.getStock() + ").");
         }
-        else throw new LogicException("La cantidad es menor a 1");
+        else throw new LogicException("cantidad inválida");
     }
 
     public int getCantidad() {

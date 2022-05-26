@@ -105,7 +105,12 @@ public class LoginProcesadoraPedidos extends javax.swing.JDialog {
 
                
         String pass = String.valueOf(txtPassword.getPassword());
-        Gestor gestor = Fachada.getInstancia().loginGestor(txtNombreMozo.getText(), pass );
+        Gestor gestor = null;
+        try {
+            gestor = Fachada.getInstancia().loginGestor(txtNombreMozo.getText(), pass );
+        } catch (LogicException ex) {
+            Logger.getLogger(LoginProcesadoraPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (gestor != null) {
             JDialog d = new DialogSeleccionarProcesadora(null, false, gestor);
             d.setVisible(true);

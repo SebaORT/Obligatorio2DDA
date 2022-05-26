@@ -15,19 +15,16 @@ import logica.excepciones.RestoException;
  * @author Usuario
  */
 public class Mozo extends Usuario{
+ 
     private int telefono;
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
+    
 
     public Mozo(String nombreUsuario,String password, String nombreCompleto,int telefono) {
         super(nombreUsuario,password,nombreCompleto);
         this.telefono = telefono;
     }
     
-    
-    public void transferirMesa(Mozo mozo,Mesa mesa)throws LogicException{
-        mesas.remove(mesa);
-        mozo.agregarMesa(mesa);        
-    }
 
     public int getTelefono() {
         return telefono;
@@ -44,11 +41,31 @@ public class Mozo extends Usuario{
     public void setServicio(ArrayList<Mesa> servicio) {
         this.mesas = servicio;
     }
+
     
+    public boolean mesasCerradas(){
+        int totMesas = this.mesas.size();
+        int mesasCerradas = 0;
+        for(Mesa m : mesas){
+            if(!m.isAbierta()){
+                mesasCerradas=+1;
+            }
+        }
+        if(mesasCerradas ==totMesas){
+            return true;
+        }
+        else return false;
+    }
+    
+    public void transferirMesa(Mozo mozo,Mesa mesa)throws LogicException{
+        mesas.remove(mesa);
+        mozo.agregarMesa(mesa);        
+    }
+
     public void validar(){
     }
 
-    private void agregarMesa(Mesa mesa)throws LogicException {
+    public void agregarMesa(Mesa mesa)throws LogicException {
         if(mesas.size()>=5){
             throw new LogicException("El mozo ya tiene 5 mesas.");
         }

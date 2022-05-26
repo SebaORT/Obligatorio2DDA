@@ -11,7 +11,7 @@ public class Observable {
     
     private ArrayList<Observador> observadores = new ArrayList();
     
-    public void agregar(Observador o){
+    public void agregarObservador(Observador o){
         if(!observadores.contains(o)){
             observadores.add(o);
         }

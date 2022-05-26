@@ -61,7 +61,7 @@ public class Fachada {
         return controlUsuario.loginMozo(u, p);
     }
     
-    public Gestor loginGestor(String u, String p) {
+    public Gestor loginGestor(String u, String p) throws LogicException {
         return controlUsuario.loginGestor(u, p);
     }
 

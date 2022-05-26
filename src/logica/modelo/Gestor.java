@@ -14,9 +14,11 @@ import logica.ProcesadoraPedidos;
  *
  * @author Usuario
  */
+
+
 public class Gestor extends Usuario {
 
-    // private Date fechaUltimoAcceso= new Date();
+    private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private ProcesadoraPedidos procesadoraPedidos;
 
@@ -24,23 +26,24 @@ public class Gestor extends Usuario {
         super(nombreUsuario, password, nombreCompleto);
     }
 
-    /*
-     * public void ultimoAcceso(){
-     * Date nuevaFecha = new Date();
-     * setFechaUltimoAcceso(nuevaFecha);
-     * }
-     * public Date getFechaUltimoAcceso() {
-     * return fechaUltimoAcceso;
-     * }
-     * public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
-     * this.fechaUltimoAcceso = fechaUltimoAcceso;
-     * }
-     */
+   
+      public void ultimoAcceso(){
+      Date nuevaFecha = new Date();
+      setFechaUltimoAcceso(nuevaFecha);
+      }
+      public Date getFechaUltimoAcceso() {
+      return fechaUltimoAcceso;
+      }
+      public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+      this.fechaUltimoAcceso = fechaUltimoAcceso;
+      }
+    
 
-    public void preparaPedido(Pedido p) {
+    public void preparaPedido(Pedido p){
         pedidos.add(p);
         p.gestorPreparador(this);
         p.setStatus("En preparacion");
+        procesadoraPedidos.sacarPedido(p);
     }
 
     public void validar() {
@@ -54,6 +57,8 @@ public class Gestor extends Usuario {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
             p.setStatus("Pronto");
+            //aca se deberia avisar al mozo que el pedido esta pronto 
+            //pero para eso el gestor tendira que ser observable tambien
         } else {
 
         }

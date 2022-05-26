@@ -27,11 +27,9 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
         initComponents();
         this.procesadora = procesadora;
         this.gestorActual = gestorActual;
-        
-       procesadora.agregar(this);
-       
-       lblGestor.setText("Gestor: "+gestorActual.getNombreUsuario());
-       lblProcesadora.setText("Unidad Procesadora: "+procesadora.getNombre());
+        procesadora.agregarObservador(this);
+        lblGestor.setText("Gestor: "+gestorActual.getNombreUsuario());
+        lblProcesadora.setText("Unidad Procesadora: "+procesadora.getNombre());
     }
 
     /**
@@ -163,6 +161,8 @@ public class GUIProcesadoraPedidos extends javax.swing.JDialog implements logica
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(evento.equals(ProcesadoraPedidos.eventos.cambioPedidos)){
+            //mostrar peidos de la procesadora
+        }
     }
 }
