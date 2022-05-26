@@ -21,6 +21,10 @@ public class Mesa {
     private Cliente cliente;
     private ArrayList<Pedido> servicio = new ArrayList<Pedido>();
 
+    public ArrayList<Pedido> getServicio() {
+        return servicio;
+    }
+
     
 
     public Mesa(int numero) {

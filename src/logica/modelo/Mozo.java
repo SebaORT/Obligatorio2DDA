@@ -64,5 +64,14 @@ public class Mozo extends Usuario{
         Mozo m = (Mozo) o;
         return m.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
+
+    public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad, String descripcion) throws LogicException {
+         this.mesas.get(indexMesaSeleccionada).agregarPedido(producto,cantidad, descripcion);
+    }
+
+    public ArrayList<Pedido> obtenerPedidosServicio(int indexMesaSeleccionada) {
+        return this.mesas.get(indexMesaSeleccionada).getServicio();
+        
+    }
         
 }
