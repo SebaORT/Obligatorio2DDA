@@ -98,16 +98,16 @@ public class DatosPrecargados {
                 mozo3.agregarMesa(mesa9);
 
                 mesa1.abrirMesa();
-                mesa1.getServicio().crearPedido(hamburguesa, 2, "cocidas");
+                //mesa1.getServicio().crearPedido(hamburguesa, 2, "cocidas");
                 mesa4.abrirMesa();
-                mesa4.getServicio().crearPedido(vodka, 2, "con hielo");
+                //mesa4.getServicio().crearPedido(vodka, 2, "con hielo");
 
                 // prueba
                 // mesa1.agregarCliente(ana);------------------------------------------------
-                mesa1.abrirMesa();
+                //mesa1.abrirMesa();
 
-                mozo1.agregarMesa(mesa1);
-                mozo1.agregarMesa(mesa2);
+                //mozo1.agregarMesa(mesa1);
+                //mozo1.agregarMesa(mesa2);
 
         }
 

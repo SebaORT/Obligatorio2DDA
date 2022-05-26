@@ -52,7 +52,7 @@ public class Mesa {
         return mozo;
     }
 
-    private void cerrarMesa() throws LogicException {
+    public void cerrarMesa() throws LogicException {
         if (abierta) {
             if (servicio.pedidosPendientes() == 0) {
                 cliente = null;
@@ -72,4 +72,10 @@ public class Mesa {
         setMozo(m);
     }
 
+    @Override
+    public String toString() {
+        return "Mesa "+numero;
+    }
+
+    
 }
