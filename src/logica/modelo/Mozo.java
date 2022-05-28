@@ -14,12 +14,13 @@ import logica.excepciones.RestoException;
  *
  * @author Usuario
  */
-public class Mozo extends Usuario {
+public class Mozo extends Usuario{
 
     private int telefono;
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
 
     private final int MAX_MESAS = 5;
+    private Pedido ultimoPedidoCambioEstado;
 
     public Mozo(String nombreUsuario, String password, String nombreCompleto, int telefono) {
         super(nombreUsuario, password, nombreCompleto);
@@ -71,6 +72,19 @@ public class Mozo extends Usuario {
             mesas.add(mesa);
             mesa.setMozo(this);
         }
+    }
+    
+    public enum eventos {pedidoCambioEstado};
+
+    public Pedido getUltimoPedidoCambioEstado() {
+        return ultimoPedidoCambioEstado;
+    }
+    
+    
+    public void pedidoCambioEstado(Pedido p) {
+        this.ultimoPedidoCambioEstado = p;
+        
+        this.avisar(eventos.pedidoCambioEstado);
     }
 
     @Override
