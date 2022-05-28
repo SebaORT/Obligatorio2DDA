@@ -99,6 +99,11 @@ public class Pedido {
         this.gestor = gestor;
     }
 
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    
    
     
     

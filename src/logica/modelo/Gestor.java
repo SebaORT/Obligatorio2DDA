@@ -70,4 +70,10 @@ public class Gestor extends Usuario {
         return g.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
 
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+    
+    
+
 }

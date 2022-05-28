@@ -72,6 +72,12 @@ public class Mesa {
         setMozo(m);
     }
 
+    public int getNumero() {
+        return numero;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Mesa "+numero;

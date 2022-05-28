@@ -66,6 +66,10 @@ public class Servicio {
         pedidos.clear();
     }
 
+    public Mesa getMesa() {
+        return mesa;
+    }
+
     
     
 }

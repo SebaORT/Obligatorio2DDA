@@ -4,11 +4,15 @@
  */
 package mvc.vista;
 
+import IuEscritorio.TableModelCustom;
+import java.util.ArrayList;
 import mvc.controlador.ControladorProcesadora;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import logica.Fachada;
 import logica.ProcesadoraPedidos;
 import logica.modelo.Gestor;
+import logica.modelo.Pedido;
 import logica.observador.Observable;
 import mvc.IVistaProcesadora;
 
@@ -22,6 +26,8 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
     private final ProcesadoraPedidos procesadora;
     private final Gestor gestorActual;
     private ControladorProcesadora controlador;
+    private ArrayList<Pedido> lista1 = new ArrayList<Pedido>();
+    private ArrayList<Pedido> lista2 = new ArrayList<Pedido>();
 
     /**
      * Creates new form GUIProcesadoraPedidos
@@ -38,6 +44,8 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
 
         lblGestor.setText("Gestor: " + gestorActual.getNombreUsuario());
         lblProcesadora.setText("Unidad Procesadora: " + procesadora.getNombre());
+        actualizarTablaGe(this.procesadora.getPedidos(), tblPedidosPendientes);
+        actualizarTablaGe(this.gestorActual.getPedidos(), tblPedidosCurso);
     }
 
     /**
@@ -120,7 +128,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
         scrollPanePedidos1.setViewportView(tblPedidosCurso);
         tblPedidosCurso.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        lblPedidosCurso.setText("Pedidos Pendientes");
+        lblPedidosCurso.setText("Pedidos en proceso");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,6 +200,34 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
         this.setVisible(false);
         this.dispose();
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
+    
+    
+    
+   
+ 
+    private void actualizarTablaGe(ArrayList<Pedido> lista, JTable tbl){
+        String[] columnNames = {"Producto", "Cantidad",
+        "Descripcion", "N° Mesa", "Mozo"};
+        
+//        this.lista1 = lista;
+        ArrayList<Object[]> data = new ArrayList<Object[]>();
+
+        for (Pedido pedido : lista) {
+            data.add(new Object[]{
+                pedido.getProducto().getNombre(),
+                pedido.getCantidad(),
+                pedido.getDescripcion(),
+                pedido.getServicio().getMesa().getNumero(),
+                pedido.getServicio().getMesa().getMozo().getNombreCompleto()
+            });
+        }
+
+        TableModelCustom model = new TableModelCustom(columnNames, data);
+        tbl.setModel(model);
+    }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizarPedido;
