@@ -48,7 +48,7 @@ public class Producto {
 
     public boolean actulizarStock(int unidades) {
         if (stock >= unidades) {
-            stock = -unidades;
+            stock -= unidades;
             return true;
         } else
             return false;

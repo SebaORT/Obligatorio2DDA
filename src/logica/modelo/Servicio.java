@@ -30,6 +30,10 @@ public class Servicio {
         cliente=c;
     }
     
+    public void sacarCliente(){
+        cliente=null;
+    }
+    
     public int calcularServicio(){
         int resultado = 0;
         for(Pedido p:pedidos){
@@ -61,8 +65,9 @@ public class Servicio {
         return pendientes;
     }
 
-    public void limpiar() {
+    public void limpiarServicio() {
         pedidos.clear();
+        sacarCliente();
     }
 
     

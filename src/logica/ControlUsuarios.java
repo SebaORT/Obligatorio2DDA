@@ -18,7 +18,8 @@ import logica.modelo.Usuario;
 public class ControlUsuarios {
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
-    private ArrayList<Usuario> usuariosConectados = new ArrayList<Usuario>();
+    private ArrayList<Usuario> mozoConectados = new ArrayList<Usuario>();
+    private ArrayList<Usuario> gestoresConectados = new ArrayList<Usuario>();
     
     
 
@@ -52,8 +53,8 @@ public class ControlUsuarios {
     public Mozo loginMozo(String nombre,String password) throws LogicException{
        Usuario usuario = login(nombre,password,(ArrayList)mozos);
        if (usuario!=null){
-           if(!usuariosConectados.contains(usuario)){
-               usuariosConectados.add(usuario);
+           if(!mozoConectados.contains(usuario)){
+               mozoConectados.add(usuario);
             return (Mozo)usuario;
            }
            else throw new LogicException("Ud. ya está logueado");
@@ -65,7 +66,7 @@ public class ControlUsuarios {
     public Gestor loginGestor(String u,String p) throws LogicException{
         Usuario usu = login(u,p,(ArrayList)gestores);
         if(usu!=null){
-            if(!usuariosConectados.contains(usu)){
+            if(!gestoresConectados.contains(usu)){
                 Gestor g = (Gestor)usu;
                 g.ultimoAcceso();
                 return g; 
@@ -75,10 +76,11 @@ public class ControlUsuarios {
         else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
     
-    public void logoutMozo(Mozo m){
+    public void logoutMozo(Mozo m) throws LogicException{
         if(m.mesasCerradas()){
-            usuariosConectados.remove(m);
+            mozoConectados.remove(m);
         }
+        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
    
 }

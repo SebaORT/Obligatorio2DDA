@@ -16,14 +16,14 @@ public class Transferencia {
     private Mozo mozoDestino;
     private Mesa mesa;
 
-    public Transferencia(Mozo mozoOrigen, Mesa mesa) {
+    public Transferencia(Mozo mozoOrigen, Mesa mesa,Mozo mosoDestino) {
         this.mozoOrigen = mozoOrigen;
         this.mesa = mesa;
+        this.mozoDestino = mosoDestino;
     }
     
-    public void trasferir(Mozo mosoDestino) throws LogicException{
-        this.mozoDestino = mozoDestino;
-        mozoOrigen.sacarMesa(this.mesa);
+    public void trasferir() throws LogicException{
+        mozoOrigen.sacarMesa(mesa);
         mozoDestino.agregarMesa(mesa);
         mesa.agregarMozo(mozoDestino);
     }

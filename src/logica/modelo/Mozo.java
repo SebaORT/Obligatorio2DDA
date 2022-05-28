@@ -18,6 +18,7 @@ public class Mozo extends Usuario{
 
     private int telefono;
     private ArrayList<Mesa> mesas = new ArrayList<Mesa>();
+    private Transferencia transferencia;
 
     private final int MAX_MESAS = 5;
     private Pedido ultimoPedidoCambioEstado;
@@ -57,9 +58,18 @@ public class Mozo extends Usuario{
             return false;
     }
 
-    public void transferirMesa(Mozo mozo, Mesa mesa) throws LogicException {
-        mesas.remove(mesa);
-        mozo.agregarMesa(mesa);
+    public void iniciarTransferencia(Mozo mozoDestino,Mozo mozoOrigen, Mesa mesa){
+        transferencia = new Transferencia(mozoOrigen,mesa,mozoDestino);
+        mozoDestino.setTransferencia(transferencia);
+    }
+    
+    public void aceptarTransferencia() throws LogicException{
+        transferencia.trasferir();
+    }
+    
+
+    public void setTransferencia(Transferencia transferencia) {
+        this.transferencia = transferencia;
     }
 
     public void validar() {
