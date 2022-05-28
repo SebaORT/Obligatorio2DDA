@@ -34,13 +34,10 @@ public class Producto {
         return codigo;
     }
 
-    @Override
-    public String toString() {
-        return nombre +"-"+codigo;
+    public ProcesadoraPedidos getUnidadProcesadora() {
+        return unidadProcesadora;
     }
 
-
-    
     public int getStock() {
         return stock;
     }
@@ -49,13 +46,17 @@ public class Producto {
         return precio;
     }
 
-
-    public boolean actulizarStock(int unidades){
-        if(stock >= unidades){
-            stock=-unidades;
+    public boolean actulizarStock(int unidades) {
+        if (stock >= unidades) {
+            stock -= unidades;
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
-        
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

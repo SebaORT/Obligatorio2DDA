@@ -34,20 +34,13 @@
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Component id="lblMozo" min="-2" pref="209" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="paneServicio" alignment="0" min="-2" pref="632" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblDescripProducto" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
@@ -67,6 +60,14 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnAgregarProducto" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblMozo" min="-2" pref="209" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="305" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="pnlAccionesMesas" max="32767" attributes="0"/>
+                                      <Component id="btnLogout" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
@@ -79,8 +80,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblMozo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblMozo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnLogout" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlAccionesMesas" min="-2" max="-2" attributes="0"/>
                   <Component id="pnlMesas" min="-2" max="-2" attributes="0"/>
@@ -146,9 +150,9 @@
                   <Component id="btnAbrirMesa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnTransferirMesa" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnCerrarMesa" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -163,16 +167,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Abrir"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirMesaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCerrarMesa">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cerrar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarMesaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnTransferirMesa">
           <Properties>
             <Property name="text" type="java.lang.String" value="Transferir"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTransferirMesaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -379,6 +392,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Mesa 1"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMesa1MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -425,6 +441,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Mesa 4"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMesa4MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -471,6 +490,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Mesa 2"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMesa2MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -517,6 +539,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Mesa 5"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMesa5MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -563,6 +588,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Mesa 3"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMesa3MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -582,6 +610,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="spnCantidad">
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spnCantidadStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblMontoTotal">
       <Properties>
@@ -597,6 +628,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Producto&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnLogout">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Log Out"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

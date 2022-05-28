@@ -14,9 +14,11 @@ import logica.ProcesadoraPedidos;
  *
  * @author Usuario
  */
+
+
 public class Gestor extends Usuario {
 
-    // private Date fechaUltimoAcceso= new Date();
+    private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private ProcesadoraPedidos procesadoraPedidos;
 
@@ -24,23 +26,24 @@ public class Gestor extends Usuario {
         super(nombreUsuario, password, nombreCompleto);
     }
 
-    /*
-     * public void ultimoAcceso(){
-     * Date nuevaFecha = new Date();
-     * setFechaUltimoAcceso(nuevaFecha);
-     * }
-     * public Date getFechaUltimoAcceso() {
-     * return fechaUltimoAcceso;
-     * }
-     * public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
-     * this.fechaUltimoAcceso = fechaUltimoAcceso;
-     * }
-     */
+   
+      public void ultimoAcceso(){
+      Date nuevaFecha = new Date();
+      setFechaUltimoAcceso(nuevaFecha);
+      }
+      public Date getFechaUltimoAcceso() {
+      return fechaUltimoAcceso;
+      }
+      public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+      this.fechaUltimoAcceso = fechaUltimoAcceso;
+      }
+    
 
-    public void preparaPedido(Pedido p) {
+    public void preparaPedido(Pedido p){
         pedidos.add(p);
         p.gestorPreparador(this);
-        p.setStatus("En preparacion");
+        p.setEstado("En preparacion");
+        procesadoraPedidos.sacarPedido(p);
     }
 
     public void validar() {
@@ -53,7 +56,12 @@ public class Gestor extends Usuario {
     public void pedidoPronto(Pedido p) {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
-            p.setStatus("Pronto");
+            p.setEstado("Pronto");
+            
+            p.getServicio().getMesa().getMozo().pedidoCambioEstado(p);
+                    
+                   // avisar(Mozo.eventos.pedidoCambioEstado);
+            //aca se deberia avisar al mozo que el pedido esta pronto 
         } else {
 
         }
@@ -64,5 +72,11 @@ public class Gestor extends Usuario {
         Gestor g = (Gestor) o;
         return g.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+    
+    
 
 }

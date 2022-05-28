@@ -5,11 +5,13 @@
  */
 package logica.modelo;
 
+import logica.observador.Observable;
+
 /**
  *
  * @author Usuario
  */
-public class Usuario {
+public class Usuario extends Observable{
     
     private String nombreUsuario;
     private String password;
@@ -46,6 +48,8 @@ public class Usuario {
         Usuario u = (Usuario) o;
         return u.getNombreUsuario().equalsIgnoreCase(nombreUsuario);
     }
+    
+    
     
     
     

@@ -4,6 +4,7 @@
  */
 package IuEscritorio;
 
+import mvc.vista.VistaProcesadoraPedidos;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -95,7 +96,7 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
         gestorActual.asignarProcesadora(procesadoraSeleccionada);
         procesadoraSeleccionada.agregarGestor(gestorActual);
         
-        JDialog d = new GUIProcesadoraPedidos(null, false, gestorActual,procesadoraSeleccionada);
+        JDialog d = new VistaProcesadoraPedidos(null, false, gestorActual,procesadoraSeleccionada);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnConfirmarActionPerformed

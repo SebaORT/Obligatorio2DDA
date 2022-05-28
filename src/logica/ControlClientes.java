@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Cliente;
 import java.util.ArrayList;
 
 /**

@@ -3,9 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/IuEscritorio/GUIAtencionMesas.java</file>
-            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/logica/ProcesadoraPedidos.java</file>
-            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/logica/modelo/Mesa.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/IuEscritorio/DialogSeleccionarProcesadora.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Mesa.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/observador/Observable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/DatosPrecargados.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/IuEscritorio/GUIAtencionMesas.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Pedido.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/IuEscritorio/GUIProcesadoraPedidos.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Servicio.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/ProcesadoraPedidos.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/ControlUsuarios.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Usuario.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/IuEscritorio/LoginProcesadoraPedidos.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Gestor.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Mozo.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/Fachada.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Producto.java</file>
+        </group>
+        <group name="ProjectsoPracticaJava">
+            <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/logica/Fachada.java</file>
+            <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/mvc/controlador/ControladorAtencionMesa.java</file>
+            <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/logica/modelo/Mozo.java</file>
+            <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/mvc/vista/VistaAtencionMesas.java</file>
         </group>
     </open-files>
 </project-private>
