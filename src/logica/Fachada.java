@@ -5,7 +5,7 @@
  */
 package logica;
 
-import IuEscritorio.GUIProcesadoraPedidos;
+import mvc.vista.VistaProcesadoraPedidos;
 import java.util.ArrayList;
 import logica.excepciones.LogicException;
 import logica.modelo.Mozo;
@@ -71,6 +71,10 @@ public class Fachada {
     
     public ArrayList<Producto> getProductosConStock() {
         return controlServicio.getProductosConStock();
+    }
+
+    public void logoutMozo(Mozo mozo) {
+        controlUsuario.logoutMozo(mozo);
     }
     
 

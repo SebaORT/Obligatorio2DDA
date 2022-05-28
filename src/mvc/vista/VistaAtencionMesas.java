@@ -1,8 +1,7 @@
+package mvc.vista;
 
-package IuEscritorio;
-
-import controladorYvista.ControladorAtencion;
-import controladorYvista.VistaAtencion;
+import IuEscritorio.TableModelCustom;
+import mvc.controlador.ControladorAtencionMesa;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
@@ -25,42 +24,46 @@ import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
 import logica.observador.Observable;
+import mvc.IVistaAtencionMesa;
 
 /**
  *
  * @author Sebastian
  */
-public class GUIAtencionMesas extends javax.swing.JDialog implements logica.observador.Observador, VistaAtencion {
+public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAtencionMesa {
 
-    private final Mozo mozoActual;
-    private ControladorAtencion controlador;
+    private ControladorAtencionMesa controlador;
 
     private final JPanel[] panelsMesasButtons = new JPanel[5];
     private final JLabel[] labelMesas = new JLabel[5];
 
     private int indexMesaSeleccionada = -1;
 
-    private String[] columnNames = { "Producto","Cantidad",
-            "Precio Unitario", "SubTotal", "Desripcion" };
+    private String[] columnNames = {"Producto", "Cantidad",
+        "Precio Unitario", "SubTotal", "Desripcion"};
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     /**
      * Creates new form GUIAtencionMesas
      */
-    public GUIAtencionMesas(java.awt.Frame parent, boolean modal, Mozo mozo) {
+    public VistaAtencionMesas(java.awt.Frame parent, boolean modal, Mozo mozo) {
         super(parent, modal);
         initComponents();
 
-        this.mozoActual = mozo;
-        controlador = new ControladorAtencion(mozo, this);
+        //this.mozoActual = mozo;
+        controlador = new ControladorAtencionMesa(mozo, this);
+    }
 
+    public void mostrarInfoPedidoListo(Pedido pedido) {
+        this.mostrarMensaje("Esta el pedido "+pedido.toString()+ " pronto!! ");
+    }
+
+    public void initLabels(Mozo mozo) {
         lblMozo.setText("Mozo: " + mozo.getNombreCompleto());
+        lblMontoTotal.setText("Monto: 0");
+    }
 
-        ArrayList<Pedido> servicioActual = new ArrayList<>();
-        updateServicioActual(servicioActual);
-
-        ArrayList<Mesa> mesasMozo = mozo.getMesas();
-
+    public void initMesasUI(ArrayList<Mesa> mesasMozo) {
         panelsMesasButtons[0] = pnlMesa1;
         panelsMesasButtons[1] = pnlMesa2;
         panelsMesasButtons[2] = pnlMesa3;
@@ -89,22 +92,17 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
             panelsMesasButtons[j].setEnabled(false);
             labelMesas[j].setText("N/A");
         }
-
-        // pressPanel(this.pnlMesa1,1);
-        updateListaProductos();
-
-        lblMontoTotal.setText("Monto: 0");
     }
-    
+
     private void setMesaAbiertaUI(int i) {
         panelsMesasButtons[i].setBackground(new Color(0, 153, 0)); // green
     }
+
     private void setMesaCerradaUI(int i) {
         panelsMesasButtons[i].setBackground(new Color(153, 0, 0));// red
     }
 
-    private void updateListaProductos() {
-        ArrayList<Producto> productos = Fachada.getInstancia().getProductosConStock();
+    public void updateListaProductos(ArrayList<Producto> productos) {
         // cbxProducto.setModel((ComboBoxModel<Producto>) productos);
 
         for (Producto producto : productos) {
@@ -112,21 +110,38 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         }
     }
 
-    private void updateServicioActual(ArrayList<Pedido> servicioActual) {
+    public void updateServicioActual(ArrayList<Pedido> servicioActual) {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
 
         for (Pedido pedido : servicioActual) {
-            data.add(new Object[] {
-                    pedido.getProducto().getNombre(),
-                    pedido.getCantidad(),
-                    pedido.getProducto().getPrecio(),
-                    pedido.getMontoPedido(),
-                    pedido.getDescripcion()
+            data.add(new Object[]{
+                pedido.getProducto().getNombre(),
+                pedido.getCantidad(),
+                pedido.getProducto().getPrecio(),
+                pedido.getMontoPedido(),
+                pedido.getDescripcion()
             });
         }
 
         TableModelCustom model = new TableModelCustom(columnNames, data);
         tblServicioActual.setModel(model);
+    }
+
+    public void mostrarExceptionError(Exception ex) {
+        Logger.getLogger(VistaAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public void mostrarAlerta(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+
+        JOptionPane.showMessageDialog(this, mensaje, "INFO",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -547,37 +562,23 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirMesaActionPerformed
-        try {
-            this.mozoActual.getMesas().get(indexMesaSeleccionada).abrirMesa();
-            setMesaAbiertaUI(indexMesaSeleccionada);
-        } catch (LogicException ex) {
-            Logger.getLogger(GUIAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        controlador.AbrirMesa(indexMesaSeleccionada);
+        setMesaAbiertaUI(indexMesaSeleccionada);
     }//GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarMesaActionPerformed
-        try {
-            this.mozoActual.getMesas().get(indexMesaSeleccionada).cerrarMesa();
-            setMesaCerradaUI(indexMesaSeleccionada);
 
-        } catch (LogicException ex) {
-            Logger.getLogger(GUIAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        controlador.CerrarMesa(indexMesaSeleccionada);
+
+        setMesaCerradaUI(indexMesaSeleccionada);
 
     }//GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void pressPanel(JPanel pnl, int index) {
-        
-        
         if (pnl.isEnabled()) {
             this.indexMesaSeleccionada = index - 1;
-            
             unPressPanels();
             pnl.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-
-            
 
             Component comp = panelsMesasButtons[index - 1].getComponent(0);
             JLabel label = comp != null ? (JLabel) comp : null;
@@ -597,30 +598,22 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
         this.pnlMesa5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
     }
-    private void updateServicioActual() {
-        if (mozoActual.getMesas().get(indexMesaSeleccionada).isAbierta()) {
-            updateServicioActual(mozoActual.obtenerPedidosServicio(indexMesaSeleccionada));
-        }
-        else {
-            updateServicioActual(new ArrayList<>());
-        }
-    }
+
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa1MouseClicked
         pressPanel(this.pnlMesa1, 1);
-        updateServicioActual();
-        
+        controlador.UpdateServicioActual(indexMesaSeleccionada);
     }// GEN-LAST:event_pnlMesa1MouseClicked
 
     private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa2MouseClicked
 
         pressPanel(this.pnlMesa2, 2);
-        updateServicioActual();
+        controlador.UpdateServicioActual(indexMesaSeleccionada);
 
     }// GEN-LAST:event_pnlMesa2MouseClicked
 
     private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa3MouseClicked
         pressPanel(this.pnlMesa3, 3);
-        updateServicioActual();
+        controlador.UpdateServicioActual(indexMesaSeleccionada);
     }// GEN-LAST:event_pnlMesa3MouseClicked
 
     private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa4MouseClicked
@@ -629,32 +622,19 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
 
     private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa5MouseClicked
         pressPanel(this.pnlMesa5, 5);
-        updateServicioActual();
+        controlador.UpdateServicioActual(indexMesaSeleccionada);
 
     }// GEN-LAST:event_pnlMesa5MouseClicked
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
-        if (indexMesaSeleccionada >= 0) {
-            Object o = cbxProducto.getSelectedItem();
-            if (o != null) {
-                int cantidad = (Integer) spnCantidad.getValue();
-                String description = txtDescripcionProducto.getText();
-                try {
-                    mozoActual.agregarProductoAlServicio(indexMesaSeleccionada, (Producto) o, cantidad, description);
-                    updateServicioActual(mozoActual.obtenerPedidosServicio(indexMesaSeleccionada));
-                    JOptionPane.showMessageDialog(this, "Producto agregado al servicio correctamente.", "INFO",
-                            JOptionPane.INFORMATION_MESSAGE);
 
-                } catch (LogicException ex) {
-                    Logger.getLogger(GUIAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        Object o = cbxProducto.getSelectedItem();
+        int cantidad = (Integer) spnCantidad.getValue();
+        String description = txtDescripcionProducto.getText();
+        Producto prod = o != null ? (Producto) o : null;
 
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una mesa!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        controlador.agregarProducto(indexMesaSeleccionada, prod, cantidad, description);
 
-        }
     }// GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void lblMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblMesa1MouseClicked
@@ -684,12 +664,7 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     }// GEN-LAST:event_spnCantidadStateChanged
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-
-        //Fachada.getInstancia().logout();
-        
-        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-
+        controlador.logout();
         this.setVisible(false);
         this.dispose();
     }// GEN-LAST:event_btnLogoutActionPerformed
@@ -725,12 +700,5 @@ public class GUIAtencionMesas extends javax.swing.JDialog implements logica.obse
     private javax.swing.JTable tblServicioActual;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void actualizar(Object evento, Observable origen) {
-        // if(evento.equals(ProcesadoraPedidos.eventos.cambioPedidos)){}
-    }
-
-    
 
 }

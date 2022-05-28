@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controladorYvista;
+package mvc.controlador;
 
 
 import logica.ProcesadoraPedidos;
 import logica.observador.Observable;
 import logica.observador.Observador;
+import mvc.IVistaProcesadora;
 
 /**
  *
@@ -17,9 +18,9 @@ public class ControladorProcesadora implements Observador{
     
     
     private ProcesadoraPedidos modelo;
-    private VistaProcesadora vista;
+    private IVistaProcesadora vista;
 
-    public ControladorProcesadora(ProcesadoraPedidos modelo, VistaProcesadora vista) {
+    public ControladorProcesadora(ProcesadoraPedidos modelo, IVistaProcesadora vista) {
         this.modelo = modelo;
         this.vista = vista;
     }

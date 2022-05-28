@@ -4,6 +4,7 @@
  */
 package IuEscritorio;
 
+import mvc.vista.VistaAtencionMesas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -105,7 +106,7 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
             String pass = String.valueOf(txtPassword.getPassword());
             mozo = Fachada.getInstancia().loginMozo(txtNombreMozo.getText(), pass );
             if (mozo != null) {
-                JDialog d = new GUIAtencionMesas(null, false,mozo);
+                JDialog d = new VistaAtencionMesas(null, false,mozo);
                 d.setVisible(true);
                 d.setLocationRelativeTo(null);
 
