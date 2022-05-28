@@ -103,6 +103,11 @@ public class Pedido {
         return servicio;
     }
 
+    @Override
+    public String toString() {
+       return "A COMERLA!!";
+    }
+
     
    
     

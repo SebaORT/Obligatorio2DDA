@@ -80,7 +80,7 @@ public class ControlUsuarios {
         if(m.mesasCerradas()){
             mozoConectados.remove(m);
         }
-        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
+        else throw new LogicException("Tiene mesas abiertas!!");
     }
    
 }

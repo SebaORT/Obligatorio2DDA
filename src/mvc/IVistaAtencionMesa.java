@@ -24,5 +24,7 @@ public interface IVistaAtencionMesa {
     public void mostrarAlerta(String error);
     public void mostrarInfoPedidoListo(Pedido pedido);
     public void mostrarMensaje(String mensaje);
+
+    public void cerrar();
     
 }

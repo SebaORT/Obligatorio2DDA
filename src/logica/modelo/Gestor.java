@@ -57,6 +57,10 @@ public class Gestor extends Usuario {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
             p.setEstado("Pronto");
+            
+            p.getServicio().getMesa().getMozo().pedidoCambioEstado(p);
+                    
+                   // avisar(Mozo.eventos.pedidoCambioEstado);
             //aca se deberia avisar al mozo que el pedido esta pronto 
         } else {
 

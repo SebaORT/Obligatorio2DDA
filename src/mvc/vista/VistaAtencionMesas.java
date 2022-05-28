@@ -55,7 +55,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }
 
     public void mostrarInfoPedidoListo(Pedido pedido) {
-        this.mostrarMensaje("Esta el pedido "+pedido.toString()+ " pronto!! ");
+        this.mostrarMensaje("Esta el pedido " + pedido.toString() + " pronto!! ");
     }
 
     public void initLabels(Mozo mozo) {
@@ -112,7 +112,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     public void updateServicioActual(ArrayList<Pedido> servicioActual) {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
-
+        
         for (Pedido pedido : servicioActual) {
             data.add(new Object[]{
                 pedido.getProducto().getNombre(),
@@ -142,6 +142,12 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
         JOptionPane.showMessageDialog(this, mensaje, "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    @Override
+    public void cerrar() {
+        this.setVisible(false);
+        this.dispose();
     }
 
     /**
@@ -206,6 +212,11 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         });
 
         btnTransferirMesa.setText("Transferir");
+        btnTransferirMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferirMesaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlAccionesMesasLayout = new javax.swing.GroupLayout(pnlAccionesMesas);
         pnlAccionesMesas.setLayout(pnlAccionesMesasLayout);
@@ -574,6 +585,10 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     }//GEN-LAST:event_btnCerrarMesaActionPerformed
 
+    private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferirMesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTransferirMesaActionPerformed
+
     private void pressPanel(JPanel pnl, int index) {
         if (pnl.isEnabled()) {
             this.indexMesaSeleccionada = index - 1;
@@ -665,8 +680,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLogoutActionPerformed
         controlador.logout();
-        this.setVisible(false);
-        this.dispose();
+
     }// GEN-LAST:event_btnLogoutActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -700,5 +714,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     private javax.swing.JTable tblServicioActual;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }

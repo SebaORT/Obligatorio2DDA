@@ -189,16 +189,24 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTomarPedidoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-        this.setVisible(false);
-        this.dispose();
+
+        this.gestorActual.preparaPedido(procesadora.getPedidos().get(0));
+
+//Fachada.getInstancia().getpr;
+
+//JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+       // this.setVisible(false);
+       // this.dispose();
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-        this.setVisible(false);
-        this.dispose();
+       
+        this.gestorActual.pedidoPronto(this.gestorActual.getPedidos().get(0));
+        
+//JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
+       // this.setVisible(false);
+       // this.dispose();
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
     
     

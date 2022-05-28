@@ -75,7 +75,7 @@ public class Fachada {
         return controlServicio.getProductosConStock();
     }
 
-    public void logoutMozo(Mozo mozo) {
+    public void logoutMozo(Mozo mozo) throws LogicException {
         controlUsuario.logoutMozo(mozo);
     }
 

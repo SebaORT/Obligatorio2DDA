@@ -49,7 +49,7 @@ public class Mozo extends Usuario{
         int mesasCerradas = 0;
         for (Mesa m : mesas) {
             if (!m.isAbierta()) {
-                mesasCerradas = +1;
+                mesasCerradas ++;
             }
         }
         if (mesasCerradas == totMesas) {

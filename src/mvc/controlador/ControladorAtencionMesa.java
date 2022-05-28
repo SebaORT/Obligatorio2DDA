@@ -14,7 +14,6 @@ import logica.modelo.Producto;
 import logica.observador.Observable;
 import logica.observador.Observador;
 import mvc.IVistaAtencionMesa;
-import mvc.vista.VistaAtencionMesas;
 
 /**
  *
@@ -37,7 +36,6 @@ public class ControladorAtencionMesa implements Observador {
     @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Mozo.eventos.pedidoCambioEstado)) {
-
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
@@ -94,7 +92,12 @@ public class ControladorAtencionMesa implements Observador {
     }
 
     public void logout() {
-        Fachada.getInstancia().logoutMozo(mozo);
+        try {
+            Fachada.getInstancia().logoutMozo(mozo);
+            vista.cerrar();
+        } catch (LogicException ex) {
+            vista.mostrarExceptionError(ex);
+        }
     }
 
 }
