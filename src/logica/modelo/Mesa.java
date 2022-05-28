@@ -6,7 +6,6 @@
 package logica.modelo;
 
 import java.util.ArrayList;
-import logica.Cliente;
 import logica.excepciones.LogicException;
 
 /**
@@ -18,7 +17,6 @@ public class Mesa {
     private int numero;
     private Mozo mozo;
     private boolean abierta = false;
-    private Cliente cliente;
     private Servicio servicio;
 
     public Servicio getServicio() {
@@ -55,9 +53,8 @@ public class Mesa {
     public void cerrarMesa() throws LogicException {
         if (abierta) {
             if (servicio.pedidosPendientes() == 0) {
-                cliente = null;
                 abierta = false;
-                servicio.limpiar();
+                servicio.limpiarServicio();
             } else
                 throw new LogicException("Tiene pedidos pendientes");
         } else
@@ -77,11 +74,17 @@ public class Mesa {
     }
     
     
-
+    
+    public void hacerTranferencia(Mozo mozoDestino){
+        
+    }
+    
     @Override
     public String toString() {
         return "Mesa "+numero;
     }
+
+    
 
     
 }

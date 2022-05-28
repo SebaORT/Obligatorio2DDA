@@ -6,7 +6,6 @@
 package logica.modelo;
 
 import java.util.ArrayList;
-import logica.Cliente;
 import logica.excepciones.LogicException;
 
 /**
@@ -31,7 +30,11 @@ public class Servicio {
         cliente=c;
     }
     
-    public int calcularServicio(Cliente c){
+    public void sacarCliente(){
+        cliente=null;
+    }
+    
+    public int calcularServicio(){
         int resultado = 0;
         for(Pedido p:pedidos){
             resultado += p.getMontoPedido();
@@ -62,8 +65,9 @@ public class Servicio {
         return pendientes;
     }
 
-    public void limpiar() {
+    public void limpiarServicio() {
         pedidos.clear();
+        sacarCliente();
     }
 
     public Mesa getMesa() {
