@@ -6,7 +6,6 @@
 package logica.modelo;
 
 import java.util.ArrayList;
-import logica.Cliente;
 import logica.excepciones.LogicException;
 
 /**
@@ -31,7 +30,7 @@ public class Servicio {
         cliente=c;
     }
     
-    public int calcularServicio(Cliente c){
+    public int calcularServicio(){
         int resultado = 0;
         for(Pedido p:pedidos){
             resultado += p.getMontoPedido();

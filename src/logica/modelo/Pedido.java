@@ -39,7 +39,7 @@ public class Pedido {
         //this.servicio = servicio;
     }
 
-    public void setStatus(String status) {
+    public void setEstado(String status) {
         this.Estado = status;
     }
 

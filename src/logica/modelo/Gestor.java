@@ -42,7 +42,7 @@ public class Gestor extends Usuario {
     public void preparaPedido(Pedido p){
         pedidos.add(p);
         p.gestorPreparador(this);
-        p.setStatus("En preparacion");
+        p.setEstado("En preparacion");
         procesadoraPedidos.sacarPedido(p);
     }
 
@@ -56,9 +56,8 @@ public class Gestor extends Usuario {
     public void pedidoPronto(Pedido p) {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
-            p.setStatus("Pronto");
+            p.setEstado("Pronto");
             //aca se deberia avisar al mozo que el pedido esta pronto 
-            //pero para eso el gestor tendira que ser observable tambien
         } else {
 
         }

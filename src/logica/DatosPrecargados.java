@@ -5,10 +5,14 @@
  */
 package logica;
 
+import logica.modelo.Cliente;
 import logica.excepciones.LogicException;
+import logica.modelo.Comun;
+import logica.modelo.DeLaCasa;
 import logica.modelo.Mozo;
 import logica.modelo.Gestor;
 import logica.modelo.Mesa;
+import logica.modelo.Preferencial;
 import logica.modelo.Producto;
 
 /**
@@ -34,6 +38,8 @@ public class DatosPrecargados {
                 Producto whiskey = new Producto(5555, "whiskey", 100, 15, bar);
                 Producto vodka = new Producto(6666, "vodka", 130, 17, bar);
                 Producto martini = new Producto(7777, "martini", 120, 14, bar);
+                Producto cafe = new Producto(8888, "cafe", 80, 1000, bar);
+                Producto aguaMineral = new Producto(9999, "agua mineral", 90, 1000, bar);
 
                 logica.agregarProducto(hamburguesa);
                 logica.agregarProducto(pizzeta);
@@ -42,10 +48,14 @@ public class DatosPrecargados {
                 logica.agregarProducto(whiskey);
                 logica.agregarProducto(vodka);
                 logica.agregarProducto(martini);
+                
+                Comun comun = new Comun();
+                DeLaCasa deLaCasa = new DeLaCasa();
+                Preferencial preferecnial = new Preferencial();
 
-                Cliente juan = new Cliente("Juan", "juan@gmail.com");
-                Cliente ana = new Cliente("ana", "ana@gmail.com");
-                Cliente mario = new Cliente("mario", "Mario@gmail.com");
+                Cliente juan = new Cliente(1,"Juan", "juan@gmail.com",comun);
+                Cliente ana = new Cliente(2,"ana", "ana@gmail.com",deLaCasa);
+                Cliente mario = new Cliente(3,"mario", "Mario@gmail.com",preferecnial);
 
                 logica.agregarCliente(juan);
                 logica.agregarCliente(ana);
@@ -98,16 +108,16 @@ public class DatosPrecargados {
                 mozo3.agregarMesa(mesa9);
 
                 mesa1.abrirMesa();
-                mesa1.getServicio().crearPedido(hamburguesa, 2, "cocidas");
+                //mesa1.getServicio().crearPedido(hamburguesa, 2, "cocidas");
                 mesa4.abrirMesa();
-                mesa4.getServicio().crearPedido(vodka, 2, "con hielo");
+                //mesa4.getServicio().crearPedido(vodka, 2, "con hielo");
 
                 // prueba
                 // mesa1.agregarCliente(ana);------------------------------------------------
-                mesa1.abrirMesa();
+                //mesa1.abrirMesa();
 
-                mozo1.agregarMesa(mesa1);
-                mozo1.agregarMesa(mesa2);
+                //mozo1.agregarMesa(mesa1);
+                //mozo1.agregarMesa(mesa2);
 
         }
 

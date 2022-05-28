@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.Cliente;
 import IuEscritorio.GUIProcesadoraPedidos;
 import java.util.ArrayList;
 import logica.excepciones.LogicException;

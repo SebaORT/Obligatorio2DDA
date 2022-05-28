@@ -80,8 +80,5 @@ public class ControlUsuarios {
             usuariosConectados.remove(m);
         }
     }
-    
-    public void logoutGestor(Gestor g){
-    
-    }
+   
 }

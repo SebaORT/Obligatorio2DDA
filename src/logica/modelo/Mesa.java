@@ -6,7 +6,6 @@
 package logica.modelo;
 
 import java.util.ArrayList;
-import logica.Cliente;
 import logica.excepciones.LogicException;
 
 /**
@@ -70,6 +69,15 @@ public class Mesa {
 
     public void agregarMozo(Mozo m) {
         setMozo(m);
+    }
+    
+    public void hacerTranferencia(Mozo mozoDestino){
+        
+    }
+    
+    @Override
+    public String toString() {
+        return "Mesa "+numero;
     }
 
 }

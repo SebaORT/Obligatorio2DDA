@@ -89,4 +89,8 @@ public class Mozo extends Usuario {
 
     }
 
+    void sacarMesa(Mesa mesa) {
+        mesas.remove(mesa);
+    }
+
 }
