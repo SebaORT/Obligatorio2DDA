@@ -14,7 +14,6 @@ import logica.modelo.Producto;
 import logica.observador.Observable;
 import logica.observador.Observador;
 import mvc.IVistaAtencionMesa;
-import mvc.vista.VistaAtencionMesas;
 
 /**
  *
@@ -37,7 +36,6 @@ public class ControladorAtencionMesa implements Observador {
     @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Mozo.eventos.pedidoCambioEstado)) {
-
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
@@ -83,21 +81,25 @@ public class ControladorAtencionMesa implements Observador {
 
     public void agregarProducto(int indexMesaSeleccionada, Producto prod, int cantidad, String description) {
         try {
-             if (indexMesaSeleccionada >= 0) {
-                mozo.agregarProductoAlServicio(indexMesaSeleccionada,prod, cantidad, description);
+            if (indexMesaSeleccionada >= 0) {
+                mozo.agregarProductoAlServicio(indexMesaSeleccionada, prod, cantidad, description);
                 vista.updateServicioActual(mozo.obtenerPedidosServicio(indexMesaSeleccionada));
                 vista.mostrarMensaje("Producto agregado al servicio correctamente.");
-             }
-             else {
+            } else {
                 vista.mostrarMensaje("Seleccione una mesa!");
-             }             
+            }
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }
     }
- 
-    public void logout() throws LogicException {
-        Fachada.getInstancia().logoutMozo(mozo);
+
+    public void logout() {
+        try {
+            Fachada.getInstancia().logoutMozo(mozo);
+            vista.cerrar();
+        } catch (LogicException ex) {
+            vista.mostrarExceptionError(ex);
+        }
     }
 
 }

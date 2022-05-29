@@ -20,8 +20,6 @@ public class ControlUsuarios {
     private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
     private ArrayList<Usuario> mozosConectados = new ArrayList<Usuario>();
     private ArrayList<Usuario> gestoresConectados = new ArrayList<Usuario>();
-    
-    
 
     public ArrayList<Mozo> getMozos() {
         return mozos;
@@ -31,66 +29,66 @@ public class ControlUsuarios {
         return gestores;
     }
 
-    public void agregarMozo(Mozo m){
+    public void agregarMozo(Mozo m) {
         mozos.add(m);
     }
-    
-    public void agregarGestor(Gestor g){
+
+    public void agregarGestor(Gestor g) {
         gestores.add(g);
     }
-    
-    private Usuario login(String u,String p,ArrayList<Usuario> lista){
-       
-        for(Usuario usr:lista){
-            if(usr.getNombreUsuario().equalsIgnoreCase(u) && 
-                    usr.getPassword().equals(p)){
-                    return usr;
+
+    private Usuario login(String u, String p, ArrayList<Usuario> lista) {
+
+        for (Usuario usr : lista) {
+            if (usr.getNombreUsuario().equalsIgnoreCase(u) &&
+                    usr.getPassword().equals(p)) {
+                return usr;
             }
         }
         return null;
     }
-    
-    public Mozo loginMozo(String nombre,String password) throws LogicException{
-       Usuario usuario = login(nombre,password,(ArrayList)mozos);
-       if (usuario!=null){
-           if(!mozosConectados.contains(usuario)){
-               mozosConectados.add(usuario);
-            return (Mozo)usuario;
-           }
-           else throw new LogicException("Ud. ya está logueado");
-        }
-       else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
+
+    public Mozo loginMozo(String nombre, String password) throws LogicException {
+        Usuario usuario = login(nombre, password, (ArrayList) mozos);
+        if (usuario != null) {
+            if (!mozosConectados.contains(usuario)) {
+                mozosConectados.add(usuario);
+                return (Mozo) usuario;
+            } else
+                throw new LogicException("Ud. ya está logueado");
+        } else
+            throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
-    
-    public ArrayList<Mozo> mozosAptosParaTransferir(){
-        ArrayList<Mozo> resultado= new ArrayList<Mozo>();
-        for (Usuario u : mozosConectados){
-            Mozo m = (Mozo)u;
-            if(m.getMesas().size()<5){
+
+    public ArrayList<Mozo> mozosAptosParaTransferir() {
+        ArrayList<Mozo> resultado = new ArrayList<Mozo>();
+        for (Usuario u : mozosConectados) {
+            Mozo m = (Mozo) u;
+            if (m.getMesas().size() < 5) {
                 resultado.add(m);
             }
         }
         return resultado;
     }
-    
-    public Gestor loginGestor(String u,String p) throws LogicException{
-        Usuario usu = login(u,p,(ArrayList)gestores);
-        if(usu!=null){
-            if(!gestoresConectados.contains(usu)){
-                Gestor g = (Gestor)usu;
+
+    public Gestor loginGestor(String u, String p) throws LogicException {
+        Usuario usu = login(u, p, (ArrayList) gestores);
+        if (usu != null) {
+            if (!gestoresConectados.contains(usu)) {
+                Gestor g = (Gestor) usu;
                 g.ultimoAcceso();
-                return g; 
-            }
-            else throw new LogicException("Ud. ya está logueado");
-        }
-        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
+                return g;
+            } else
+                throw new LogicException("Ud. ya está logueado");
+        } else
+            throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
-    
-    public void logoutMozo(Mozo m) throws LogicException{
-        if(m.mesasCerradas()){
+
+    public void logoutMozo(Mozo m) throws LogicException {
+        if (m.mesasCerradas()) {
             mozosConectados.remove(m);
-        }
-        else throw new LogicException("Debe cerrar las mesas abiertas antes de salir");
+        } else
+            throw new LogicException("Debe cerrar las mesas abiertas antes de salir");
     }
-   
+
 }

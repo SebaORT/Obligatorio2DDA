@@ -329,7 +329,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblPedidosCurso">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pedidos Pendientes"/>
+        <Property name="text" type="java.lang.String" value="Pedidos en proceso"/>
       </Properties>
     </Component>
   </SubComponents>

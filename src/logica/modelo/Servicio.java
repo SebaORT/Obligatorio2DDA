@@ -73,6 +73,10 @@ public class Servicio {
         sacarCliente();
     }
 
+    public Mesa getMesa() {
+        return mesa;
+    }
+
     
     
 }

@@ -99,6 +99,16 @@ public class Pedido {
         this.gestor = gestor;
     }
 
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    @Override
+    public String toString() {
+       return "A COMERLA!!";
+    }
+
+    
    
     
     

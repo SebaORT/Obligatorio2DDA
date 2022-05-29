@@ -68,6 +68,12 @@ public class Mesa {
     public void agregarMozo(Mozo m) {
         setMozo(m);
     }
+
+    public int getNumero() {
+        return numero;
+    }
+    
+    
     
     public void hacerTranferencia(Mozo mozoDestino){
         
@@ -77,7 +83,7 @@ public class Mesa {
     public String toString() {
         return "Mesa "+numero;
     }
-
+    
     
 
     
