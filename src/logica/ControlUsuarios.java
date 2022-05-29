@@ -18,7 +18,7 @@ import logica.modelo.Usuario;
 public class ControlUsuarios {
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Mozo> mozos = new ArrayList<Mozo>();
-    private ArrayList<Usuario> mozoConectados = new ArrayList<Usuario>();
+    private ArrayList<Usuario> mozosConectados = new ArrayList<Usuario>();
     private ArrayList<Usuario> gestoresConectados = new ArrayList<Usuario>();
     
     
@@ -53,8 +53,8 @@ public class ControlUsuarios {
     public Mozo loginMozo(String nombre,String password) throws LogicException{
        Usuario usuario = login(nombre,password,(ArrayList)mozos);
        if (usuario!=null){
-           if(!mozoConectados.contains(usuario)){
-               mozoConectados.add(usuario);
+           if(!mozosConectados.contains(usuario)){
+               mozosConectados.add(usuario);
             return (Mozo)usuario;
            }
            else throw new LogicException("Ud. ya está logueado");
@@ -62,6 +62,16 @@ public class ControlUsuarios {
        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
     
+    public ArrayList<Mozo> mozosAptosParaTransferir(){
+        ArrayList<Mozo> resultado= new ArrayList<Mozo>();
+        for (Usuario u : mozosConectados){
+            Mozo m = (Mozo)u;
+            if(m.getMesas().size()<5){
+                resultado.add(m);
+            }
+        }
+        return resultado;
+    }
     
     public Gestor loginGestor(String u,String p) throws LogicException{
         Usuario usu = login(u,p,(ArrayList)gestores);
@@ -78,9 +88,9 @@ public class ControlUsuarios {
     
     public void logoutMozo(Mozo m) throws LogicException{
         if(m.mesasCerradas()){
-            mozoConectados.remove(m);
+            mozosConectados.remove(m);
         }
-        else throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
+        else throw new LogicException("Debe cerrar las mesas abiertas antes de salir");
     }
    
 }

@@ -8,7 +8,6 @@ package logica.modelo;
 import logica.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
-import logica.ProcesadoraPedidos;
 
 /**
  *

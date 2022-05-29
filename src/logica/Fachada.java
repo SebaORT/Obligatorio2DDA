@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.ProcesadoraPedidos;
 import mvc.vista.VistaProcesadoraPedidos;
 import java.util.ArrayList;
 import logica.excepciones.LogicException;
@@ -75,7 +76,7 @@ public class Fachada {
         return controlServicio.getProductosConStock();
     }
 
-    public void logoutMozo(Mozo mozo) {
+    public void logoutMozo(Mozo mozo) throws LogicException {
         controlUsuario.logoutMozo(mozo);
     }
 

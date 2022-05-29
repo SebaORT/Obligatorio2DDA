@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.modelo;
 
 import logica.modelo.Gestor;
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ import logica.observador.Observable;
  *
  * @author Usuario
  */
-public class ProcesadoraPedidos extends Observable {
+public class ProcesadoraPedidos{
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     
-    public enum eventos{cambioPedidos}
     
-    // agregar enum con los eventos
+    
+    
 
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
@@ -40,13 +40,11 @@ public class ProcesadoraPedidos extends Observable {
     }
 
     public void agregarPedido(Pedido p) {
-        pedidos.add(p);
-        avisar(eventos.cambioPedidos);
+        pedidos.add(p);       
     }
     
     public void sacarPedido(Pedido p){
         pedidos.remove(p);
-        avisar(eventos.cambioPedidos);
     }
 
     public void asignarGestor(Gestor gestorActual) {

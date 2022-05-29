@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import logica.Fachada;
-import logica.ProcesadoraPedidos;
+import logica.modelo.ProcesadoraPedidos;
 import logica.excepciones.LogicException;
 import logica.modelo.Mesa;
 import logica.modelo.Mozo;
@@ -104,7 +104,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     public void updateListaProductos(ArrayList<Producto> productos) {
         // cbxProducto.setModel((ComboBoxModel<Producto>) productos);
-
+        cbxProducto.removeAllItems();
         for (Producto producto : productos) {
             cbxProducto.addItem(producto);
         }
@@ -663,11 +663,16 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         }
     }// GEN-LAST:event_spnCantidadStateChanged
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLogoutActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
         controlador.logout();
         this.setVisible(false);
         this.dispose();
-    }// GEN-LAST:event_btnLogoutActionPerformed
+        } catch (LogicException ex) {
+            Logger.getLogger(VistaAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrirMesa;

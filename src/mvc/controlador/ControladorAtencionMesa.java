@@ -41,6 +41,9 @@ public class ControladorAtencionMesa implements Observador {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
+        if (evento.equals(Mozo.eventos.actulizarProductos)) {
+            vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
+        }
     }
 
     private void inicializarVista() {
@@ -92,8 +95,8 @@ public class ControladorAtencionMesa implements Observador {
             vista.mostrarExceptionError(ex);
         }
     }
-
-    public void logout() {
+ 
+    public void logout() throws LogicException {
         Fachada.getInstancia().logoutMozo(mozo);
     }
 

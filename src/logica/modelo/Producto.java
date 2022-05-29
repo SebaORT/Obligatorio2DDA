@@ -5,8 +5,6 @@
  */
 package logica.modelo;
 
-import logica.ProcesadoraPedidos;
-
 /**
  *
  * @author Usuario

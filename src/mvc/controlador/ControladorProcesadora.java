@@ -5,7 +5,7 @@
 package mvc.controlador;
 
 
-import logica.ProcesadoraPedidos;
+import logica.modelo.ProcesadoraPedidos;
 import logica.observador.Observable;
 import logica.observador.Observador;
 import mvc.IVistaProcesadora;

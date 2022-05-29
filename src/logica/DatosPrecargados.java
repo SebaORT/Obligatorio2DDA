@@ -5,6 +5,7 @@
  */
 package logica;
 
+import logica.modelo.ProcesadoraPedidos;
 import logica.modelo.Cliente;
 import logica.excepciones.LogicException;
 import logica.modelo.Comun;

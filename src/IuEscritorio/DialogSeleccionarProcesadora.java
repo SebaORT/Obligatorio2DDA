@@ -9,7 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import logica.Fachada;
-import logica.ProcesadoraPedidos;
+import logica.modelo.ProcesadoraPedidos;
 import logica.modelo.Gestor;
 
 /**

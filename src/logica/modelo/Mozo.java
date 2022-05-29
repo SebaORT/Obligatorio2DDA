@@ -49,7 +49,7 @@ public class Mozo extends Usuario{
         int mesasCerradas = 0;
         for (Mesa m : mesas) {
             if (!m.isAbierta()) {
-                mesasCerradas = +1;
+                mesasCerradas ++;
             }
         }
         if (mesasCerradas == totMesas) {
@@ -61,10 +61,12 @@ public class Mozo extends Usuario{
     public void iniciarTransferencia(Mozo mozoDestino,Mozo mozoOrigen, Mesa mesa){
         transferencia = new Transferencia(mozoOrigen,mesa,mozoDestino);
         mozoDestino.setTransferencia(transferencia);
+        // avisar a mozo destino
     }
     
     public void aceptarTransferencia() throws LogicException{
         transferencia.trasferir();
+        // avisar a mozo origen
     }
     
 
@@ -84,7 +86,7 @@ public class Mozo extends Usuario{
         }
     }
     
-    public enum eventos {pedidoCambioEstado};
+    public enum eventos {pedidoCambioEstado,actulizarProductos};
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
@@ -96,6 +98,10 @@ public class Mozo extends Usuario{
         
         this.avisar(eventos.pedidoCambioEstado);
     }
+    
+    public void actuliaziarProductos(){
+        this.avisar(eventos.actulizarProductos);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -103,8 +109,7 @@ public class Mozo extends Usuario{
         return m.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
 
-    public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad,
-            String descripcion) throws LogicException {
+    public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad,String descripcion) throws LogicException {
         this.mesas.get(indexMesaSeleccionada).getServicio().crearPedido(producto, cantidad, descripcion);
     }
 

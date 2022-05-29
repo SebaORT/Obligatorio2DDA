@@ -7,7 +7,7 @@ package mvc.vista;
 import mvc.controlador.ControladorProcesadora;
 import javax.swing.JOptionPane;
 import logica.Fachada;
-import logica.ProcesadoraPedidos;
+import logica.modelo.ProcesadoraPedidos;
 import logica.modelo.Gestor;
 import logica.observador.Observable;
 import mvc.IVistaProcesadora;
@@ -34,7 +34,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
         this.gestorActual = gestorActual;
         controlador = new ControladorProcesadora(procesadora, this);
 
-        procesadora.agregarObservador(this);
+        //procesadora.agregarObservador(this);
 
         lblGestor.setText("Gestor: " + gestorActual.getNombreUsuario());
         lblProcesadora.setText("Unidad Procesadora: " + procesadora.getNombre());
@@ -209,8 +209,6 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        if (evento.equals(ProcesadoraPedidos.eventos.cambioPedidos)) {
-            // mostrar peidos de la procesadora
-        }
+        
     }
 }
