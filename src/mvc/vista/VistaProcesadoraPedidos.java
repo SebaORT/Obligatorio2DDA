@@ -255,6 +255,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     @Override
     public void actulizazPedidosProcesadora() {
         actualizarTablaGe(this.procesadora.getPedidos(), tblPedidosPendientes);
+        actualizarTablaGe(this.gestorActual.getPedidos(), tblPedidosCurso);
     }
 
     
