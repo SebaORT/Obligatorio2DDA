@@ -20,8 +20,7 @@ import mvc.IVistaProcesadora;
  *
  * @author Sebastian
  */
-public class VistaProcesadoraPedidos extends javax.swing.JDialog
-        implements logica.observador.Observador, IVistaProcesadora {
+public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVistaProcesadora {
 
     private final ProcesadoraPedidos procesadora;
     private final Gestor gestorActual;
@@ -38,7 +37,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
         initComponents();
         this.procesadora = procesadora;
         this.gestorActual = gestorActual;
-        controlador = new ControladorProcesadora(procesadora, this);
+        controlador = new ControladorProcesadora(gestorActual, this);
 
         //procesadora.agregarObservador(this);
 
@@ -251,8 +250,12 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog
     private javax.swing.JTable tblPedidosPendientes;
     // End of variables declaration//GEN-END:variables
 
+    
+
     @Override
-    public void actualizar(Object evento, Observable origen) {
-        
+    public void actulizazPedidosProcesadora() {
+        actualizarTablaGe(this.procesadora.getPedidos(), tblPedidosPendientes);
     }
+
+    
 }

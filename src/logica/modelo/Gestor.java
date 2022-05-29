@@ -20,6 +20,8 @@ public class Gestor extends Usuario {
     private Date fechaUltimoAcceso= new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private ProcesadoraPedidos procesadoraPedidos;
+    
+    public enum eventos{actulizarPedidosProcesadora,actulizarMisPedidos};
 
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
         super(nombreUsuario, password, nombreCompleto);
@@ -43,6 +45,7 @@ public class Gestor extends Usuario {
         p.gestorPreparador(this);
         p.setEstado("En preparacion");
         procesadoraPedidos.sacarPedido(p);
+        avisar(eventos.actulizarPedidosProcesadora);
     }
 
     public void validar() {
@@ -58,8 +61,8 @@ public class Gestor extends Usuario {
             p.setEstado("Pronto");
             
             p.getServicio().getMesa().getMozo().pedidoCambioEstado(p);
-                    
-                   // avisar(Mozo.eventos.pedidoCambioEstado);
+            avisar(eventos.actulizarMisPedidos);       
+            // avisar(Mozo.eventos.pedidoCambioEstado);
             //aca se deberia avisar al mozo que el pedido esta pronto 
         } else {
 

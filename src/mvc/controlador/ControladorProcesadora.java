@@ -5,6 +5,7 @@
 package mvc.controlador;
 
 
+import logica.modelo.Gestor;
 import logica.modelo.ProcesadoraPedidos;
 import logica.observador.Observable;
 import logica.observador.Observador;
@@ -17,19 +18,26 @@ import mvc.IVistaProcesadora;
 public class ControladorProcesadora implements Observador{
     
     
-    private ProcesadoraPedidos modelo;
+    private Gestor gestor;
     private IVistaProcesadora vista;
 
-    public ControladorProcesadora(ProcesadoraPedidos modelo, IVistaProcesadora vista) {
-        this.modelo = modelo;
+    public ControladorProcesadora(Gestor gestor, IVistaProcesadora vista) {
+        this.gestor = gestor;
         this.vista = vista;
+        
+        gestor.agregarObservador(this);
     }
     
     
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(evento.equals(Gestor.eventos.actulizarPedidosProcesadora)){
+            vista.actulizazPedidosProcesadora();
+        }
+        if(evento.equals(Gestor.eventos.actulizarMisPedidos)){
+            //actuliza mi lista de pedidos como gestor
+        }
     }
     
 }

@@ -10,4 +10,6 @@ package mvc;
  */
 public interface IVistaProcesadora {
     
+    public void actulizazPedidosProcesadora();
+    
 }
