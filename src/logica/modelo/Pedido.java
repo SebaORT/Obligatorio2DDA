@@ -6,7 +6,6 @@
 package logica.modelo;
 
 import logica.excepciones.LogicException;
-import logica.excepciones.RestoException;
 
 /**
  *
@@ -36,7 +35,6 @@ public class Pedido {
         this.montoPedido = montoPedido;
         this.descripcion = descripcion;
         this.gestor = gestor;
-        //this.servicio = servicio;
     }
 
     public void setEstado(String status) {

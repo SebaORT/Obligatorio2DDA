@@ -49,7 +49,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         super(parent, modal);
         initComponents();
 
-        // this.mozoActual = mozo;
         controlador = new ControladorAtencionMesa(mozo, this);
     }
 

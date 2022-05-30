@@ -8,7 +8,6 @@ package logica.modelo;
 import logica.excepciones.LogicException;
 import logica.modelo.Usuario;
 import java.util.ArrayList;
-import logica.excepciones.RestoException;
 
 /**
  *

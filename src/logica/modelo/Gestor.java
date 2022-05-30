@@ -13,34 +13,34 @@ import java.util.Date;
  *
  * @author Usuario
  */
-
-
 public class Gestor extends Usuario {
 
-    private Date fechaUltimoAcceso= new Date();
+    private Date fechaUltimoAcceso = new Date();
     private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
     private ProcesadoraPedidos procesadoraPedidos;
-    
-    public enum eventos{actualizarPedidosProcesadora,actualizarMisPedidos};
+
+    public enum eventos {
+        actualizarPedidosProcesadora, actualizarMisPedidos
+    };
 
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
         super(nombreUsuario, password, nombreCompleto);
     }
 
-   
-      public void ultimoAcceso(){
-      Date nuevaFecha = new Date();
-      setFechaUltimoAcceso(nuevaFecha);
-      }
-      public Date getFechaUltimoAcceso() {
-      return fechaUltimoAcceso;
-      }
-      public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
-      this.fechaUltimoAcceso = fechaUltimoAcceso;
-      }
-    
+    public void ultimoAcceso() {
+        Date nuevaFecha = new Date();
+        setFechaUltimoAcceso(nuevaFecha);
+    }
 
-    public void preparaPedido(Pedido p){
+    public Date getFechaUltimoAcceso() {
+        return fechaUltimoAcceso;
+    }
+
+    public void setFechaUltimoAcceso(Date fechaUltimoAcceso) {
+        this.fechaUltimoAcceso = fechaUltimoAcceso;
+    }
+
+    public void preparaPedido(Pedido p) {
         pedidos.add(p);
         p.gestorPreparador(this);
         p.setEstado("En preparacion");
@@ -59,9 +59,9 @@ public class Gestor extends Usuario {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
             p.setEstado("Pronto");
-            
+
             p.getServicio().getMesa().getMozo().pedidoCambioEstado(p);
-            avisar(eventos.actualizarMisPedidos);       
+            avisar(eventos.actualizarMisPedidos);
             // avisar(Mozo.eventos.pedidoCambioEstado);
             //aca se deberia avisar al mozo que el pedido esta pronto 
         } else {
@@ -78,7 +78,5 @@ public class Gestor extends Usuario {
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
-    
-    
 
 }
