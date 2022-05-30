@@ -55,7 +55,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }
 
     public void mostrarInfoPedidoListo(Pedido pedido) {
-        this.mostrarMensaje("Esta el pedido " + pedido.toString() + " pronto!! ");
+        this.mostrarMensaje(pedido.toString());
     }
 
     public void initLabels(Mozo mozo) {

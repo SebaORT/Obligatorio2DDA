@@ -99,6 +99,8 @@ public class DialogSeleccionarProcesadora extends javax.swing.JDialog {
         JDialog d = new VistaProcesadoraPedidos(null, false, gestorActual,procesadoraSeleccionada);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
 

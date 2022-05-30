@@ -10,9 +10,10 @@ package logica.modelo;
  * @author Usuario
  */
 public abstract class TipoCliente {
-
+    
     public abstract float montoAPagarConDescuento(Servicio servicio);
-    
-    
-    
+
+    @Override
+    public abstract String toString();
+
 }

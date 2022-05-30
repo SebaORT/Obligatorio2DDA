@@ -22,5 +22,11 @@ public class Comun extends TipoCliente {
         
         return resultado;
     }
+
+    @Override
+    public String toString() {
+        return "Comun";
+    }
+    
     
 }

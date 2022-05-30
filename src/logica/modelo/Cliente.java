@@ -18,6 +18,10 @@ public class Cliente {
     private String tipo;
     private TipoCliente tipoCliente;
 
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
     public Cliente(int id,String nombre, String email,TipoCliente tipoCliente) {
         this.nombre = nombre;
         this.email = email;

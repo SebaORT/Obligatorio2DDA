@@ -13,7 +13,7 @@ public class DeLaCasa extends TipoCliente{
 
     @Override
     public float montoAPagarConDescuento(Servicio servicio) {
-        float tot =(float)servicio.calcularServicio();
+        float tot = servicio.calcularServicio();
         if(tot>500){
             tot = tot-500;
         }
@@ -21,4 +21,8 @@ public class DeLaCasa extends TipoCliente{
         return tot;
     }
     
+    @Override
+    public String toString() {
+        return "De La Casa";
+    }
 }

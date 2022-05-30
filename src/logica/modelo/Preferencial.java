@@ -20,10 +20,14 @@ public class Preferencial extends TipoCliente{
             }
         }
         if(resultado>2000){
-            resultado -= resultado*0.05;
+            resultado = (float) (resultado - resultado*0.05);
         }
         
         return resultado;
     }
     
+    @Override
+    public String toString() {
+        return "Preferencial";
+    }
 }

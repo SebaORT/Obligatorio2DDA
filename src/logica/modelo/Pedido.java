@@ -105,7 +105,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-       return "A COMERLA!!";
+       return "El Pedido : "+ cantidad + " " + producto.getNombre() + ", de la Mesa: " + servicio.getMesa().getNumero() + " esta pronto!!";
     }
 
     
