@@ -29,10 +29,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
             ProcesadoraPedidos procesadora) {
         super(parent, modal);
         initComponents();
-        controlador = new ControladorProcesadora(gestorActual,procesadora, this);
-
-        //procesadora.agregarObservador(this);
-       
+        controlador = new ControladorProcesadora(gestorActual,procesadora, this);       
     }
 
     public void initLabels(Gestor g, ProcesadoraPedidos p) {

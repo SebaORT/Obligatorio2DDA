@@ -77,9 +77,9 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         int i = 0;
         for (Mesa mesa : mesasMozo) {
             if (mesa.isAbierta()) {
-                setMesaAbiertaUI(i);
+                setMesaAbierta(i);
             } else { // mesa cerrada
-                setMesaCerradaUI(i);
+                setMesaCerrada(i);
             }
             labelMesas[i].setText(mesa.toString());
             i++;
@@ -93,11 +93,11 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         }
     }
 
-    private void setMesaAbiertaUI(int i) {
+    public void setMesaAbierta(int i) {
         panelsMesasButtons[i].setBackground(new Color(0, 153, 0)); // green
     }
 
-    private void setMesaCerradaUI(int i) {
+    public void setMesaCerrada(int i) {
         panelsMesasButtons[i].setBackground(new Color(153, 0, 0));// red
     }
 
@@ -138,7 +138,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     @Override
     public void mostrarMensaje(String mensaje) {
-
         JOptionPane.showMessageDialog(this, mensaje, "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
     }
@@ -649,15 +648,10 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     private void btnAbrirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAbrirMesaActionPerformed
         controlador.AbrirMesa(indexMesaSeleccionada);
-        setMesaAbiertaUI(indexMesaSeleccionada);
     }// GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCerrarMesaActionPerformed
-
         controlador.CerrarMesa(indexMesaSeleccionada);
-
-        setMesaCerradaUI(indexMesaSeleccionada);
-
     }// GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTransferirMesaActionPerformed

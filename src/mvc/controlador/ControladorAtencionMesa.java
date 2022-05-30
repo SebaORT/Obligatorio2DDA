@@ -58,6 +58,8 @@ public class ControladorAtencionMesa implements Observador {
     public void AbrirMesa(int indexMesaSeleccionada) {
         try {
             this.mozo.getMesas().get(indexMesaSeleccionada).abrirMesa();
+            vista.setMesaAbierta(indexMesaSeleccionada);
+
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }
@@ -66,6 +68,7 @@ public class ControladorAtencionMesa implements Observador {
     public void CerrarMesa(int indexMesaSeleccionada) {
         try {
             this.mozo.getMesas().get(indexMesaSeleccionada).cerrarMesa();
+            vista.setMesaCerrada(indexMesaSeleccionada);
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }

@@ -35,7 +35,7 @@ public class Mesa {
     public void abrirMesa() throws LogicException {
         if (!abierta) {
             abierta = true;
-
+            
         } else {
             throw new LogicException("La mesa esta abierta.");
         }
