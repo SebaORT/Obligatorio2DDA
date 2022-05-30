@@ -1,6 +1,5 @@
 package mvc.vista;
 
-import IuEscritorio.TableModelCustom;
 import mvc.controlador.ControladorAtencionMesa;
 import java.awt.Color;
 import java.awt.Component;

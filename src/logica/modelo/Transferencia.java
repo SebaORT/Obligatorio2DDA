@@ -6,6 +6,8 @@
 package logica.modelo;
 
 import logica.excepciones.LogicException;
+import logica.modelo.Mesa;
+import logica.modelo.Mozo;
 
 /**
  *
