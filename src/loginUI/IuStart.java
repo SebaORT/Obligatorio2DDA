@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IuEscritorio;
+package loginUI;
 
 import javax.swing.JDialog;
 
@@ -83,10 +83,9 @@ public class IuStart extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JDialog d = new LoginProcesadoraPedidos(null,false);     
-         d.setVisible(true);
+        d.setVisible(true);
         d.setLocationRelativeTo(null);
         d.setVisible(true); 
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

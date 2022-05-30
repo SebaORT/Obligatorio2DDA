@@ -4,7 +4,6 @@
  */
 package mvc.vista;
 
-import IuEscritorio.TableModelCustom;
 import java.util.ArrayList;
 import mvc.controlador.ControladorProcesadora;
 import javax.swing.JOptionPane;
@@ -22,12 +21,7 @@ import mvc.IVistaProcesadora;
  */
 public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVistaProcesadora {
 
-    private final ProcesadoraPedidos procesadora;
-    private final Gestor gestorActual;
     private ControladorProcesadora controlador;
-    private ArrayList<Pedido> lista1 = new ArrayList<Pedido>();
-    private ArrayList<Pedido> lista2 = new ArrayList<Pedido>();
-
     /**
      * Creates new form GUIProcesadoraPedidos
      */
@@ -35,18 +29,25 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
             ProcesadoraPedidos procesadora) {
         super(parent, modal);
         initComponents();
-        this.procesadora = procesadora;
-        this.gestorActual = gestorActual;
-        controlador = new ControladorProcesadora(gestorActual, this);
+        controlador = new ControladorProcesadora(gestorActual,procesadora, this);
 
         //procesadora.agregarObservador(this);
-
-        lblGestor.setText("Gestor: " + gestorActual.getNombreUsuario());
-        lblProcesadora.setText("Unidad Procesadora: " + procesadora.getNombre());
-        actualizarTablaGe(this.procesadora.getPedidos(), tblPedidosPendientes);
-        actualizarTablaGe(this.gestorActual.getPedidos(), tblPedidosCurso);
+       
     }
 
+    public void initLabels(Gestor g, ProcesadoraPedidos p) {
+        lblGestor.setText("Gestor: " + g.getNombreUsuario());
+        lblProcesadora.setText("Unidad Procesadora: " + p.getNombre());
+    }
+    public void actualizarPedidosPendientes(ArrayList<Pedido> pedidos) {
+         actualizarTablaGeneric(pedidos, tblPedidosPendientes);
+    }
+    
+    @Override
+    public void actualizarPedidosEnCurso(ArrayList<Pedido> pedidos) {
+         actualizarTablaGeneric(pedidos, tblPedidosCurso);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -189,34 +190,25 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTomarPedidoActionPerformed
         // TODO add your handling code here:
 
-        this.gestorActual.preparaPedido(procesadora.getPedidos().get(0));
+        controlador.prepararPedido(null); 
 
-//Fachada.getInstancia().getpr;
 
-//JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-       // this.setVisible(false);
-       // this.dispose();
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         // TODO add your handling code here:
        
-        this.gestorActual.pedidoPronto(this.gestorActual.getPedidos().get(0));
+        controlador.finalizarPedido(null);
         
-//JOptionPane.showMessageDialog(this, "METODO NO IMPLEMENTADO!!!!", "ERROR", JOptionPane.ERROR_MESSAGE);
-       // this.setVisible(false);
-       // this.dispose();
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
     
     
     
    
  
-    private void actualizarTablaGe(ArrayList<Pedido> lista, JTable tbl){
+    private void actualizarTablaGeneric(ArrayList<Pedido> lista, JTable tbl){
         String[] columnNames = {"Producto", "Cantidad",
         "Descripcion", "N° Mesa", "Mozo"};
-        
-//        this.lista1 = lista;
         ArrayList<Object[]> data = new ArrayList<Object[]>();
 
         for (Pedido pedido : lista) {
@@ -250,12 +242,11 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     private javax.swing.JTable tblPedidosPendientes;
     // End of variables declaration//GEN-END:variables
 
+
+
     
 
-    @Override
-    public void actulizazPedidosProcesadora() {
-        actualizarTablaGe(this.procesadora.getPedidos(), tblPedidosPendientes);
-    }
+   
 
     
 }

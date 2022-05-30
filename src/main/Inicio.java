@@ -1,6 +1,6 @@
 package main;
 
-import IuEscritorio.IuStart;
+import loginUI.IuStart;
 import logica.DatosPrecargados;
 
 
