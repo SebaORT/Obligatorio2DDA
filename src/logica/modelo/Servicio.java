@@ -74,7 +74,7 @@ public class Servicio {
         int pendientes=0;
         for (Pedido p: pedidos){
             if(p.getEstado()!= "servido")
-                pendientes =+ 1;
+                pendientes ++;
         }
         return pendientes;
     }
