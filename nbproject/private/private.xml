@@ -8,6 +8,10 @@
             <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/logica/modelo/Mozo.java</file>
             <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/mvc/vista/VistaAtencionMesas.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/main/Inicio.java</file>
+            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/logica/ControlClientes.java</file>
+            <file>file:/C:/Users/santi/Documents/GitHub/Obligatorio2DDA/src/logica/Fachada.java</file>
+        </group>
     </open-files>
 </project-private>
