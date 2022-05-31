@@ -5,6 +5,7 @@
 package mvc.vista;
 
 import java.util.ArrayList;
+import javax.swing.JButton;
 import mvc.controlador.ControladorProcesadora;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -22,6 +23,7 @@ import mvc.IVistaProcesadora;
 public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVistaProcesadora {
 
     private ControladorProcesadora controlador;
+    
     /**
      * Creates new form GUIProcesadoraPedidos
      */
@@ -186,8 +188,11 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTomarPedidoActionPerformed
         // TODO add your handling code here:
-
-        controlador.prepararPedido(null); 
+        
+        ArrayList<Pedido> lista = controlador.PedidosPendientes();
+        int rowSel = tblPedidosPendientes.getSelectedRow();
+        
+        controlador.prepararPedido(lista.get(rowSel)); 
 
 
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
@@ -195,7 +200,10 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         // TODO add your handling code here:
        
-        controlador.finalizarPedido(null);
+        ArrayList<Pedido> lista = controlador.PedidosEncurso();
+        int rowSel = tblPedidosCurso.getSelectedRow();
+        
+        controlador.finalizarPedido(lista.get(rowSel));
         
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
     

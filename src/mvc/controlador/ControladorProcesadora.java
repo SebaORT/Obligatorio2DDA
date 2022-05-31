@@ -4,6 +4,7 @@
  */
 package mvc.controlador;
 
+import java.util.ArrayList;
 import logica.modelo.Gestor;
 import logica.modelo.Pedido;
 import logica.modelo.ProcesadoraPedidos;
@@ -34,11 +35,11 @@ public class ControladorProcesadora implements Observador {
     @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Gestor.eventos.actualizarPedidosProcesadora)) {
-            vista.actualizarPedidosEnCurso(this.procesadora.getPedidos());
+            vista.actualizarPedidosEnCurso(PedidosEncurso());
         }
         if (evento.equals(Gestor.eventos.actualizarMisPedidos)) {
             //actualiza mi lista de pedidos como gestor
-            vista.actualizarPedidosPendientes(this.gestor.getPedidos());
+            vista.actualizarPedidosPendientes(PedidosPendientes());
         }
     }
 
@@ -49,11 +50,18 @@ public class ControladorProcesadora implements Observador {
     }
 
     public void prepararPedido(Pedido pedido) {
-        this.gestor.preparaPedido(procesadora.getPedidos().get(0));
+        this.gestor.preparaPedido(pedido);
     }
 
-    public void finalizarPedido(Object object) {
-        this.gestor.pedidoPronto(this.gestor.getPedidos().get(0));
+    public void finalizarPedido(Pedido pedido) {
+        this.gestor.pedidoPronto(pedido);
+    }
+    
+    public ArrayList<Pedido> PedidosPendientes(){
+        return this.procesadora.getPedidos();
     }
 
+    public ArrayList<Pedido> PedidosEncurso(){
+        return this.gestor.getPedidos();
+    }
 }
