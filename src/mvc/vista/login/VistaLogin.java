@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package loginUI;
+package mvc.vista.login;
 
 import mvc.vista.VistaAtencionMesas;
 import java.util.logging.Level;
@@ -12,20 +12,38 @@ import javax.swing.JOptionPane;
 import logica.Fachada;
 import logica.excepciones.LogicException;
 import logica.modelo.Mozo;
+import mvc.IVistaLogin;
+import mvc.controlador.login.ControladorLogin;
 
 /**
  *
  * @author Sebastian
  */
-public class LoginAtencionMesas extends javax.swing.JDialog {
+public abstract class VistaLogin extends javax.swing.JDialog implements IVistaLogin {
+
+    ControladorLogin controlador;
 
     /**
      * Creates new form LoginAtencionPedidos
      */
-    public LoginAtencionMesas(java.awt.Frame parent, boolean modal) {
+    public VistaLogin(java.awt.Frame parent, boolean modal, String title) {
         super(parent, modal);
         initComponents();
+        this.setTitle(title);
+        controlador = crearControlador(this);
     }
+
+    public void cerrar() {
+        this.setVisible(false);
+        this.dispose();
+    }
+
+    public void mostrarError(Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "LOGIC ERROR", JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(VistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    public abstract ControladorLogin crearControlador(IVistaLogin vista);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,23 +54,23 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnLoginMozo = new javax.swing.JButton();
-        lblNombreMozo = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JButton();
+        lblNombre = new javax.swing.JLabel();
         lblContrasenia = new javax.swing.JLabel();
-        txtNombreMozo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login Atencion Mesas");
 
-        btnLoginMozo.setText("Login");
-        btnLoginMozo.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginMozoActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
-        lblNombreMozo.setText("Nombre Mozo");
+        lblNombre.setText("Nombre");
 
         lblContrasenia.setText("Contrasenia");
 
@@ -69,14 +87,14 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLoginMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblContrasenia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNombreMozo, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreMozo, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                             .addComponent(txtPassword))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -85,53 +103,37 @@ public class LoginAtencionMesas extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreMozo)
-                    .addComponent(txtNombreMozo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContrasenia)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnLoginMozo)
+                .addComponent(btnLogin)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginMozoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginMozoActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String pass = String.valueOf(txtPassword.getPassword());
+        controlador.login(txtNombre.getText(), pass);
 
-        Mozo mozo;
-        try {
-            String pass = String.valueOf(txtPassword.getPassword());
-            mozo = Fachada.getInstancia().loginMozo(txtNombreMozo.getText(), pass );
-            if (mozo != null) {
-                JDialog d = new VistaAtencionMesas(null, false,mozo);
-                d.setVisible(true);
-                d.setLocationRelativeTo(null);
 
-                this.setVisible(false);
-                this.dispose();
-            }
-        } catch (LogicException ex) {
-           JOptionPane.showMessageDialog(this, ex.getMessage(), "LOGIC ERROR", JOptionPane.ERROR_MESSAGE);
-
-            Logger.getLogger(LoginAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-
-    }//GEN-LAST:event_btnLoginMozoActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        btnLoginMozoActionPerformed(evt);
+        btnLoginActionPerformed(evt);
     }//GEN-LAST:event_txtPasswordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLoginMozo;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblContrasenia;
-    private javax.swing.JLabel lblNombreMozo;
-    private javax.swing.JTextField txtNombreMozo;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

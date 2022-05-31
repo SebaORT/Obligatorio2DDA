@@ -6,8 +6,8 @@
 package main;
 
 import javax.swing.JDialog;
-import loginUI.LoginAtencionMesas;
-import loginUI.LoginProcesadoraPedidos;
+import mvc.vista.login.VistaLoginAtencionMesas;
+import mvc.vista.login.VistaLoginProcesadoraPedidos;
 
 /**
  *
@@ -78,16 +78,15 @@ public class IuStart extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInitAppAtencionMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInitAppAtencionMesasActionPerformed
-        JDialog d = new LoginAtencionMesas(null, false);
+        JDialog d = new VistaLoginAtencionMesas(null, false);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnInitAppAtencionMesasActionPerformed
 
     private void btnInitAppProcesadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInitAppProcesadoraActionPerformed
-        JDialog d = new LoginProcesadoraPedidos(null,false);     
+        JDialog d = new VistaLoginProcesadoraPedidos(null,false);     
         d.setVisible(true);
         d.setLocationRelativeTo(null);
-        d.setVisible(true); 
     }//GEN-LAST:event_btnInitAppProcesadoraActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
