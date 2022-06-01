@@ -193,8 +193,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
         int rowSel = tblPedidosPendientes.getSelectedRow();
         
         controlador.prepararPedido(lista.get(rowSel)); 
-
-
+        
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed

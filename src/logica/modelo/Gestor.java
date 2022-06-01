@@ -46,6 +46,7 @@ public class Gestor extends Usuario {
         p.setEstado("En preparacion");
         procesadoraPedidos.sacarPedido(p);
         avisar(eventos.actualizarPedidosProcesadora);
+         avisar(eventos.actualizarMisPedidos);
     }
 
     public void validar() {
