@@ -39,7 +39,7 @@ public class ControladorAtencionMesa implements Observador {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
-        if (evento.equals(Mozo.eventos.actulizarProductos)) {
+        if (evento.equals(Mozo.eventos.actualizarProductos)) {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
     }
@@ -55,38 +55,38 @@ public class ControladorAtencionMesa implements Observador {
         vista.initLabels(mozo);
     }
 
-    public void AbrirMesa(int indexMesaSeleccionada) {
+    public void AbrirMesa(Mesa m) {
         try {
-            this.mozo.getMesas().get(indexMesaSeleccionada).abrirMesa();
-            vista.setMesaAbierta(indexMesaSeleccionada);
+            m.abrirMesa();
+            vista.setMesaAbierta(m);
 
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }
     }
 
-    public void CerrarMesa(int indexMesaSeleccionada) {
+    public void CerrarMesa(Mesa m) {
         try {
-            this.mozo.getMesas().get(indexMesaSeleccionada).cerrarMesa();
-            vista.setMesaCerrada(indexMesaSeleccionada);
+            m.cerrarMesa();
+            vista.setMesaCerrada(m);
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }
     }
 
-    public void UpdateServicioActual(int indexMesaSeleccionada) {
-        if (mozo.getMesas().get(indexMesaSeleccionada).isAbierta()) {
-            vista.updateServicioActual(mozo.obtenerPedidosServicio(indexMesaSeleccionada));
+    public void UpdateServicioActual(Mesa m) {
+        if (m.isAbierta()) {
+            vista.updateServicioActual(m.getServicio().getPedidos());
         } else {
             vista.updateServicioActual(new ArrayList<>());
         }
     }
 
-    public void agregarProducto(int indexMesaSeleccionada, Producto prod, int cantidad, String description) {
+    public void agregarProductoAlServicio(Mesa m, Producto prod, int cantidad, String description) {
         try {
-            if (indexMesaSeleccionada >= 0) {
-                mozo.agregarProductoAlServicio(indexMesaSeleccionada, prod, cantidad, description);
-                vista.updateServicioActual(mozo.obtenerPedidosServicio(indexMesaSeleccionada));
+            if (m!= null) {
+                m.getServicio().crearPedido(prod, cantidad, description);
+                vista.updateServicioActual(m.getServicio().getPedidos());
                 vista.mostrarMensaje("Producto agregado al servicio correctamente.");
             } else {
                 vista.mostrarMensaje("Seleccione una mesa!");

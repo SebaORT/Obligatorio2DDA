@@ -85,7 +85,7 @@ public class Mozo extends Usuario{
         }
     }
     
-    public enum eventos {pedidoCambioEstado,actulizarProductos};
+    public enum eventos {pedidoCambioEstado,actualizarProductos};
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
@@ -99,7 +99,7 @@ public class Mozo extends Usuario{
     }
     
     public void actuliaziarProductos(){
-        this.avisar(eventos.actulizarProductos);
+        this.avisar(eventos.actualizarProductos);
     }
 
     @Override
@@ -108,14 +108,13 @@ public class Mozo extends Usuario{
         return m.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
 
-    public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad,String descripcion) throws LogicException {
+   /* public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad,String descripcion) throws LogicException {
         this.mesas.get(indexMesaSeleccionada).getServicio().crearPedido(producto, cantidad, descripcion);
     }
 
     public ArrayList<Pedido> obtenerPedidosServicio(int indexMesaSeleccionada) {
         return this.mesas.get(indexMesaSeleccionada).getServicio().getPedidos();
-
-    }
+    }*/
 
     void sacarMesa(Mesa mesa) {
         mesas.remove(mesa);
