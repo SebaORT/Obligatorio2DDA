@@ -59,6 +59,8 @@ public class Servicio {
                 p.agregarProducto(producto, cantidad,descripcion);
                 pedidos.add(p);
                 producto.getUnidadProcesadora().agregarPedido(p);
+
+
                 if(p.getProducto().getStock()==0){
                     mesa.getMozo().actuliaziarProductos();
                 }

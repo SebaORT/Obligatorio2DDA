@@ -35,19 +35,17 @@ public class ControladorProcesadora implements Observador {
     @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Gestor.eventos.actualizarPedidosProcesadora)) {
-            //actualizar lista de pedidos pendientes de la procesadora
-            vista.actualizarPedidosPendientes(procesadora.getPedidos());
+            actualizarPedidosProcesadora();
         }
-        if (evento.equals(Gestor.eventos.actualizarMisPedidos)) {
-            //actualiza la lista de pedidos en curso del gestor
-           vista.actualizarPedidosEnCurso(gestor.getPedidos());
+        if (evento.equals(Gestor.eventos.actualizarPedidosGestor)) {
+            actualizarPedidosGestor();
         }
     }
 
     private void inicializarVista() {
         vista.initLabels(gestor, procesadora);
-        vista.actualizarPedidosPendientes(this.procesadora.getPedidos());
-        vista.actualizarPedidosEnCurso(this.gestor.getPedidos());
+        actualizarPedidosProcesadora();
+        actualizarPedidosGestor();
     }
 
     public void prepararPedido(Pedido pedido) {
@@ -57,5 +55,15 @@ public class ControladorProcesadora implements Observador {
     public void finalizarPedido(Pedido pedido) {
         this.gestor.pedidoPronto(pedido);
     }
-    
+
+    private void actualizarPedidosGestor() {
+        //actualiza la lista de pedidos en curso del gestor
+        vista.actualizarPedidosEnCurso(gestor.getPedidos());
+    }
+
+    private void actualizarPedidosProcesadora() {
+        //actualizar lista de pedidos pendientes de la procesadora
+        vista.actualizarPedidosPendientes(procesadora.getPedidos());
+    }
+
 }
