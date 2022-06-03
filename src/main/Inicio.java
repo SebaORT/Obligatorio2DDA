@@ -1,6 +1,5 @@
 package main;
 
-import loginUI.IuStart;
 import logica.DatosPrecargados;
 
 

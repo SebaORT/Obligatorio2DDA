@@ -40,7 +40,11 @@ public class ProcesadoraPedidos{
     }
 
     public void agregarPedido(Pedido p) {
-        pedidos.add(p);       
+        pedidos.add(p);   
+        
+        for (Gestor gestor : gestores) {
+            gestor.avisar(Gestor.eventos.actualizarPedidosProcesadora);
+        }
     }
     
     public void sacarPedido(Pedido p){

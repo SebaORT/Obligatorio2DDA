@@ -41,6 +41,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     private String[] columnNames = { "Producto", "Cantidad",
             "Precio Unitario", "SubTotal", "Desripcion" };
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private ArrayList<Mesa> mesasMozoVista;
 
     /**
      * Creates new form GUIAtencionMesas
@@ -49,7 +50,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         super(parent, modal);
         initComponents();
 
-        // this.mozoActual = mozo;
         controlador = new ControladorAtencionMesa(mozo, this);
     }
 
@@ -74,12 +74,14 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         labelMesas[3] = lblMesa4;
         labelMesas[4] = lblMesa5;
 
+        
+        mesasMozoVista = mesasMozo;
         int i = 0;
         for (Mesa mesa : mesasMozo) {
             if (mesa.isAbierta()) {
-                setMesaAbiertaUI(i);
+                setMesaAbierta(mesa);
             } else { // mesa cerrada
-                setMesaCerradaUI(i);
+                setMesaCerrada(mesa);
             }
             labelMesas[i].setText(mesa.toString());
             i++;
@@ -93,11 +95,13 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         }
     }
 
-    private void setMesaAbiertaUI(int i) {
+    public void setMesaAbierta(Mesa m) {
+        int i = mesasMozoVista.indexOf(m);
         panelsMesasButtons[i].setBackground(new Color(0, 153, 0)); // green
     }
 
-    private void setMesaCerradaUI(int i) {
+    public void setMesaCerrada(Mesa m) {
+        int i = mesasMozoVista.indexOf(m);
         panelsMesasButtons[i].setBackground(new Color(153, 0, 0));// red
     }
 
@@ -138,7 +142,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     @Override
     public void mostrarMensaje(String mensaje) {
-
         JOptionPane.showMessageDialog(this, mensaje, "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
     }
@@ -648,23 +651,18 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAbrirMesaActionPerformed
-        controlador.AbrirMesa(indexMesaSeleccionada);
-        setMesaAbiertaUI(indexMesaSeleccionada);
+        controlador.AbrirMesa(mesasMozoVista.get(indexMesaSeleccionada));
     }// GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCerrarMesaActionPerformed
-
-        controlador.CerrarMesa(indexMesaSeleccionada);
-
-        setMesaCerradaUI(indexMesaSeleccionada);
-
+        controlador.CerrarMesa(mesasMozoVista.get(indexMesaSeleccionada));
     }// GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTransferirMesaActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_btnTransferirMesaActionPerformed
 
-    private void pressPanel(JPanel pnl, int index) {
+    private void updateMesaActual(JPanel pnl, int index) {
         if (pnl.isEnabled()) {
             this.indexMesaSeleccionada = index - 1;
             unPressPanels();
@@ -678,6 +676,9 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
                 lblServicioParaMesa.setText("Servicio para " + label.getText());
             }
         }
+        
+        controlador.UpdateServicioActual(mesasMozoVista.get(indexMesaSeleccionada));
+
     }
 
     private void unPressPanels() {
@@ -690,30 +691,25 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }
 
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa1MouseClicked
-        pressPanel(this.pnlMesa1, 1);
-        controlador.UpdateServicioActual(indexMesaSeleccionada);
+        updateMesaActual(this.pnlMesa1, 1);
     }// GEN-LAST:event_pnlMesa1MouseClicked
 
     private void pnlMesa2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa2MouseClicked
 
-        pressPanel(this.pnlMesa2, 2);
-        controlador.UpdateServicioActual(indexMesaSeleccionada);
+        updateMesaActual(this.pnlMesa2, 2);
 
     }// GEN-LAST:event_pnlMesa2MouseClicked
 
     private void pnlMesa3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa3MouseClicked
-        pressPanel(this.pnlMesa3, 3);
-        controlador.UpdateServicioActual(indexMesaSeleccionada);
+        updateMesaActual(this.pnlMesa3, 3);
     }// GEN-LAST:event_pnlMesa3MouseClicked
 
     private void pnlMesa4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa4MouseClicked
-        pressPanel(this.pnlMesa4, 4);
+        updateMesaActual(this.pnlMesa4, 4);
     }// GEN-LAST:event_pnlMesa4MouseClicked
 
     private void pnlMesa5MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa5MouseClicked
-        pressPanel(this.pnlMesa5, 5);
-        controlador.UpdateServicioActual(indexMesaSeleccionada);
-
+        updateMesaActual(this.pnlMesa5, 5);
     }// GEN-LAST:event_pnlMesa5MouseClicked
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
@@ -722,8 +718,8 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         int cantidad = (Integer) spnCantidad.getValue();
         String description = txtDescripcionProducto.getText();
         Producto prod = o != null ? (Producto) o : null;
-
-        controlador.agregarProducto(indexMesaSeleccionada, prod, cantidad, description);
+        Mesa m = indexMesaSeleccionada!= -1 ? mesasMozoVista.get(indexMesaSeleccionada) : null;
+        controlador.agregarProductoAlServicio(m, prod, cantidad, description);
 
     }// GEN-LAST:event_btnAgregarProductoActionPerformed
 

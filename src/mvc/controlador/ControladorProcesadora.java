@@ -4,6 +4,7 @@
  */
 package mvc.controlador;
 
+import java.util.ArrayList;
 import logica.modelo.Gestor;
 import logica.modelo.Pedido;
 import logica.modelo.ProcesadoraPedidos;
@@ -34,26 +35,35 @@ public class ControladorProcesadora implements Observador {
     @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Gestor.eventos.actualizarPedidosProcesadora)) {
-            vista.actualizarPedidosEnCurso(this.procesadora.getPedidos());
+            actualizarPedidosProcesadora();
         }
-        if (evento.equals(Gestor.eventos.actualizarMisPedidos)) {
-            //actualiza mi lista de pedidos como gestor
-            vista.actualizarPedidosPendientes(this.gestor.getPedidos());
+        if (evento.equals(Gestor.eventos.actualizarPedidosGestor)) {
+            actualizarPedidosGestor();
         }
     }
 
     private void inicializarVista() {
         vista.initLabels(gestor, procesadora);
-        vista.actualizarPedidosPendientes(this.gestor.getPedidos());
-        vista.actualizarPedidosEnCurso(this.procesadora.getPedidos());
+        actualizarPedidosProcesadora();
+        actualizarPedidosGestor();
     }
 
     public void prepararPedido(Pedido pedido) {
-        this.gestor.preparaPedido(procesadora.getPedidos().get(0));
+        this.gestor.preparaPedido(pedido);
     }
 
-    public void finalizarPedido(Object object) {
-        this.gestor.pedidoPronto(this.gestor.getPedidos().get(0));
+    public void finalizarPedido(Pedido pedido) {
+        this.gestor.pedidoPronto(pedido);
+    }
+
+    private void actualizarPedidosGestor() {
+        //actualiza la lista de pedidos en curso del gestor
+        vista.actualizarPedidosEnCurso(gestor.getPedidos());
+    }
+
+    private void actualizarPedidosProcesadora() {
+        //actualizar lista de pedidos pendientes de la procesadora
+        vista.actualizarPedidosPendientes(procesadora.getPedidos());
     }
 
 }

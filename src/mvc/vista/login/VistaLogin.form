@@ -27,15 +27,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnLoginMozo" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Component id="btnLogin" min="-2" pref="102" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblContrasenia" max="32767" attributes="0"/>
-                          <Component id="lblNombreMozo" pref="92" max="32767" attributes="0"/>
+                          <Component id="lblNombre" pref="92" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtNombreMozo" pref="205" max="32767" attributes="0"/>
+                          <Component id="txtNombre" pref="205" max="32767" attributes="0"/>
                           <Component id="txtPassword" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -49,8 +49,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblNombreMozo" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNombreMozo" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -58,24 +58,24 @@
                   <Component id="txtPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnLoginMozo" min="-2" max="-2" attributes="0"/>
+              <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="15" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnLoginMozo">
+    <Component class="javax.swing.JButton" name="btnLogin">
       <Properties>
         <Property name="text" type="java.lang.String" value="Login"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginMozoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblNombreMozo">
+    <Component class="javax.swing.JLabel" name="lblNombre">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre Mozo"/>
+        <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblContrasenia">
@@ -83,7 +83,7 @@
         <Property name="text" type="java.lang.String" value="Contrasenia"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNombreMozo">
+    <Component class="javax.swing.JTextField" name="txtNombre">
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtPassword">
       <Events>

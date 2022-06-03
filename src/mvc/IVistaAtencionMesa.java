@@ -25,6 +25,9 @@ public interface IVistaAtencionMesa {
     public void mostrarInfoPedidoListo(Pedido pedido);
     public void mostrarMensaje(String mensaje);
 
+    public void setMesaAbierta(Mesa m);
+    public void setMesaCerrada(Mesa m);
+    
     public void cerrar();
     
 }

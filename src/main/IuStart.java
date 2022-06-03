@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loginUI;
+package main;
 
 import javax.swing.JDialog;
+import mvc.vista.login.VistaLoginAtencionMesas;
+import mvc.vista.login.VistaLoginProcesadoraPedidos;
 
 /**
  *
@@ -29,23 +31,23 @@ public class IuStart extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnInitAppAtencionMesas = new javax.swing.JButton();
+        btnInitAppProcesadora = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Obligatorio 2 DDA");
 
-        jButton1.setText("Iniciar App Atencion Mesas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnInitAppAtencionMesas.setText("Iniciar App Atencion Mesas");
+        btnInitAppAtencionMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnInitAppAtencionMesasActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Iniciar Procesadora de Pedidos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnInitAppProcesadora.setText("Iniciar Procesadora de Pedidos");
+        btnInitAppProcesadora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnInitAppProcesadoraActionPerformed(evt);
             }
         });
 
@@ -55,41 +57,40 @@ public class IuStart extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnInitAppProcesadora)
                 .addGap(65, 65, 65))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnInitAppAtencionMesas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jButton1)
+                .addComponent(btnInitAppAtencionMesas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnInitAppProcesadora)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JDialog d = new LoginAtencionMesas(null, false);
+    private void btnInitAppAtencionMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInitAppAtencionMesasActionPerformed
+        JDialog d = new VistaLoginAtencionMesas(null, false);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnInitAppAtencionMesasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JDialog d = new LoginProcesadoraPedidos(null,false);     
+    private void btnInitAppProcesadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInitAppProcesadoraActionPerformed
+        JDialog d = new VistaLoginProcesadoraPedidos(null,false);     
         d.setVisible(true);
         d.setLocationRelativeTo(null);
-        d.setVisible(true); 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnInitAppProcesadoraActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnInitAppAtencionMesas;
+    private javax.swing.JButton btnInitAppProcesadora;
     // End of variables declaration//GEN-END:variables
 }

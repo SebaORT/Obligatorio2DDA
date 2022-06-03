@@ -5,6 +5,7 @@
 package mvc.vista;
 
 import java.util.ArrayList;
+import javax.swing.JButton;
 import mvc.controlador.ControladorProcesadora;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -22,6 +23,9 @@ import mvc.IVistaProcesadora;
 public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVistaProcesadora {
 
     private ControladorProcesadora controlador;
+    private ArrayList<Pedido> pedidosPendientesVista;
+    private ArrayList<Pedido> pedidosEnCursoVista;
+    
     /**
      * Creates new form GUIProcesadoraPedidos
      */
@@ -29,10 +33,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
             ProcesadoraPedidos procesadora) {
         super(parent, modal);
         initComponents();
-        controlador = new ControladorProcesadora(gestorActual,procesadora, this);
-
-        //procesadora.agregarObservador(this);
-       
+        controlador = new ControladorProcesadora(gestorActual,procesadora, this);       
     }
 
     public void initLabels(Gestor g, ProcesadoraPedidos p) {
@@ -40,12 +41,14 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
         lblProcesadora.setText("Unidad Procesadora: " + p.getNombre());
     }
     public void actualizarPedidosPendientes(ArrayList<Pedido> pedidos) {
+         pedidosPendientesVista = pedidos;
          actualizarTablaGeneric(pedidos, tblPedidosPendientes);
     }
     
     @Override
     public void actualizarPedidosEnCurso(ArrayList<Pedido> pedidos) {
-         actualizarTablaGeneric(pedidos, tblPedidosCurso);
+        pedidosEnCursoVista = pedidos;
+        actualizarTablaGeneric(pedidos, tblPedidosCurso);
     }
     
     /**
@@ -189,23 +192,20 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTomarPedidoActionPerformed
         // TODO add your handling code here:
-
-        controlador.prepararPedido(null); 
-
-
+        
+        //ArrayList<Pedido> lista = controlador.PedidosPendientes();
+        int rowSel = tblPedidosPendientes.getSelectedRow();
+        controlador.prepararPedido(pedidosPendientesVista.get(rowSel)); 
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed
         // TODO add your handling code here:
        
-        controlador.finalizarPedido(null);
+        int rowSel = tblPedidosCurso.getSelectedRow();
+        controlador.finalizarPedido(pedidosEnCursoVista.get(rowSel));
         
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
     
-    
-    
-   
- 
     private void actualizarTablaGeneric(ArrayList<Pedido> lista, JTable tbl){
         String[] columnNames = {"Producto", "Cantidad",
         "Descripcion", "N° Mesa", "Mozo"};
@@ -220,14 +220,10 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
                 pedido.getServicio().getMesa().getMozo().getNombreCompleto()
             });
         }
-
         TableModelCustom model = new TableModelCustom(columnNames, data);
         tbl.setModel(model);
     }
     
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizarPedido;
     private javax.swing.JButton btnTomarPedido;
