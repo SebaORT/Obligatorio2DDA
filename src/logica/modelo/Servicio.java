@@ -53,6 +53,8 @@ public class Servicio {
         return totalServicio;
     }
     
+   
+    
     public void crearPedido(Producto producto,int cantidad,String descripcion) throws LogicException{
         Pedido p = new Pedido(this);
         if(mesa.isAbierta()){
@@ -73,7 +75,7 @@ public class Servicio {
     public int pedidosPendientes(){
         int pendientes=0;
         for (Pedido p: pedidos){
-            if(p.getEstado()!= "servido")
+            if(p.getEstado()!= "Pronto")
                 pendientes =+ 1;
         }
         return pendientes;
