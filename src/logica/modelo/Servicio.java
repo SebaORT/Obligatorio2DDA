@@ -22,6 +22,10 @@ public class Servicio {
         this.mesa = mesa;
     }
 
+    public Servicio() {
+        
+    }
+
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
@@ -76,7 +80,7 @@ public class Servicio {
     public int pedidosPendientes() {
         int pendientes = 0;
         for (Pedido p : pedidos) {
-            if (p.getEstado() != "Pronto")
+            if (p.getEstado().name() != "Pronto")
                 pendientes = +1;
         }
         return pendientes;

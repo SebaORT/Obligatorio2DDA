@@ -40,13 +40,19 @@ public class Gestor extends Usuario {
         this.fechaUltimoAcceso = fechaUltimoAcceso;
     }
 
+    @Override
+    public String toString() {
+        return super.getNombreCompleto();
+    }
+
     public void preparaPedido(Pedido p) {
         pedidos.add(p);
         p.gestorPreparador(this);
-        p.setEstado("En preparacion");
+        p.enPreparacion();
         procesadoraPedidos.sacarPedido(p);
         avisar(eventos.actualizarPedidosProcesadora);
-         avisar(eventos.actualizarPedidosGestor);
+        avisar(eventos.actualizarPedidosGestor);
+        
     }
 
     public void validar() {
@@ -59,9 +65,7 @@ public class Gestor extends Usuario {
     public void pedidoPronto(Pedido p) {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
-            p.setEstado("Pronto");
-
-            p.getServicio().getMesa().getMozo().pedidoCambioEstado(p);
+            p.Pronto();
             avisar(eventos.actualizarPedidosGestor);
             // avisar(Mozo.eventos.pedidoCambioEstado);
             //aca se deberia avisar al mozo que el pedido esta pronto 

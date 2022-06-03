@@ -21,6 +21,7 @@ public class Mozo extends Usuario{
 
     private final int MAX_MESAS = 5;
     private Pedido ultimoPedidoCambioEstado;
+    private Mesa ultimaMesaCambio;
 
     public Mozo(String nombreUsuario, String password, String nombreCompleto, int telefono) {
         super(nombreUsuario, password, nombreCompleto);
@@ -84,11 +85,25 @@ public class Mozo extends Usuario{
             mesa.setMozo(this);
         }
     }
+
+    public Mesa getUltimaMesaCambio() {
+        return ultimaMesaCambio;
+    }
+
+    public void setUltimaMesaCambio(Mesa ultimaMesaCambio) {
+        this.ultimaMesaCambio = ultimaMesaCambio;
+    }
     
-    public enum eventos {pedidoCambioEstado,actualizarProductos};
+    public enum eventos {pedidoCambioEstado,actualizarProductos,actulizarServicio};
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
+    }
+    
+    public void mesaCambioEstado(Pedido p) {
+        this.ultimaMesaCambio = p.getServicio().getMesa();
+        
+        this.avisar(eventos.actulizarServicio);
     }
     
     

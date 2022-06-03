@@ -42,6 +42,12 @@ public class ControladorAtencionMesa implements Observador {
         if (evento.equals(Mozo.eventos.actualizarProductos)) {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
+        if (evento.equals(Mozo.eventos.actulizarServicio)) {
+            Mesa mesa = mozo.getUltimaMesaCambio();
+            vista.updateServicioActual(mesa.getServicio().getPedidos());
+            // hay sabes en que mesa se esta el usuario para sabes si actulizar el servicio o no
+        }
+        
     }
 
     private void inicializarVista() {
@@ -69,6 +75,7 @@ public class ControladorAtencionMesa implements Observador {
         try {
             m.cerrarMesa();
             vista.setMesaCerrada(m);
+            vista.updateServicioActual(m.getServicio().getPedidos());
         } catch (LogicException ex) {
             vista.mostrarExceptionError(ex);
         }

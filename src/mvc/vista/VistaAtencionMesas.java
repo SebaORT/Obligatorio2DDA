@@ -39,7 +39,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     private int indexMesaSeleccionada = -1;
 
     private String[] columnNames = { "Producto", "Cantidad",
-            "Precio Unitario", "SubTotal", "Desripcion" };
+            "Precio Unitario", "SubTotal", "Estado","Gestor" };
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private ArrayList<Mesa> mesasMozoVista;
 
@@ -122,7 +122,8 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
                     pedido.getCantidad(),
                     pedido.getProducto().getPrecio(),
                     pedido.getMontoPedido(),
-                    pedido.getDescripcion()
+                    pedido.getEstado().name(),
+                    pedido.getGestor()
             });
         }
 
@@ -160,7 +161,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblProducto = new javax.swing.JLabel();
@@ -193,8 +194,13 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         cbxProducto = new javax.swing.JComboBox<>();
         btnLogout = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("App Atencion de Mesas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblProducto.setText("Producto");
 
@@ -224,45 +230,43 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlAccionesMesasLayout = new javax.swing.GroupLayout(pnlAccionesMesas);
         pnlAccionesMesas.setLayout(pnlAccionesMesasLayout);
         pnlAccionesMesasLayout.setHorizontalGroup(
-                pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(pnlAccionesMesasLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnTransferirMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnCerrarMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnAbrirMesa, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(15, Short.MAX_VALUE)));
+            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblMesaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTransferirMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAbrirMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
         pnlAccionesMesasLayout.setVerticalGroup(
-                pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(lblMesaSeleccionada)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAbrirMesa)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnTransferirMesa)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCerrarMesa)
-                                .addContainerGap(12, Short.MAX_VALUE)));
+            pnlAccionesMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccionesMesasLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblMesaSeleccionada)
+                .addGap(18, 18, 18)
+                .addComponent(btnAbrirMesa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnTransferirMesa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCerrarMesa)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         tblServicioActual.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { "2", "Chivito Con fritas", "10", "20", "A punto sin cebolla" },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null }
-                },
-                new String[] {
-                        "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
-                }));
+            new Object [][] {
+                {"2", "Chivito Con fritas", "10", "20", "A punto sin cebolla"},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Cantidad", "Descripcion", "Precio Unitario", "SubTotal", "Comentarios"
+            }
+        ));
         paneServicio.setViewportView(tblServicioActual);
 
         lblDescripProducto.setText("Descripcion");
@@ -295,18 +299,19 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlMesa1Layout = new javax.swing.GroupLayout(pnlMesa1);
         pnlMesa1.setLayout(pnlMesa1Layout);
         pnlMesa1Layout.setHorizontalGroup(
-                pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesa1Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(lblMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(39, Short.MAX_VALUE)));
+            pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesa1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(lblMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
         pnlMesa1Layout.setVerticalGroup(
-                pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa1Layout.createSequentialGroup()
-                                .addContainerGap(28, Short.MAX_VALUE)
-                                .addComponent(lblMesa1)
-                                .addGap(26, 26, 26)));
+            pnlMesa1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(lblMesa1)
+                .addGap(26, 26, 26))
+        );
 
         pnlMesa4.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -327,18 +332,19 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlMesa4Layout = new javax.swing.GroupLayout(pnlMesa4);
         pnlMesa4.setLayout(pnlMesa4Layout);
         pnlMesa4Layout.setHorizontalGroup(
-                pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesa4Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(lblMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(39, Short.MAX_VALUE)));
+            pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesa4Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(lblMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
         pnlMesa4Layout.setVerticalGroup(
-                pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesa4Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(lblMesa4)
-                                .addContainerGap(25, Short.MAX_VALUE)));
+            pnlMesa4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesa4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(lblMesa4)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
 
         pnlMesa2.setBackground(new java.awt.Color(0, 153, 0));
         pnlMesa2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -359,18 +365,19 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlMesa2Layout = new javax.swing.GroupLayout(pnlMesa2);
         pnlMesa2.setLayout(pnlMesa2Layout);
         pnlMesa2Layout.setHorizontalGroup(
-                pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesa2Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(lblMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(34, Short.MAX_VALUE)));
+            pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesa2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(lblMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
         pnlMesa2Layout.setVerticalGroup(
-                pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa2Layout.createSequentialGroup()
-                                .addContainerGap(28, Short.MAX_VALUE)
-                                .addComponent(lblMesa2)
-                                .addGap(26, 26, 26)));
+            pnlMesa2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa2Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(lblMesa2)
+                .addGap(26, 26, 26))
+        );
 
         pnlMesa5.setBackground(new java.awt.Color(153, 153, 153));
         pnlMesa5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -391,18 +398,19 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlMesa5Layout = new javax.swing.GroupLayout(pnlMesa5);
         pnlMesa5.setLayout(pnlMesa5Layout);
         pnlMesa5Layout.setHorizontalGroup(
-                pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesa5Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(lblMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(35, Short.MAX_VALUE)));
+            pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesa5Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(lblMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
         pnlMesa5Layout.setVerticalGroup(
-                pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa5Layout.createSequentialGroup()
-                                .addContainerGap(26, Short.MAX_VALUE)
-                                .addComponent(lblMesa5)
-                                .addGap(24, 24, 24)));
+            pnlMesa5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa5Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(lblMesa5)
+                .addGap(24, 24, 24))
+        );
 
         pnlMesa3.setBackground(new java.awt.Color(153, 0, 0));
         pnlMesa3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -423,74 +431,57 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout pnlMesa3Layout = new javax.swing.GroupLayout(pnlMesa3);
         pnlMesa3.setLayout(pnlMesa3Layout);
         pnlMesa3Layout.setHorizontalGroup(
-                pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
-                                .addContainerGap(40, Short.MAX_VALUE)
-                                .addComponent(lblMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 48,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)));
+            pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(lblMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
+        );
         pnlMesa3Layout.setVerticalGroup(
-                pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblMesa3)
-                                .addGap(25, 25, 25)));
+            pnlMesa3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMesa3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMesa3)
+                .addGap(25, 25, 25))
+        );
 
         javax.swing.GroupLayout pnlMesasLayout = new javax.swing.GroupLayout(pnlMesas);
         pnlMesas.setLayout(pnlMesasLayout);
         pnlMesasLayout.setHorizontalGroup(
-                pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesasLayout.createSequentialGroup()
-                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlMesasLayout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(33, 33, 33)
-                                                .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(28, 28, 28)
-                                                .addComponent(pnlMesa3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(pnlMesasLayout.createSequentialGroup()
-                                                .addGap(93, 93, 93)
-                                                .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(41, 41, 41)
-                                                .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(51, Short.MAX_VALUE)));
+            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesasLayout.createSequentialGroup()
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(pnlMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
         pnlMesasLayout.setVerticalGroup(
-                pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMesasLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(pnlMesa3, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(pnlMesasLayout.createSequentialGroup()
-                                                .addGroup(pnlMesasLayout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(15, 15, 15)));
+            pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMesasLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMesa3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlMesasLayout.createSequentialGroup()
+                        .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
 
         lblMozo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMozo.setText("Mozo: {{Nombre Mozo}}");
@@ -515,140 +506,84 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-                                                .createSequentialGroup()
-                                                .addComponent(lblServicioParaMesa,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 161,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblServicioParaMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblDescripProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(paneServicio,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 632,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(layout
-                                                                .createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                .addGroup(layout.createSequentialGroup()
-                                                                        .addGroup(layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(lblDescripProducto,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        83,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(lblProducto,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        61,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                        .addGroup(layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                                .addGroup(layout.createSequentialGroup()
-                                                                                        .addComponent(
-                                                                                                txtDescripcionProducto,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                201,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                        .addGap(18, 18, 18)
-                                                                                        .addComponent(lblCantidad)
-                                                                                        .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                        .addComponent(spnCantidad,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                72,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                .addComponent(cbxProducto,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                        351,
-                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addGap(18, 18, 18)
-                                                                        .addComponent(btnAgregarProducto))
-                                                                .addGroup(layout.createSequentialGroup()
-                                                                        .addComponent(lblMozo,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                209,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addGap(305, 305, 305)
-                                                                        .addGroup(layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                false)
-                                                                                .addComponent(pnlAccionesMesas,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        Short.MAX_VALUE)
-                                                                                .addComponent(btnLogout,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                        Short.MAX_VALUE)))))
-                                                .addGap(0, 7, Short.MAX_VALUE)))));
+                                            .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(lblCantidad)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnAgregarProducto))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblMozo, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(305, 305, 305)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(0, 7, Short.MAX_VALUE))))
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblMozo)
-                                        .addComponent(btnLogout))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(lblProducto)
-                                                        .addComponent(cbxProducto,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(lblDescripProducto)
-                                                        .addComponent(txtDescripcionProducto,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblCantidad)
-                                                        .addComponent(spnCantidad,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 56,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lblServicioParaMesa)
-                                        .addComponent(lblMontoTotal))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 262,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMozo)
+                    .addComponent(btnLogout))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlAccionesMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblProducto)
+                            .addComponent(cbxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDescripProducto)
+                            .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCantidad)
+                            .addComponent(spnCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblServicioParaMesa)
+                    .addComponent(lblMontoTotal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(paneServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controlador.logout();
+    }//GEN-LAST:event_formWindowClosing
 
     private void btnAbrirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAbrirMesaActionPerformed
         controlador.AbrirMesa(mesasMozoVista.get(indexMesaSeleccionada));
@@ -751,9 +686,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {
         controlador.logout();
-        this.setVisible(false);
-        this.dispose();
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

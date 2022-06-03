@@ -19,14 +19,34 @@ public class Pedido {
     private String descripcion;
     private Gestor gestor;
     private Servicio servicio;
-    private String Estado = "Buscando Gestor";
+    private status Estado = status.BuscandoGestor;
+    
+    
+    public enum status{BuscandoGestor,EnPreparacion,Pronto};
+
+    public status getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(status Estado) {
+        this.Estado = Estado;
+    }
+    
+    public void Pronto(){
+        setEstado(status.Pronto);
+        servicio.getMesa().getMozo().pedidoCambioEstado(this);
+        servicio.getMesa().getMozo().mesaCambioEstado(this);
+    }
+    
+    
 
     public Pedido(Servicio s) {
         this.servicio = s;
     }
 
-    public String getEstado() {
-        return Estado;
+    public void enPreparacion(){
+        setEstado(status.EnPreparacion);
+        servicio.getMesa().getMozo().mesaCambioEstado(this);  
     }
     
     public Pedido(Producto producto, int cantidad, int montoPedido, String descripcion) {
@@ -37,9 +57,7 @@ public class Pedido {
         this.gestor = gestor;
     }
 
-    public void setEstado(String status) {
-        this.Estado = status;
-    }
+  
 
     public void agregarProducto(Producto p, int cantidad, String desc)throws LogicException{
         if(cantidad >0){

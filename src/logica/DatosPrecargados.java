@@ -49,6 +49,8 @@ public class DatosPrecargados {
                 logica.agregarProducto(whiskey);
                 logica.agregarProducto(vodka);
                 logica.agregarProducto(martini);
+                logica.agregarProducto(cafe);
+                logica.agregarProducto(aguaMineral);
                 
                 Comun comun = new Comun();
                 DeLaCasa deLaCasa = new DeLaCasa();
@@ -71,8 +73,8 @@ public class DatosPrecargados {
                 logica.agregarMozo(mozo3);
 
                 Gestor gestor1 = new Gestor("gestor", "123", "alicia juarez");
-                Gestor gestor2 = new Gestor("ant", "4321", "antonio rodriguez");
-                Gestor gestor3 = new Gestor("flor", "4321", "florencia martines");
+                Gestor gestor2 = new Gestor("ant", "123", "antonio rodriguez");
+                Gestor gestor3 = new Gestor("flor", "123", "florencia martines");
 
                 logica.agregarGestor(gestor1);
                 logica.agregarGestor(gestor2);
