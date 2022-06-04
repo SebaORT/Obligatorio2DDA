@@ -28,6 +28,6 @@ public class Preferencial extends TipoCliente{
     
     @Override
     public String toString() {
-        return "Preferencial";
+        return "Agua Mineral invitacion mas 5% en compras mayor a 2000";
     }
 }

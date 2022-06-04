@@ -42,6 +42,7 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     private ArrayList<Mesa> mesasMozoVista;
     
     private Mozo mozoActual;
+    private DialogCerrarMesa dialogoCerrarMesa;
     
 
     /**
@@ -616,7 +617,15 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     }// GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCerrarMesaActionPerformed
-        controlador.CerrarMesa(mesasMozoVista.get(indexMesaSeleccionada));
+        Mesa mesaActual = mesasMozoVista.get(indexMesaSeleccionada);
+        dialogoCerrarMesa = new DialogCerrarMesa(this, true, this.controlador, mesaActual);
+        dialogoCerrarMesa.init();
+        dialogoCerrarMesa.setLocationRelativeTo(this);
+        dialogoCerrarMesa.setVisible(true);
+       
+        
+        //controlador.CerrarMesa(mesa);
+        
     }// GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTransferirMesaActionPerformed
@@ -645,10 +654,10 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
             }
 
           controlador.UpdateServicioActual(mesasMozoVista.get(indexMesaSeleccionada));
-        }
-        
-        
+        }   
     }
+    
+    
 
 
     private void unPressPanels() {
@@ -754,5 +763,22 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     private javax.swing.JTable tblServicioActual;
     private javax.swing.JTextField txtDescripcionProducto;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarMontoServicio(int monto) {
+        dialogoCerrarMesa.mostroMontoServicio(monto);
+    }
+
+    @Override
+    public void cargarDatosCliente(String nombreCliente, String beneficio, float descuento, float montoPagar) {
+        dialogoCerrarMesa.cargarDatosCliente(nombreCliente,beneficio,descuento,montoPagar);
+    }
+
+    @Override
+    public void cerrarDialogoCerrarMesa() {
+       if(dialogoCerrarMesa != null){
+           dialogoCerrarMesa.dispose();
+       }
+    }
 
 }

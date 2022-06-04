@@ -24,4 +24,12 @@ public class ControlClientes {
         return clientes;
     }
     
+    public Cliente getCliente(int idCliente){
+        for (Cliente cliente : clientes) {
+            if(idCliente == cliente.getId())
+                return cliente;
+        }
+        return null;
+    }
+    
 }

@@ -32,5 +32,11 @@ public interface IVistaAtencionMesa {
     public void cerrar();
 
     public void solicitacionTransferencia(Transferencia transf);
+
+    public void mostrarMontoServicio(int monto);
+
+    public void cargarDatosCliente(String nombreCliente, String beneficio, float descuento, float montoPagar);
+
+    public void cerrarDialogoCerrarMesa();
     
 }

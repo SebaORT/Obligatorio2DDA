@@ -25,7 +25,7 @@ public class Comun extends TipoCliente {
 
     @Override
     public String toString() {
-        return "Comun";
+        return "Cafe invitacion";
     }
     
     

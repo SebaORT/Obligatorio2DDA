@@ -84,5 +84,9 @@ public class Fachada extends Observable{
     public Iterable<Mozo> getMozosAptosTransferir(Mozo mozoOrigen) {
         return controlUsuario.mozosAptosParaTransferir(mozoOrigen);
     }
+    
+    public Cliente getCliente(int id){
+        return controlClientes.getCliente(id);
+    }
 
 }

@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import logica.Fachada;
 import logica.excepciones.LogicException;
+import logica.modelo.Cliente;
 import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
@@ -107,6 +108,7 @@ public class ControladorAtencionMesa implements Observador {
     public void CerrarMesa(Mesa m) {
         try {
             m.cerrarMesa();
+            vista.cerrarDialogoCerrarMesa();
             vista.setMesaCerrada(m);
             vista.updateServicioActual(m.getServicio().getPedidos());
         } catch (LogicException ex) {
@@ -148,5 +150,20 @@ public class ControladorAtencionMesa implements Observador {
             vista.mostrarExceptionError(ex);
         }
     }
+
+    public void calcularMontoServicio(Mesa mesaActual) {
+        int montoServicio = mesaActual.getServicio().calcularServicio();
+        vista.mostrarMontoServicio(montoServicio);
+    }
+    
+    public void cargarDatosCliente(int idCliente,Mesa mesa){
+        Cliente cliente = Fachada.getInstancia().getCliente(idCliente);
+        String nombreCliente = cliente.getNombre();
+        String beneficio = cliente.getTipoCliente().toString();
+        float descuento = -1;
+        float montoPagar = cliente.getTipoCliente().montoAPagarConDescuento(mesa.getServicio());
+        vista.cargarDatosCliente(nombreCliente,beneficio,descuento,montoPagar);
+    }
+    
 
 }

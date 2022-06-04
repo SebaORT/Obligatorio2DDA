@@ -22,6 +22,14 @@ public class Cliente {
         return tipoCliente;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public Cliente(int id,String nombre, String email,TipoCliente tipoCliente) {
         this.nombre = nombre;
         this.email = email;

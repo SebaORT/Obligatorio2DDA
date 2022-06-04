@@ -23,6 +23,6 @@ public class DeLaCasa extends TipoCliente{
     
     @Override
     public String toString() {
-        return "De La Casa";
+        return "500 de regalo";
     }
 }
