@@ -9,6 +9,7 @@ import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
+import logica.modelo.Transferencia;
 
 /**
  *
@@ -29,5 +30,7 @@ public interface IVistaAtencionMesa {
     public void setMesaCerrada(Mesa m);
     
     public void cerrar();
+
+    public void solicitacionTransferencia(Transferencia transf);
     
 }

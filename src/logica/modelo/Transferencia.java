@@ -22,12 +22,50 @@ public class Transferencia {
         this.mozoOrigen = mozoOrigen;
         this.mesa = mesa;
         this.mozoDestino = mosoDestino;
+        
+        this.mozoOrigen.setTransferencia(this);
+        this.mozoDestino.setTransferencia(this);
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public Mozo getMozoDestino() {
+        return mozoDestino;
+    }
+
+    public Mozo getMozoOrigen() {
+        return mozoOrigen;
     }
     
+    
+    //3
     public void trasferir() throws LogicException{
         mozoOrigen.sacarMesa(mesa);
         mozoDestino.agregarMesa(mesa);
         mesa.agregarMozo(mozoDestino);
+        
+        avisarMozoOrigenAceptar();
+    }
+
+    
+    //1
+    public void avisarMozoDestino() {
+        mozoDestino.avisar(Mozo.eventos.transferenciaSolicitada);
+    }
+    
+    
+    //2
+    private void avisarMozoOrigenAceptar() {
+        mozoOrigen.avisar(Mozo.eventos.transferenciaAceptada);
+        mozoDestino.avisar(Mozo.eventos.transferenciaAceptada);
+
+    }
+    
+    public void avisarMozoOrigenDenegada() {
+        mozoOrigen.avisar(Mozo.eventos.transferenciaDenegada);
+
     }
 
 }

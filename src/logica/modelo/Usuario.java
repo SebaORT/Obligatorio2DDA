@@ -6,6 +6,7 @@
 package logica.modelo;
 
 import logica.observador.Observable;
+import logica.observador.Observador;
 
 /**
  *

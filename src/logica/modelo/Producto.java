@@ -16,6 +16,10 @@ public class Producto {
     private int stock;
     private ProcesadoraPedidos unidadProcesadora;
 
+    public static final int CODIGO_AGUA_MINERAL = 9999;
+    public static final int CODIGO_CAFE = 8888;
+
+    
     public Producto(int codigo, String nombre, int precio, int stock, ProcesadoraPedidos unidadProcesadora) {
         this.codigo = codigo;
         this.nombre = nombre;

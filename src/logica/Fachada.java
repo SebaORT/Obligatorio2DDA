@@ -14,13 +14,14 @@ import logica.modelo.Cliente;
 import logica.modelo.Gestor;
 import logica.modelo.Mesa;
 import logica.modelo.Producto;
+import logica.observador.Observable;
 import logica.observador.Observador;
 
 /**
  *
  * @author Usuario
  */
-public class Fachada {
+public class Fachada extends Observable{
 
     private ControlUsuarios controlUsuario = new ControlUsuarios();
     private ControlMesas controlMesas = new ControlMesas();
@@ -78,6 +79,10 @@ public class Fachada {
 
     public void logoutMozo(Mozo mozo) throws LogicException {
         controlUsuario.logoutMozo(mozo);
+    }
+
+    public Iterable<Mozo> getMozosAptosTransferir(Mozo mozoOrigen) {
+        return controlUsuario.mozosAptosParaTransferir(mozoOrigen);
     }
 
 }

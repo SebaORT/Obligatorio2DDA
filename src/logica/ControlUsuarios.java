@@ -60,12 +60,12 @@ public class ControlUsuarios {
             throw new LogicException("Nombre de usuario y/o contraseña incorrectos");
     }
 
-    public ArrayList<Mozo> mozosAptosParaTransferir() {
+    public ArrayList<Mozo> mozosAptosParaTransferir(Mozo mozoOrigen) {
         ArrayList<Mozo> resultado = new ArrayList<Mozo>();
         for (Usuario u : mozosConectados) {
-            Mozo m = (Mozo) u;
-            if (m.getMesas().size() < 5) {
-                resultado.add(m);
+            Mozo mozo = (Mozo) u;
+            if (mozo.getMesas().size() < 5 && mozo!= mozoOrigen) {
+                resultado.add(mozo);
             }
         }
         return resultado;

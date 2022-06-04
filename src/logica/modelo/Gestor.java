@@ -8,6 +8,7 @@ package logica.modelo;
 import logica.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
+import logica.Fachada;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Gestor extends Usuario {
     private ProcesadoraPedidos procesadoraPedidos;
 
     public enum eventos {
-        actualizarPedidosProcesadora, actualizarPedidosGestor
+        actualizarPedidosGestor
     };
 
     public Gestor(String nombreUsuario, String password, String nombreCompleto) {
@@ -50,7 +51,8 @@ public class Gestor extends Usuario {
         p.gestorPreparador(this);
         p.enPreparacion();
         procesadoraPedidos.sacarPedido(p);
-        avisar(eventos.actualizarPedidosProcesadora);
+        
+        procesadoraPedidos.avisar(ProcesadoraPedidos.eventos.actualizarPedidosProcesadora);
         avisar(eventos.actualizarPedidosGestor);
         
     }
@@ -67,7 +69,6 @@ public class Gestor extends Usuario {
             pedidos.remove(p);
             p.Pronto();
             avisar(eventos.actualizarPedidosGestor);
-            // avisar(Mozo.eventos.pedidoCambioEstado);
             //aca se deberia avisar al mozo que el pedido esta pronto 
         } else {
 

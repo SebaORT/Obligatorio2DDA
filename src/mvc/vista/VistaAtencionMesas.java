@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
+import logica.modelo.Transferencia;
 import logica.observador.Observable;
 import mvc.IVistaAtencionMesa;
 
@@ -29,27 +31,26 @@ import mvc.IVistaAtencionMesa;
  *
  * @author Sebastian
  */
-public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAtencionMesa {
+public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAtencionMesa {
 
     private ControladorAtencionMesa controlador;
-
     private final JPanel[] panelsMesasButtons = new JPanel[5];
     private final JLabel[] labelMesas = new JLabel[5];
-
     private int indexMesaSeleccionada = -1;
-
     private String[] columnNames = { "Producto", "Cantidad",
             "Precio Unitario", "SubTotal", "Estado","Gestor" };
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private ArrayList<Mesa> mesasMozoVista;
+    
+    private Mozo mozoActual;
+    
 
     /**
      * Creates new form GUIAtencionMesas
      */
-    public VistaAtencionMesas(java.awt.Frame parent, boolean modal, Mozo mozo) {
-        super(parent, modal);
+    public VistaAtencionMesas( Mozo mozo) {
         initComponents();
 
+        this.mozoActual = mozo;
         controlador = new ControladorAtencionMesa(mozo, this);
     }
 
@@ -62,6 +63,23 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
         lblMontoTotal.setText("Monto: 0");
     }
 
+    public void solicitacionTransferencia(Transferencia transf) {
+        Mozo mozoOrigen = transf.getMozoOrigen();
+        Mesa mesaOrigen = transf.getMesa();
+        String abiertaStr = mesaOrigen.isAbierta() ? "Si" : "No";
+         int result = JOptionPane.
+                 showConfirmDialog(this, 
+                         "Transferencia recibida de mesa : (N°:"+ mesaOrigen.getNumero()+"-Abierta: "+abiertaStr+") "+
+                                 " | Mozo Origen: "+mozoOrigen.getNombreCompleto());
+         if (result == JOptionPane.YES_OPTION) {
+               controlador.realizarTransferencia();
+         }
+         else {
+             controlador.avisarTransferenciaDenegada();
+         }
+         
+    }
+    
     public void initMesasUI(ArrayList<Mesa> mesasMozo) {
         panelsMesasButtons[0] = pnlMesa1;
         panelsMesasButtons[1] = pnlMesa2;
@@ -84,6 +102,7 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
                 setMesaCerrada(mesa);
             }
             labelMesas[i].setText(mesa.toString());
+              panelsMesasButtons[i].setEnabled(true);
             i++;
         }
 
@@ -92,7 +111,12 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
             panelsMesasButtons[j].setBackground(new Color(153, 153, 153));// gray
             panelsMesasButtons[j].setEnabled(false);
             labelMesas[j].setText("N/A");
+            unPressPanel(j);
         }
+    }
+    
+    private void unPressPanel(int i) {
+        panelsMesasButtons[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 
     public void setMesaAbierta(Mesa m) {
@@ -106,7 +130,6 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }
 
     public void updateListaProductos(ArrayList<Producto> productos) {
-        // cbxProducto.setModel((ComboBoxModel<Producto>) productos);
         cbxProducto.removeAllItems();
         for (Producto producto : productos) {
             cbxProducto.addItem(producto);
@@ -115,16 +138,19 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
 
     public void updateServicioActual(ArrayList<Pedido> servicioActual) {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
-
-        for (Pedido pedido : servicioActual) {
-            data.add(new Object[] {
-                    pedido.getProducto().getNombre(),
-                    pedido.getCantidad(),
-                    pedido.getProducto().getPrecio(),
-                    pedido.getMontoPedido(),
-                    pedido.getEstado().name(),
-                    pedido.getGestor()
-            });
+        Mesa mesaSeleccionada = indexMesaSeleccionada !=-1 ? this.mesasMozoVista.get(indexMesaSeleccionada) : null;
+        for (Pedido pedido : servicioActual) {            
+            if (pedido.esMiMesa(mesaSeleccionada))
+            {
+                data.add(new Object[] {
+                        pedido.getProducto().getNombre(),
+                        pedido.getCantidad(),
+                        pedido.getProducto().getPrecio(),
+                        pedido.getMontoPedido(),
+                        pedido.getEstado().name(),
+                        pedido.getGestor()
+                });
+            }
         }
 
         TableModelCustom model = new TableModelCustom(columnNames, data);
@@ -594,7 +620,14 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
     }// GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTransferirMesaActionPerformed
-        // TODO add your handling code here:
+        
+        Mesa mesaActual = this.mesasMozoVista.get(this.indexMesaSeleccionada);
+        JDialog d = new DialogMozosTransferir(this, true, this.mozoActual, mesaActual);
+
+        d.pack();
+        d.setLocationRelativeTo(this);
+         d.setVisible(true);
+        
     }// GEN-LAST:event_btnTransferirMesaActionPerformed
 
     private void updateMesaActual(JPanel pnl, int index) {
@@ -610,11 +643,13 @@ public class VistaAtencionMesas extends javax.swing.JDialog implements IVistaAte
                 lblMesaSeleccionada.setText(label.getText());
                 lblServicioParaMesa.setText("Servicio para " + label.getText());
             }
+
+          controlador.UpdateServicioActual(mesasMozoVista.get(indexMesaSeleccionada));
         }
         
-        controlador.UpdateServicioActual(mesasMozoVista.get(indexMesaSeleccionada));
-
+        
     }
+
 
     private void unPressPanels() {
         this.pnlMesa1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));

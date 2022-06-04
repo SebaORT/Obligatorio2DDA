@@ -14,15 +14,13 @@ import logica.observador.Observable;
  *
  * @author Usuario
  */
-public class ProcesadoraPedidos{
+public class ProcesadoraPedidos extends Observable{
     private String nombre;
     private ArrayList<Gestor> gestores = new ArrayList<Gestor>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     
-    
-    
-    
-
+    public enum eventos {actualizarPedidosProcesadora};
+   
     public ProcesadoraPedidos(String nombre) {
         this.nombre = nombre;
     }
@@ -42,13 +40,13 @@ public class ProcesadoraPedidos{
     public void agregarPedido(Pedido p) {
         pedidos.add(p);   
         
-        for (Gestor gestor : gestores) {
-            gestor.avisar(Gestor.eventos.actualizarPedidosProcesadora);
-        }
+        this.avisar(eventos.actualizarPedidosProcesadora);
     }
     
     public void sacarPedido(Pedido p){
         pedidos.remove(p);
+        
+        this.avisar(eventos.actualizarPedidosProcesadora);
     }
 
     public void asignarGestor(Gestor gestorActual) {

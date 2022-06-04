@@ -15,7 +15,7 @@ public class Comun extends TipoCliente {
     public float montoAPagarConDescuento(Servicio servicio) {
         float resultado = 0;
         for(Pedido p:servicio.getPedidos()){
-            if(p.getProducto().getCodigo()!=8888){
+            if(p.getProducto().getCodigo()!=Producto.CODIGO_CAFE){
                 resultado += p.getMontoPedido();
             }
         }

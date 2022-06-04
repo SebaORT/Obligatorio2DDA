@@ -8,6 +8,7 @@ package logica.modelo;
 import logica.excepciones.LogicException;
 import logica.modelo.Usuario;
 import java.util.ArrayList;
+import logica.Fachada;
 
 /**
  *
@@ -21,6 +22,13 @@ public class Mozo extends Usuario{
 
     private final int MAX_MESAS = 5;
     private Pedido ultimoPedidoCambioEstado;
+    
+    public enum eventos {pedidoPronto,actualizarProductos,actualizarServicio,
+                        transferenciaSolicitada,
+                        transferenciaAceptada,
+                        transferenciaDenegada
+                        };
+
     //private Mesa ultimaCambioMesaServicio;
 
     public Mozo(String nombreUsuario, String password, String nombreCompleto, int telefono) {
@@ -31,7 +39,7 @@ public class Mozo extends Usuario{
     public int getTelefono() {
         return telefono;
     }
-
+    
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
@@ -40,6 +48,11 @@ public class Mozo extends Usuario{
         return mesas;
     }
 
+    public Transferencia getTransferencia() {
+        return transferencia;
+    }
+
+    
     public void setServicio(ArrayList<Mesa> servicio) {
         this.mesas = servicio;
     }
@@ -94,7 +107,6 @@ public class Mozo extends Usuario{
         this.ultimaCambioMesaServicio = ultimaMesaCambio;
     }
     */
-    public enum eventos {pedidoPronto,actualizarProductos,actulizarServicio};
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
@@ -103,23 +115,17 @@ public class Mozo extends Usuario{
     
     
     //estos metodos son iguales se podria sacar el evento a un metodo aparte y usar solo pedido cambio de estado capaz
-    /*
-    public void mesaCambioEstado(Pedido p) {
-        this.ultimaCambioMesaServicio = p.getServicio().getMesa();
-        
-        this.avisar(eventos.actulizarServicio);
-    }
-    */
+
     public void pedidoCambioEstado(Pedido p) {
         this.ultimoPedidoCambioEstado = p;
-        this.avisar(eventos.actulizarServicio);  
+        this.avisar(eventos.actualizarServicio);  
     }
     
     public void pedidoEstadoPronto(){
         this.avisar(eventos.pedidoPronto);
     }
     
-    public void actuliaziarProductos(){
+    public void actualizarProductos(){
         this.avisar(eventos.actualizarProductos);
     }
 
@@ -129,16 +135,15 @@ public class Mozo extends Usuario{
         return m.getNombreUsuario().equalsIgnoreCase(super.getNombreUsuario());
     }
 
-   /* public void agregarProductoAlServicio(int indexMesaSeleccionada, Producto producto, int cantidad,String descripcion) throws LogicException {
-        this.mesas.get(indexMesaSeleccionada).getServicio().crearPedido(producto, cantidad, descripcion);
-    }
-
-    public ArrayList<Pedido> obtenerPedidosServicio(int indexMesaSeleccionada) {
-        return this.mesas.get(indexMesaSeleccionada).getServicio().getPedidos();
-    }*/
-
     void sacarMesa(Mesa mesa) {
         mesas.remove(mesa);
     }
+
+    @Override
+    public String toString() {
+        return getNombreUsuario();
+    }
+    
+    
 
 }

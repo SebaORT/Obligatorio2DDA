@@ -6,6 +6,7 @@
 package logica.modelo;
 
 import java.util.ArrayList;
+import logica.Fachada;
 import logica.excepciones.LogicException;
 
 /**
@@ -29,6 +30,17 @@ public class Servicio {
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
+    
+    public ArrayList<Pedido> getPedidosMesa() {
+        ArrayList<Pedido> result= new ArrayList<>();
+        for (Pedido pedido : pedidos) {
+            if (pedido.getServicio().getMesa() == mesa) {
+                result.add(pedido);
+            }
+        }
+
+        return result;
+    }
 
     public void agregarCliente(Cliente c) {
         cliente = c;
@@ -46,18 +58,6 @@ public class Servicio {
         return resultado;
     }
 
-    public String totalServicio(Cliente c) {
-        String totalServicio = "El total del Servicio es: " + String.valueOf(calcularServicio());
-        float total = 0;
-        float totalConDescuento = 0;
-        if (c != null) {
-            totalConDescuento = c.getTipoCliente().montoAPagarConDescuento(this);
-            totalServicio += ". Al ser un Cliente " + c.getTipoCliente().toString() + " el total es: "
-                    + String.valueOf(totalConDescuento);
-        }
-        return totalServicio;
-    }
-
     public void crearPedido(Producto producto, int cantidad, String descripcion) throws LogicException {
         Pedido p = new Pedido(this);
         if (mesa.isAbierta()) {
@@ -66,10 +66,12 @@ public class Servicio {
             producto.getUnidadProcesadora().agregarPedido(p);
 
             if (p.getProducto().getStock() == 0) {
-                mesa.getMozo().actuliaziarProductos();
+                mesa.getMozo().actualizarProductos();
+                Fachada.getInstancia().avisar(Mozo.eventos.actualizarProductos);
             }
-        } else
+        } else {
             throw new LogicException("La mesa esta cerrada.");
+        }
     }
 
     /*
@@ -80,8 +82,9 @@ public class Servicio {
     public int pedidosPendientes() {
         int pendientes = 0;
         for (Pedido p : pedidos) {
-            if (p.getEstado().name() != "Pronto")
+            if (p.getEstado() != Pedido.status.Pronto) {
                 pendientes++;
+            }
         }
         return pendientes;
     }

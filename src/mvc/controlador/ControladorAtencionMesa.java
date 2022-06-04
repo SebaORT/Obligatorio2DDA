@@ -5,6 +5,8 @@
 package mvc.controlador;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logica.Fachada;
 import logica.excepciones.LogicException;
 import logica.modelo.Mesa;
@@ -12,6 +14,7 @@ import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
 import logica.modelo.Servicio;
+import logica.modelo.Transferencia;
 import logica.observador.Observable;
 import logica.observador.Observador;
 import mvc.IVistaAtencionMesa;
@@ -32,10 +35,13 @@ public class ControladorAtencionMesa implements Observador {
 
         mozo.agregarObservador(this);
 
+        Fachada.getInstancia().agregarObservador(this);
+
     }
 
     @Override
     public void actualizar(Object evento, Observable origen) {
+
         if (evento.equals(Mozo.eventos.pedidoPronto)) {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
@@ -43,12 +49,38 @@ public class ControladorAtencionMesa implements Observador {
         if (evento.equals(Mozo.eventos.actualizarProductos)) {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
-        if (evento.equals(Mozo.eventos.actulizarServicio)) {
+        if (evento.equals(Mozo.eventos.actualizarServicio)) {
             Servicio servicio = mozo.getUltimoPedidoCambioEstado().getServicio();
-            vista.updateServicioActual(servicio.getPedidos());
+            vista.updateServicioActual(servicio.getPedidosMesa());
             // hay sabes en que mesa se esta el usuario para sabes si actulizar el servicio o no
         }
-        
+
+        if (evento.equals(Mozo.eventos.transferenciaSolicitada)) {
+            vista.solicitacionTransferencia(mozo.getTransferencia());
+        }
+
+        if (evento.equals(Mozo.eventos.transferenciaAceptada)) {
+            vista.mostrarMensaje("Transferencia Aceptada!!");
+            vista.initMesasUI(mozo.getMesas());
+        }
+
+        if (evento.equals(Mozo.eventos.transferenciaDenegada)) {
+            vista.mostrarMensaje("Transferencia Rechazada!!");
+        }
+
+    }
+
+    public void realizarTransferencia() {
+        try {
+            mozo.getTransferencia().trasferir();
+        } catch (LogicException ex) {
+            vista.mostrarExceptionError(ex);
+        }
+    }
+
+    public void avisarTransferenciaDenegada() {
+        mozo.getTransferencia().avisarMozoOrigenDenegada();
+
     }
 
     private void inicializarVista() {
@@ -96,7 +128,7 @@ public class ControladorAtencionMesa implements Observador {
 
     public void agregarProductoAlServicio(Mesa m, Producto prod, int cantidad, String description) {
         try {
-            if (m!= null) {
+            if (m != null) {
                 m.getServicio().crearPedido(prod, cantidad, description);
                 updateServicioActualMesa(m);
                 vista.mostrarMensaje("Producto agregado al servicio correctamente.");

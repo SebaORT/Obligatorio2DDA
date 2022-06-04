@@ -5,6 +5,7 @@
 package mvc.vista.login;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import logica.modelo.Mozo;
 import logica.modelo.Usuario;
 import mvc.IVistaLogin;
@@ -31,7 +32,7 @@ public class VistaLoginAtencionMesas extends VistaLogin {
 
     @Override
     public void proximoCasoUso(Usuario user) {
-        JDialog d = new VistaAtencionMesas(null, false, (Mozo) user);
+        JFrame d = new VistaAtencionMesas((Mozo) user);
         d.setVisible(true);
         d.setLocationRelativeTo(null);
     }

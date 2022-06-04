@@ -39,7 +39,9 @@ public class Pedido {
         servicio.getMesa().getMozo().pedidoEstadoPronto();
     }
     
-    
+    public boolean esMiMesa(Mesa otraMesa) {
+        return servicio.getMesa() == otraMesa;
+    }
 
     public Pedido(Servicio s) {
         this.servicio = s;
