@@ -81,7 +81,7 @@ public class Servicio {
         int pendientes = 0;
         for (Pedido p : pedidos) {
             if (p.getEstado().name() != "Pronto")
-                pendientes = +1;
+                pendientes++;
         }
         return pendientes;
     }

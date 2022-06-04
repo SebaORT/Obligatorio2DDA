@@ -21,7 +21,7 @@ public class Mozo extends Usuario{
 
     private final int MAX_MESAS = 5;
     private Pedido ultimoPedidoCambioEstado;
-    private Mesa ultimaMesaCambio;
+    //private Mesa ultimaCambioMesaServicio;
 
     public Mozo(String nombreUsuario, String password, String nombreCompleto, int telefono) {
         super(nombreUsuario, password, nombreCompleto);
@@ -85,32 +85,38 @@ public class Mozo extends Usuario{
             mesa.setMozo(this);
         }
     }
-
+    /*
     public Mesa getUltimaMesaCambio() {
-        return ultimaMesaCambio;
+        return ultimaCambioMesaServicio;
     }
 
     public void setUltimaMesaCambio(Mesa ultimaMesaCambio) {
-        this.ultimaMesaCambio = ultimaMesaCambio;
+        this.ultimaCambioMesaServicio = ultimaMesaCambio;
     }
-    
-    public enum eventos {pedidoCambioEstado,actualizarProductos,actulizarServicio};
+    */
+    public enum eventos {pedidoPronto,actualizarProductos,actulizarServicio};
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
     }
     
+    
+    
+    //estos metodos son iguales se podria sacar el evento a un metodo aparte y usar solo pedido cambio de estado capaz
+    /*
     public void mesaCambioEstado(Pedido p) {
-        this.ultimaMesaCambio = p.getServicio().getMesa();
+        this.ultimaCambioMesaServicio = p.getServicio().getMesa();
         
         this.avisar(eventos.actulizarServicio);
     }
-    
-    
+    */
     public void pedidoCambioEstado(Pedido p) {
         this.ultimoPedidoCambioEstado = p;
-        
-        this.avisar(eventos.pedidoCambioEstado);
+        this.avisar(eventos.actulizarServicio);  
+    }
+    
+    public void pedidoEstadoPronto(){
+        this.avisar(eventos.pedidoPronto);
     }
     
     public void actuliaziarProductos(){

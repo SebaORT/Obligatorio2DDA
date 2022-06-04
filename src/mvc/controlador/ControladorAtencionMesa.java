@@ -11,6 +11,7 @@ import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
 import logica.modelo.Producto;
+import logica.modelo.Servicio;
 import logica.observador.Observable;
 import logica.observador.Observador;
 import mvc.IVistaAtencionMesa;
@@ -35,7 +36,7 @@ public class ControladorAtencionMesa implements Observador {
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        if (evento.equals(Mozo.eventos.pedidoCambioEstado)) {
+        if (evento.equals(Mozo.eventos.pedidoPronto)) {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
@@ -43,8 +44,8 @@ public class ControladorAtencionMesa implements Observador {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
         if (evento.equals(Mozo.eventos.actulizarServicio)) {
-            Mesa mesa = mozo.getUltimaMesaCambio();
-            vista.updateServicioActual(mesa.getServicio().getPedidos());
+            Servicio servicio = mozo.getUltimoPedidoCambioEstado().getServicio();
+            vista.updateServicioActual(servicio.getPedidos());
             // hay sabes en que mesa se esta el usuario para sabes si actulizar el servicio o no
         }
         

@@ -8,6 +8,11 @@
             <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/logica/modelo/Mozo.java</file>
             <file>file:/C:/Repos/ORT/Diseño%20y%20desarrollo%20de%20Aplicaciones/obligatorio2/Obligatorio2DDA%20-%20Mock/src/mvc/vista/VistaAtencionMesas.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Pedido.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/Mozo.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/mvc/controlador/ControladorAtencionMesa.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ORT/DIseno%20de%20APp/OBLI2DDA/Obligatorio2DDA/src/logica/modelo/ProcesadoraPedidos.java</file>
+        </group>
     </open-files>
 </project-private>

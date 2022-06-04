@@ -35,7 +35,8 @@ public class Pedido {
     public void Pronto(){
         setEstado(status.Pronto);
         servicio.getMesa().getMozo().pedidoCambioEstado(this);
-        servicio.getMesa().getMozo().mesaCambioEstado(this);
+        //servicio.getMesa().getMozo().mesaCambioEstado(this);
+        servicio.getMesa().getMozo().pedidoEstadoPronto();
     }
     
     
@@ -46,7 +47,7 @@ public class Pedido {
 
     public void enPreparacion(){
         setEstado(status.EnPreparacion);
-        servicio.getMesa().getMozo().mesaCambioEstado(this);  
+        servicio.getMesa().getMozo().pedidoCambioEstado(this);  
     }
     
     public Pedido(Producto producto, int cantidad, int montoPedido, String descripcion) {

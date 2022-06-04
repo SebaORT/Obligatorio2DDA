@@ -75,7 +75,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
         tblPedidosCurso = new javax.swing.JTable();
         lblPedidosCurso = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblMonitorPedidosTitle.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         lblMonitorPedidosTitle.setText("Monitor de Pedidos");
