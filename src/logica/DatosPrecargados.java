@@ -57,8 +57,8 @@ public class DatosPrecargados {
                 Preferencial preferecnial = new Preferencial();
 
                 Cliente juan = new Cliente(1,"Juan", "juan@gmail.com",comun);
-                Cliente ana = new Cliente(2,"ana", "ana@gmail.com",deLaCasa);
-                Cliente mario = new Cliente(3,"mario", "Mario@gmail.com",preferecnial);
+                Cliente ana = new Cliente(2,"Ana", "ana@gmail.com",deLaCasa);
+                Cliente mario = new Cliente(3,"Mario", "Mario@gmail.com",preferecnial);
 
                 logica.agregarCliente(juan);
                 logica.agregarCliente(ana);

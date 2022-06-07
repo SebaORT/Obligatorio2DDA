@@ -78,6 +78,11 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
                 txtIdClienteActionPerformed(evt);
             }
         });
+        txtIdCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdClienteKeyTyped(evt);
+            }
+        });
 
         btnCerrarMesa.setText("Cerrar Mesa");
         btnCerrarMesa.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +120,10 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
         });
 
         jLabel6.setText("Nombre Cliente:");
+
+        txtNombreCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtNombreCliente.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNombreCliente.setToolTipText("");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +189,7 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(txtMontoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,7 +216,7 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdClienteActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtIdClienteActionPerformed
 
     private void txtMontoPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoPagarActionPerformed
@@ -232,6 +241,15 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarMesaActionPerformed
         controlador.CerrarMesa(mesaActual);
     }//GEN-LAST:event_btnCerrarMesaActionPerformed
+
+    private void txtIdClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdClienteKeyTyped
+
+        char c = evt.getKeyChar();
+        
+        if(!(Character.isDigit(c))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdClienteKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
