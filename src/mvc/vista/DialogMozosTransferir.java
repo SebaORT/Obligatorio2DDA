@@ -20,12 +20,16 @@ import logica.modelo.Transferencia;
 public class DialogMozosTransferir extends javax.swing.JDialog {
     Mozo mozoOrigen;
     Mesa mesaActual;
+    
+    VistaAtencionMesas vistaOriginal;
     /**
      * Creates new form DialogMozosTransferir
      */
     public DialogMozosTransferir(java.awt.Frame parent, boolean modal, Mozo mozoOrigen,Mesa mesaActual) {
         super(parent, modal);
         initComponents();
+        
+        this.vistaOriginal = (VistaAtencionMesas)parent;
         
         this.mozoOrigen = mozoOrigen;
         this.mesaActual = mesaActual;
@@ -90,12 +94,16 @@ public class DialogMozosTransferir extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitarTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitarTransferenciaActionPerformed
-        Mozo mozoDestino = (Mozo)cbxMozosTransferir.getSelectedItem();
-        Transferencia transf= new Transferencia(mozoOrigen, mesaActual, mozoDestino);
-        
-        transf.avisarMozoDestino();
-        
-        this.dispose();
+        Object o = cbxMozosTransferir.getSelectedItem();
+        if (o!= null) {
+            Mozo mozoDestino = (Mozo)o;
+            Transferencia transf= new Transferencia(mozoOrigen, mesaActual, mozoDestino);
+            transf.avisarMozoDestino();
+            this.dispose();
+        }
+        else {
+            this.vistaOriginal.mostrarAlerta("Debe seleccionar un mozo");
+        }
     }//GEN-LAST:event_btnSolicitarTransferenciaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
