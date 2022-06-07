@@ -6,6 +6,7 @@ package mvc.vista;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import logica.Fachada;
 import logica.excepciones.LogicException;
 import logica.modelo.Mesa;
@@ -214,8 +215,14 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtMontoPagarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       int idCliente = Integer.parseInt(txtIdCliente.getText());
-       controlador.cargarDatosCliente(idCliente,mesaActual);
+      String id = txtIdCliente.getText();
+      int idCliente=-1;
+        if(!id.isBlank()){
+            idCliente = Integer.parseInt(id.trim());
+        }
+      
+      controlador.cargarDatosCliente(idCliente,mesaActual);
+      
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -246,6 +253,7 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
 
     public void mostroMontoServicio(int monto) {
         txtMontoServicio.setText(String.valueOf(monto));
+        txtMontoPagar.setText(String.valueOf(monto));
     }
     
     public void init(){
@@ -257,5 +265,10 @@ public class DialogCerrarMesa extends javax.swing.JDialog {
         txtNombreCliente.setText(nombreCliente);
         txtMontoPagar.setText(String.valueOf(montoPagar));
         txtDescuento.setText(String.valueOf(descuento));
+    }
+    
+    public void mostrarExceptionErrorCerrarMesa(Exception ex) {
+        Logger.getLogger(VistaAtencionMesas.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 }

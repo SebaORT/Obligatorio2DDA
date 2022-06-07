@@ -5,6 +5,7 @@
 package mvc;
 
 import java.util.ArrayList;
+import logica.excepciones.LogicException;
 import logica.modelo.Mesa;
 import logica.modelo.Mozo;
 import logica.modelo.Pedido;
@@ -38,5 +39,7 @@ public interface IVistaAtencionMesa {
     public void cargarDatosCliente(String nombreCliente, String beneficio, float descuento, float montoPagar);
 
     public void cerrarDialogoCerrarMesa();
+
+    public void cerraMesaMostrarMensaje(LogicException ex);
     
 }

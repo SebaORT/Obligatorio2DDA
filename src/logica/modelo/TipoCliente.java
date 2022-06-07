@@ -12,6 +12,9 @@ package logica.modelo;
 public abstract class TipoCliente {
     
     public abstract float montoAPagarConDescuento(Servicio servicio);
+    public float descuentoAplicado(Servicio servicio){
+        return servicio.calcularServicio() - montoAPagarConDescuento(servicio);
+    }
 
     @Override
     public abstract String toString();

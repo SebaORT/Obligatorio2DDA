@@ -158,12 +158,19 @@ public class ControladorAtencionMesa implements Observador {
     
     public void cargarDatosCliente(int idCliente,Mesa mesa){
         Cliente cliente = Fachada.getInstancia().getCliente(idCliente);
-        String nombreCliente = cliente.getNombre();
-        String beneficio = cliente.getTipoCliente().toString();
-        float descuento = -1;
-        float montoPagar = cliente.getTipoCliente().montoAPagarConDescuento(mesa.getServicio());
-        vista.cargarDatosCliente(nombreCliente,beneficio,descuento,montoPagar);
+        try{
+            mesa.getServicio().agregarCliente(cliente);
+            String nombreCliente = cliente.getNombre();
+            String beneficio = cliente.getTipoCliente().toString();
+            float descuento = cliente.getTipoCliente().descuentoAplicado(mesa.getServicio());
+            float montoPagar = cliente.getTipoCliente().montoAPagarConDescuento(mesa.getServicio());
+            vista.cargarDatosCliente(nombreCliente,beneficio,descuento,montoPagar);
+        } 
+        catch (LogicException ex) {
+                vista.cerraMesaMostrarMensaje(ex);
+        }
     }
+}
     
 
-}
+

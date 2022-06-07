@@ -42,8 +42,11 @@ public class Servicio {
         return result;
     }
 
-    public void agregarCliente(Cliente c) {
+    public void agregarCliente(Cliente c) throws LogicException {
+        if(c!=null){
         cliente = c;
+        }
+        else throw new LogicException ("No se encontro al Cliente");
     }
 
     public void sacarCliente() {

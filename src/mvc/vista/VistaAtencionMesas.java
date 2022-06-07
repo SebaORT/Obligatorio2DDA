@@ -617,12 +617,13 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     }// GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCerrarMesaActionPerformed
-        Mesa mesaActual = mesasMozoVista.get(indexMesaSeleccionada);
-        dialogoCerrarMesa = new DialogCerrarMesa(this, true, this.controlador, mesaActual);
-        dialogoCerrarMesa.init();
-        dialogoCerrarMesa.setLocationRelativeTo(this);
-        dialogoCerrarMesa.setVisible(true);
-       
+        if(indexMesaSeleccionada != -1){
+            Mesa mesaActual = mesasMozoVista.get(indexMesaSeleccionada);
+            dialogoCerrarMesa = new DialogCerrarMesa(this, true, this.controlador, mesaActual);
+            dialogoCerrarMesa.init();
+            dialogoCerrarMesa.setLocationRelativeTo(this);
+            dialogoCerrarMesa.setVisible(true);
+        }else mostrarAlerta("Seleccione una mesa");
         
         //controlador.CerrarMesa(mesa);
         
@@ -779,6 +780,12 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
        if(dialogoCerrarMesa != null){
            dialogoCerrarMesa.dispose();
        }
+    }
+
+    @Override
+    public void cerraMesaMostrarMensaje(LogicException ex) {
+        dialogoCerrarMesa.mostrarExceptionErrorCerrarMesa(ex);
+        
     }
 
 }
