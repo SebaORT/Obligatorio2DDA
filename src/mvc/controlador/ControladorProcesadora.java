@@ -36,11 +36,10 @@ public class ControladorProcesadora implements Observador {
 
     @Override
     public void actualizar(Object evento, Observable origen) {
+        
+        //todos los gestores deben ser notificados que hay cambios en la procesadora
         if (evento.equals(ProcesadoraPedidos.eventos.actualizarPedidosProcesadora)) {
             actualizarPedidosProcesadora();
-        }
-        if (evento.equals(Gestor.eventos.actualizarPedidosGestor)) {
-            actualizarPedidosGestor();
         }
     }
 
@@ -52,10 +51,12 @@ public class ControladorProcesadora implements Observador {
 
     public void prepararPedido(Pedido pedido) {
         this.gestor.preparaPedido(pedido);
+        actualizarPedidosGestor();
     }
 
     public void finalizarPedido(Pedido pedido) {
         this.gestor.pedidoPronto(pedido);
+        actualizarPedidosGestor();
     }
 
     private void actualizarPedidosGestor() {

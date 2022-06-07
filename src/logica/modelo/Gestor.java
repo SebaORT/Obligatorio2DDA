@@ -51,10 +51,7 @@ public class Gestor extends Usuario {
         p.gestorPreparador(this);
         p.enPreparacion();
         procesadoraPedidos.sacarPedido(p);
-        
         procesadoraPedidos.avisar(ProcesadoraPedidos.eventos.actualizarPedidosProcesadora);
-        avisar(eventos.actualizarPedidosGestor);
-        
     }
 
     public void validar() {
@@ -68,10 +65,6 @@ public class Gestor extends Usuario {
         if (pedidos.contains(p)) {
             pedidos.remove(p);
             p.Pronto();
-            avisar(eventos.actualizarPedidosGestor);
-            //aca se deberia avisar al mozo que el pedido esta pronto 
-        } else {
-
         }
     }
 
