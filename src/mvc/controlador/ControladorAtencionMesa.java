@@ -98,12 +98,17 @@ public class ControladorAtencionMesa implements Observador {
     }
 
     public void AbrirMesa(Mesa m) {
-        try {
-            m.abrirMesa();
-            vista.setMesaAbierta(m);
+        if (m != null) {
+            try {
+                m.abrirMesa();
+                vista.setMesaAbierta(m);
 
-        } catch (LogicException ex) {
-            vista.mostrarExceptionError(ex);
+            } catch (LogicException ex) {
+                vista.mostrarExceptionError(ex);
+            }
+        }
+        else {
+             vista.mostrarAlerta("Seleccione una mesa");
         }
     }
 

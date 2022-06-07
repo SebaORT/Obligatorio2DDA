@@ -98,7 +98,8 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
                 "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
             }
         ));
-        tblPedidosPendientes.setColumnSelectionAllowed(true);
+        tblPedidosPendientes.setCellSelectionEnabled(false);
+        tblPedidosPendientes.setRowSelectionAllowed(true);
         scrollPanePedidos.setViewportView(tblPedidosPendientes);
         tblPedidosPendientes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -193,18 +194,15 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTomarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTomarPedidoActionPerformed
-        // TODO add your handling code here:
-        
-        //ArrayList<Pedido> lista = controlador.PedidosPendientes();
         int rowSel = tblPedidosPendientes.getSelectedRow();
-        controlador.prepararPedido(pedidosPendientesVista.get(rowSel)); 
+        Pedido p = rowSel>=0 ? pedidosPendientesVista.get(rowSel) : null;
+        controlador.prepararPedido(p); 
     }// GEN-LAST:event_btnTomarPedidoActionPerformed
 
     private void btnFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFinalizarPedidoActionPerformed
-        // TODO add your handling code here:
-       
         int rowSel = tblPedidosCurso.getSelectedRow();
-        controlador.finalizarPedido(pedidosEnCursoVista.get(rowSel));
+        Pedido p = rowSel>=0 ? pedidosEnCursoVista.get(rowSel) : null;
+        controlador.finalizarPedido(p);
         
     }// GEN-LAST:event_btnFinalizarPedidoActionPerformed
     
@@ -239,6 +237,11 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
     private javax.swing.JTable tblPedidosCurso;
     private javax.swing.JTable tblPedidosPendientes;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarError(String mensaje) {
+       JOptionPane.showMessageDialog(this, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
 
 
 

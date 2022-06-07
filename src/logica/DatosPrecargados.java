@@ -110,10 +110,6 @@ public class DatosPrecargados {
                 mozo3.agregarMesa(mesa8);
                 mozo3.agregarMesa(mesa9);
 
-                mesa1.abrirMesa();
-                mesa1.getServicio().crearPedido(hamburguesa, 2, "cocidas");
-                mesa4.abrirMesa();
-
         }
 
 }

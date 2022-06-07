@@ -613,7 +613,8 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAbrirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAbrirMesaActionPerformed
-        controlador.AbrirMesa(mesasMozoVista.get(indexMesaSeleccionada));
+        Mesa m = indexMesaSeleccionada >= 0 ? mesasMozoVista.get(indexMesaSeleccionada) : null;
+        controlador.AbrirMesa(m);
     }// GEN-LAST:event_btnAbrirMesaActionPerformed
 
     private void btnCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCerrarMesaActionPerformed
@@ -623,21 +624,22 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
             dialogoCerrarMesa.init();
             dialogoCerrarMesa.setLocationRelativeTo(this);
             dialogoCerrarMesa.setVisible(true);
-        }else mostrarAlerta("Seleccione una mesa");
-        
-        //controlador.CerrarMesa(mesa);
-        
+        } else { 
+            mostrarAlerta("Seleccione una mesa");
+        }        
     }// GEN-LAST:event_btnCerrarMesaActionPerformed
 
     private void btnTransferirMesaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTransferirMesaActionPerformed
-        
-        Mesa mesaActual = this.mesasMozoVista.get(this.indexMesaSeleccionada);
-        JDialog d = new DialogMozosTransferir(this, true, this.mozoActual, mesaActual);
-
-        d.pack();
-        d.setLocationRelativeTo(this);
-         d.setVisible(true);
-        
+        if(indexMesaSeleccionada != -1){
+            Mesa mesaActual =  this.mesasMozoVista.get(this.indexMesaSeleccionada);
+            JDialog d = new DialogMozosTransferir(this, true, this.mozoActual, mesaActual);
+            d.pack();
+            d.setLocationRelativeTo(this);
+            d.setVisible(true);
+        }
+        else {
+          mostrarAlerta("Seleccione una mesa");
+        }
     }// GEN-LAST:event_btnTransferirMesaActionPerformed
 
     private void updateMesaActual(JPanel pnl, int index) {

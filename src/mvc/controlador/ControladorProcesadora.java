@@ -50,13 +50,23 @@ public class ControladorProcesadora implements Observador {
     }
 
     public void prepararPedido(Pedido pedido) {
-        this.gestor.preparaPedido(pedido);
-        actualizarPedidosGestor();
+        if (pedido != null) {
+            this.gestor.preparaPedido(pedido);
+            actualizarPedidosGestor();
+        }
+        else {
+            vista.mostrarError("Seleccione un pedido pendiente");
+        }
     }
 
     public void finalizarPedido(Pedido pedido) {
-        this.gestor.pedidoPronto(pedido);
-        actualizarPedidosGestor();
+        if (pedido != null) {
+            this.gestor.pedidoPronto(pedido);
+            actualizarPedidosGestor();
+        }
+        else {
+            vista.mostrarError("Seleccione un pedido en curso");
+        }
     }
 
     private void actualizarPedidosGestor() {

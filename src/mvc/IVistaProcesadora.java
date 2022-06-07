@@ -19,5 +19,7 @@ public interface IVistaProcesadora {
     public void actualizarPedidosEnCurso(ArrayList<Pedido> pedidos);
     
     public void initLabels(Gestor g, ProcesadoraPedidos p);
+
+    public void mostrarError(String mensaje);
     
 }
