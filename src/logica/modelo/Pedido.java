@@ -35,7 +35,6 @@ public class Pedido {
     public void Pronto(){
         setEstado(status.Pronto);
         servicio.getMesa().getMozo().pedidoCambioEstado(this);
-        //servicio.getMesa().getMozo().mesaCambioEstado(this);
         servicio.getMesa().getMozo().pedidoEstadoPronto();
     }
     
@@ -59,9 +58,7 @@ public class Pedido {
         this.descripcion = descripcion;
         this.gestor = gestor;
     }
-
-  
-
+    
     public void agregarProducto(Producto p, int cantidad, String desc)throws LogicException{
         if(cantidad >0){
             if(p.actulizarStock(cantidad)){

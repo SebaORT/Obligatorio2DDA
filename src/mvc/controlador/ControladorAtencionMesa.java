@@ -47,6 +47,8 @@ public class ControladorAtencionMesa implements Observador {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
+        
+        //si un producto se queda sin stock la fachada avisa
         if (evento.equals(Mozo.eventos.actualizarProductos)) {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
