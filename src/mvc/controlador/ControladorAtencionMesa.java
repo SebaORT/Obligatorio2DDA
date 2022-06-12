@@ -128,19 +128,27 @@ public class ControladorAtencionMesa implements Observador {
             updateServicioActualMesa(m);
         } else {
             vista.updateServicioActual(new ArrayList<>());
+            
         }
+        updateMontoTotalServicioActualMesa(m);
+
     }
 
     private void updateServicioActualMesa(Mesa m) {
         vista.updateServicioActual(m.getServicio().getPedidos());
     }
 
+    private void updateMontoTotalServicioActualMesa(Mesa m) {
+        int montoServicio = m.getServicio().calcularServicio();
+        vista.actualizarMontoTotalServicio(montoServicio);
+    }
     public void agregarProductoAlServicio(Mesa m, Producto prod, int cantidad, String description) {
         try {
             if (m != null) {
                 m.getServicio().crearPedido(prod, cantidad, description);
                 updateServicioActualMesa(m);
                 vista.mostrarMensaje("Producto agregado al servicio correctamente.");
+                updateMontoTotalServicioActualMesa(m);
             } else {
                 vista.mostrarMensaje("Seleccione una mesa!");
             }

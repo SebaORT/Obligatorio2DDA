@@ -41,5 +41,7 @@ public interface IVistaAtencionMesa {
     public void cerrarDialogoCerrarMesa();
 
     public void cerraMesaMostrarMensaje(LogicException ex);
+
+    public void actualizarMontoTotalServicio(int monto);
     
 }
