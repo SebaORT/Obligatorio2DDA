@@ -24,29 +24,29 @@ public class Servicio {
     }
 
     public Servicio() {
-        
+
     }
 
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
-    
+
     public ArrayList<Pedido> getPedidosMesa() {
-        ArrayList<Pedido> result= new ArrayList<>();
+        ArrayList<Pedido> result = new ArrayList<>();
         for (Pedido pedido : pedidos) {
             if (pedido.getServicio().getMesa() == mesa) {
                 result.add(pedido);
             }
         }
-
         return result;
     }
 
     public void agregarCliente(Cliente c) throws LogicException {
-        if(c!=null){
-        cliente = c;
+        if (c != null) {
+            cliente = c;
+        } else {
+            throw new LogicException("No se encontro al Cliente");
         }
-        else throw new LogicException ("No se encontro al Cliente");
     }
 
     public void sacarCliente() {
@@ -77,11 +77,6 @@ public class Servicio {
         }
     }
 
-    /*
-     * public void cerrarServicio() {
-     * calcularServicio();
-     * }
-     */
     public int pedidosPendientes() {
         int pendientes = 0;
         for (Pedido p : pedidos) {

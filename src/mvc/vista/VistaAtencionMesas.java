@@ -71,7 +71,9 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
          int result = JOptionPane.
                  showConfirmDialog(this, 
                          "Transferencia recibida de mesa : (N°:"+ mesaOrigen.getNumero()+"-Abierta: "+abiertaStr+") "+
-                                 " | Mozo Origen: "+mozoOrigen.getNombreCompleto());
+                                 " | Mozo Origen: "+mozoOrigen.getNombreCompleto(),
+                         "Solicitud de Transferencia de mesa",
+                         JOptionPane.YES_NO_OPTION);
          if (result == JOptionPane.YES_OPTION) {
                controlador.realizarTransferencia();
          }
@@ -660,16 +662,12 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
         }   
     }
     
-    
-
-
     private void unPressPanels() {
         this.pnlMesa1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa4.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.pnlMesa5.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
     }
 
     private void pnlMesa1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_pnlMesa1MouseClicked
@@ -695,7 +693,6 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     }// GEN-LAST:event_pnlMesa5MouseClicked
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
-
         Object o = cbxProducto.getSelectedItem();
         int cantidad = (Integer) spnCantidad.getValue();
         String description = txtDescripcionProducto.getText();

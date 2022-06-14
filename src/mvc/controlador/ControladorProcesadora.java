@@ -28,7 +28,6 @@ public class ControladorProcesadora implements Observador {
         this.procesadora = procesadora;
         this.vista = vista;
 
-        gestor.agregarObservador(this);        
         procesadora.agregarObservador(this);
                 
         inicializarVista();
@@ -36,7 +35,6 @@ public class ControladorProcesadora implements Observador {
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        
         //todos los gestores deben ser notificados que hay cambios en la procesadora
         if (evento.equals(ProcesadoraPedidos.eventos.actualizarPedidosProcesadora)) {
             actualizarPedidosProcesadora();

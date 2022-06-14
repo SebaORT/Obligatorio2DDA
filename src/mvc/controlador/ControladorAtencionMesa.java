@@ -47,15 +47,15 @@ public class ControladorAtencionMesa implements Observador {
             Pedido pedido = mozo.getUltimoPedidoCambioEstado();
             vista.mostrarInfoPedidoListo(pedido);
         }
-        
-        //si un producto se queda sin stock la fachada avisa
+
         if (evento.equals(Mozo.eventos.actualizarProductos)) {
             vista.updateListaProductos(Fachada.getInstancia().getProductosConStock());
         }
+        
+        //cuando se hace un pedido actualiza el servicio asociado
         if (evento.equals(Mozo.eventos.actualizarServicio)) {
             Servicio servicio = mozo.getUltimoPedidoCambioEstado().getServicio();
             vista.updateServicioActual(servicio.getPedidosMesa());
-            // hay sabes en que mesa se esta el usuario para sabes si actulizar el servicio o no
         }
 
         if (evento.equals(Mozo.eventos.transferenciaSolicitada)) {
@@ -83,7 +83,6 @@ public class ControladorAtencionMesa implements Observador {
 
     public void avisarTransferenciaDenegada() {
         mozo.getTransferencia().avisarMozoOrigenDenegada();
-
     }
 
     private void inicializarVista() {
@@ -106,9 +105,8 @@ public class ControladorAtencionMesa implements Observador {
             } catch (LogicException ex) {
                 vista.mostrarExceptionError(ex);
             }
-        }
-        else {
-             vista.mostrarAlerta("Seleccione una mesa");
+        } else {
+            vista.mostrarAlerta("Seleccione una mesa");
         }
     }
 
@@ -128,7 +126,7 @@ public class ControladorAtencionMesa implements Observador {
             updateServicioActualMesa(m);
         } else {
             vista.updateServicioActual(new ArrayList<>());
-            
+
         }
         updateMontoTotalServicioActualMesa(m);
 
@@ -142,6 +140,7 @@ public class ControladorAtencionMesa implements Observador {
         int montoServicio = m.getServicio().calcularServicio();
         vista.actualizarMontoTotalServicio(montoServicio);
     }
+
     public void agregarProductoAlServicio(Mesa m, Producto prod, int cantidad, String description) {
         try {
             if (m != null) {
@@ -170,22 +169,18 @@ public class ControladorAtencionMesa implements Observador {
         int montoServicio = mesaActual.getServicio().calcularServicio();
         vista.mostrarMontoServicio(montoServicio);
     }
-    
-    public void cargarDatosCliente(int idCliente,Mesa mesa){
+
+    public void cargarDatosCliente(int idCliente, Mesa mesa) {
         Cliente cliente = Fachada.getInstancia().getCliente(idCliente);
-        try{
+        try {
             mesa.getServicio().agregarCliente(cliente);
             String nombreCliente = cliente.getNombre();
             String beneficio = cliente.getTipoCliente().toString();
             float descuento = cliente.getTipoCliente().descuentoAplicado(mesa.getServicio());
             float montoPagar = cliente.getTipoCliente().montoAPagarConDescuento(mesa.getServicio());
-            vista.cargarDatosCliente(nombreCliente,beneficio,descuento,montoPagar);
-        } 
-        catch (LogicException ex) {
-                vista.cerraMesaMostrarMensaje(ex);
+            vista.cargarDatosCliente(nombreCliente, beneficio, descuento, montoPagar);
+        } catch (LogicException ex) {
+            vista.cerraMesaMostrarMensaje(ex);
         }
     }
 }
-    
-
-

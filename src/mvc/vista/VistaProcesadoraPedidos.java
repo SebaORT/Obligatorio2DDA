@@ -75,7 +75,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
         tblPedidosCurso = new javax.swing.JTable();
         lblPedidosCurso = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         lblMonitorPedidosTitle.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         lblMonitorPedidosTitle.setText("Monitor de Pedidos");
@@ -98,8 +98,6 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
                 "Nombre Producto", "Cantidad", "Descripcion", "N° Mesa", "Mozo ", "Estado"
             }
         ));
-        tblPedidosPendientes.setCellSelectionEnabled(false);
-        tblPedidosPendientes.setRowSelectionAllowed(true);
         scrollPanePedidos.setViewportView(tblPedidosPendientes);
         tblPedidosPendientes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -134,7 +132,7 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
         scrollPanePedidos1.setViewportView(tblPedidosCurso);
         tblPedidosCurso.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        lblPedidosCurso.setText("Pedidos en proceso");
+        lblPedidosCurso.setText("Mis Pedidos en proceso");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,8 +152,8 @@ public class VistaProcesadoraPedidos extends javax.swing.JDialog implements IVis
                                 .addComponent(btnFinalizarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrollPanePedidos1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblPedidosCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)))
+                                .addComponent(lblPedidosCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

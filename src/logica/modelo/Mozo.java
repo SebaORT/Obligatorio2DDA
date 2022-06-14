@@ -23,7 +23,9 @@ public class Mozo extends Usuario{
     private final int MAX_MESAS = 5;
     private Pedido ultimoPedidoCambioEstado;
     
-    public enum eventos {pedidoPronto,actualizarProductos,actualizarServicio,
+    public enum eventos {pedidoPronto,
+                        actualizarProductos,
+                        actualizarServicio,
                         transferenciaSolicitada,
                         transferenciaAceptada,
                         transferenciaDenegada
@@ -67,27 +69,22 @@ public class Mozo extends Usuario{
         }
         if (mesasCerradas == totMesas) {
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     public void iniciarTransferencia(Mozo mozoDestino,Mozo mozoOrigen, Mesa mesa){
         transferencia = new Transferencia(mozoOrigen,mesa,mozoDestino);
         mozoDestino.setTransferencia(transferencia);
-        // avisar a mozo destino
     }
     
     public void aceptarTransferencia() throws LogicException{
         transferencia.trasferir();
-        // avisar a mozo origen
     }
-    
 
     public void setTransferencia(Transferencia transferencia) {
         this.transferencia = transferencia;
-    }
-
-    public void validar() {
     }
 
     public void agregarMesa(Mesa mesa) throws LogicException {
@@ -98,24 +95,12 @@ public class Mozo extends Usuario{
             mesa.setMozo(this);
         }
     }
-    /*
-    public Mesa getUltimaMesaCambio() {
-        return ultimaCambioMesaServicio;
-    }
-
-    public void setUltimaMesaCambio(Mesa ultimaMesaCambio) {
-        this.ultimaCambioMesaServicio = ultimaMesaCambio;
-    }
-    */
 
     public Pedido getUltimoPedidoCambioEstado() {
         return ultimoPedidoCambioEstado;
     }
     
-    
-    
-    //estos metodos son iguales se podria sacar el evento a un metodo aparte y usar solo pedido cambio de estado capaz
-
+    // pone el ultimo pedido y avisa que se actualize el estado de ese pedido
     public void pedidoCambioEstado(Pedido p) {
         this.ultimoPedidoCambioEstado = p;
         this.avisar(eventos.actualizarServicio);  

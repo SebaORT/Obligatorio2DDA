@@ -48,7 +48,7 @@ public class Producto {
         return precio;
     }
 
-    public boolean actulizarStock(int unidades) {
+    public boolean actualizarStock(int unidades) {
         if (stock >= unidades) {
             stock -= unidades;
             return true;

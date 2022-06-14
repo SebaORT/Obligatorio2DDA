@@ -73,12 +73,6 @@ public class Mesa {
         return numero;
     }
     
-    
-    
-    public void hacerTranferencia(Mozo mozoDestino){
-        
-    }
-    
     @Override
     public String toString() {
         return "Mesa "+numero;

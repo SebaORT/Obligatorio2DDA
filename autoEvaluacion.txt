@@ -1,0 +1,16 @@
+AutoEvaluacion
+
+*Depender del indice de los pedidos para la UI en procesadora de pedidos.
+Se puede mejorar.
+
+*Validaciones de precarga de datos. 
+Asumimos que los datos vienen correctamente. 
+
+*En la cargaDatosCliente que se hace en el dialogo Cerrar Mesa
+Se podria usar un DTO para pasar la informacion y usar menos parametros en el metodo.
+
+*Gestor quedo como Observable (por herencia de Usuario) 
+pero no es necesario ya que no tiene ningun observador registrado.
+Por que en nuestra implementacion el Mozo (Observable) avisa a su controlador (Observador).
+
+*La validacion de la mesa seleccionada (y mostrar alerta) se a nivel de UI con el indice de mesa.

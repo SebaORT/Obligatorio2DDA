@@ -76,6 +76,7 @@ public class ControlUsuarios {
         if (usu != null) {
             if (!gestoresConectados.contains(usu)) {
                 Gestor g = (Gestor) usu;
+                gestoresConectados.add(g);
                 g.ultimoAcceso();
                 return g;
             } else

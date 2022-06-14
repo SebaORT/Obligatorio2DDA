@@ -61,15 +61,19 @@ public class Pedido {
     
     public void agregarProducto(Producto p, int cantidad, String desc)throws LogicException{
         if(cantidad >0){
-            if(p.actulizarStock(cantidad)){
+            if(p.actualizarStock(cantidad)){
                 producto = p;
                 this.cantidad = cantidad;
                 montoPedido = cantidad*p.getPrecio();
                 descripcion = desc;
             }
-            else throw new LogicException("Sin stock, solo quedan (" + p.getStock() + ").");
+            else { 
+                throw new LogicException("Sin stock, solo quedan (" + p.getStock() + ").");
+            }
         }
-        else throw new LogicException("cantidad inválida");
+        else {
+            throw new LogicException("cantidad inválida");
+        }
     }
 
     public int getCantidad() {
@@ -121,7 +125,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-       return "El Pedido : "+ cantidad + " " + producto.getNombre() + ", de la Mesa: " + servicio.getMesa().getNumero() + " esta pronto!!";
+       return "El Pedido : " + producto.getNombre() +" (#"+ cantidad + ") , de la Mesa: " + servicio.getMesa().getNumero() + " esta pronto!!";
     }
 
     
