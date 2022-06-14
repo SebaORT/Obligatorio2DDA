@@ -84,6 +84,7 @@ public class VistaAtencionMesas extends javax.swing.JFrame implements IVistaAten
     }
     
     public void initMesasUI(ArrayList<Mesa> mesasMozo) {
+        indexMesaSeleccionada = -1;
         panelsMesasButtons[0] = pnlMesa1;
         panelsMesasButtons[1] = pnlMesa2;
         panelsMesasButtons[2] = pnlMesa3;
